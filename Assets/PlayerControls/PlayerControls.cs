@@ -22,9 +22,41 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerControls"",
-    ""maps"": [],
+    ""maps"": [
+        {
+            ""name"": ""ClickEvents"",
+            ""id"": ""56637187-0079-4e79-a787-161c6344075f"",
+            ""actions"": [
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""661b4999-f2b8-48d2-99db-c2d8c24f563e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0d47953a-e46b-4a9a-b07e-a451b0850aed"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        }
+    ],
     ""controlSchemes"": []
 }");
+        // ClickEvents
+        m_ClickEvents = asset.FindActionMap("ClickEvents", throwIfNotFound: true);
+        m_ClickEvents_Click = m_ClickEvents.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -79,5 +111,42 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public int FindBinding(InputBinding bindingMask, out InputAction action)
     {
         return asset.FindBinding(bindingMask, out action);
+    }
+
+    // ClickEvents
+    private readonly InputActionMap m_ClickEvents;
+    private IClickEventsActions m_ClickEventsActionsCallbackInterface;
+    private readonly InputAction m_ClickEvents_Click;
+    public struct ClickEventsActions
+    {
+        private @PlayerControls m_Wrapper;
+        public ClickEventsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Click => m_Wrapper.m_ClickEvents_Click;
+        public InputActionMap Get() { return m_Wrapper.m_ClickEvents; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ClickEventsActions set) { return set.Get(); }
+        public void SetCallbacks(IClickEventsActions instance)
+        {
+            if (m_Wrapper.m_ClickEventsActionsCallbackInterface != null)
+            {
+                @Click.started -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnClick;
+            }
+            m_Wrapper.m_ClickEventsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
+            }
+        }
+    }
+    public ClickEventsActions @ClickEvents => new ClickEventsActions(this);
+    public interface IClickEventsActions
+    {
+        void OnClick(InputAction.CallbackContext context);
     }
 }
