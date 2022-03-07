@@ -16,7 +16,7 @@ public class TrackPoint : MonoBehaviour
     public PointType trackPointType;
     private void Start()
     {
-        if (trackPointType == PointType.Continue)
+        if (trackPointType != PointType.Choice)
         {
             SetCurrent(0);
         }
@@ -29,9 +29,10 @@ public class TrackPoint : MonoBehaviour
         }
         chosenNext = nextPoints[i];
     }
-    public void StationStop()
+    public void StationStop(GameObject train)
     {
-
+        GameManager.Instance.setTrainPosition(train.transform.position);
+        //start next scene
     }
     private void OnDrawGizmos()
     {

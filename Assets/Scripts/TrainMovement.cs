@@ -25,7 +25,7 @@ public class TrainMovement : MonoBehaviour
             transform.right = nextPoint.transform.position - transform.position;
             if (nextPoint.trackPointType == TrackPoint.PointType.Station)
             {
-                nextPoint.StationStop();
+                nextPoint.StationStop(this.gameObject);
             }
         }
     }
