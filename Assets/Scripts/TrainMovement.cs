@@ -18,11 +18,15 @@ public class TrainMovement : MonoBehaviour
         {
             TrackPoint previousChosen = nextPoint;
             nextPoint = nextPoint.chosenNext;
-            if (previousChosen.nextPoints.Length > 1)
+            if (previousChosen.trackPointType == TrackPoint.PointType.Choice)
             {
                 previousChosen.chosenNext = null;
             }
             transform.right = nextPoint.transform.position - transform.position;
+            if (nextPoint.trackPointType == TrackPoint.PointType.Station)
+            {
+                nextPoint.StationStop();
+            }
         }
     }
 }

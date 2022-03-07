@@ -169,6 +169,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1726825327}
   chosenNext: {fileID: 0}
+  trackPointType: 0
 --- !u!1 &216595728
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +216,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 241113953}
   chosenNext: {fileID: 0}
+  trackPointType: 0
 --- !u!1 &241113951
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,6 +263,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1802080257}
   chosenNext: {fileID: 0}
+  trackPointType: 0
 --- !u!1 &632708393
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +349,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 118011982}
   chosenNext: {fileID: 0}
+  trackPointType: 0
 --- !u!1 &927935352
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,6 +693,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 216595730}
   chosenNext: {fileID: 0}
+  trackPointType: 0
 --- !u!1 &1664289397
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,6 +952,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1838319717}
   chosenNext: {fileID: 0}
+  trackPointType: 1
 --- !u!1 &1802080255
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,6 +999,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1821395770}
   chosenNext: {fileID: 0}
+  trackPointType: 0
 --- !u!1 &1821395768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,6 +1047,7 @@ MonoBehaviour:
   - {fileID: 118011982}
   - {fileID: 787212406}
   chosenNext: {fileID: 0}
+  trackPointType: 2
 --- !u!1 &1838319715
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,3 +1094,4 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1492030942}
   chosenNext: {fileID: 0}
+  trackPointType: 0
