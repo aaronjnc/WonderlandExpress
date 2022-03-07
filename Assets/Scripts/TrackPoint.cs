@@ -7,9 +7,16 @@ public class TrackPoint : MonoBehaviour
     public TrackPoint[] nextPoints;
     [HideInInspector]
     public TrackPoint chosenNext;
+    public enum PointType
+    {
+        Continue,
+        Station,
+        Choice,
+    }
+    public PointType trackPointType;
     private void Start()
     {
-        if (nextPoints != null && nextPoints.Length == 1)
+        if (trackPointType == PointType.Continue)
         {
             SetCurrent(0);
         }
@@ -21,6 +28,10 @@ public class TrackPoint : MonoBehaviour
             Debug.Log("clicked");
         }
         chosenNext = nextPoints[i];
+    }
+    public void StationStop()
+    {
+
     }
     private void OnDrawGizmos()
     {
