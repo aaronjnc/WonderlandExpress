@@ -24,10 +24,6 @@ public class TrackPoint : MonoBehaviour
     }
     public void SetCurrent(int i)
     {
-        if (i != 0)
-        {
-            Debug.Log("clicked");
-        }
         chosenNext = nextPoints[i];
     }
     public void TollStop(GameObject train)
