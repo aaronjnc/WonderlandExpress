@@ -12,6 +12,7 @@ public class TrackPoint : MonoBehaviour
         Continue,
         Station,
         Choice,
+        Toll,
     }
     public PointType trackPointType;
     private void Start()
@@ -28,6 +29,11 @@ public class TrackPoint : MonoBehaviour
             Debug.Log("clicked");
         }
         chosenNext = nextPoints[i];
+    }
+    public void TollStop(GameObject train)
+    {
+        //reduce train money by cost of toll
+        //fail if not enough money
     }
     public void StationStop(GameObject train)
     {

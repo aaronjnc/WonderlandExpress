@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Current position of the train")]
     private Vector3 trainPosition;
+    [Tooltip("Current Game Manager")]
     private static GameManager _instance;
     public static GameManager Instance
     {
