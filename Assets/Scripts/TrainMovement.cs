@@ -19,6 +19,13 @@ public class TrainMovement : MonoBehaviour
     public float stoppingDistance;
     [Tooltip("Train is stopped")]
     private bool stopped = false;
+    private void Start()
+    {
+        if (GameManager.Instance.load)
+        {
+            nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
+        }
+    }
     void FixedUpdate()
     {
         if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)

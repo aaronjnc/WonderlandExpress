@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     private Vector3 trainPosition;
     [Tooltip("Current Game Manager")]
     private static GameManager _instance;
+    [Tooltip("Name of current stop")]
+    private string currentStop;
+    public bool load = false;
     public static GameManager Instance
     {
         get
@@ -21,6 +24,7 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         _instance = this;
     }
     public void setTrainPosition(Vector3 pos)
@@ -30,5 +34,13 @@ public class GameManager : MonoBehaviour
     public Vector3 getTrainPosition()
     {
         return trainPosition;
+    }
+    public void SetCurrentStop(string stop)
+    {
+        currentStop = stop;
+    }
+    public string GetCurrentStop()
+    {
+        return currentStop;
     }
 }

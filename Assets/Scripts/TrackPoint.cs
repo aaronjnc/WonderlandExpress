@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TrackPoint : MonoBehaviour
 {
@@ -34,7 +35,8 @@ public class TrackPoint : MonoBehaviour
     public void StationStop(GameObject train)
     {
         GameManager.Instance.setTrainPosition(train.transform.position);
-        //start next scene
+        GameManager.Instance.SetCurrentStop(gameObject.name);
+        SceneManager.LoadScene(1);
     }
     private void OnDrawGizmos()
     {
