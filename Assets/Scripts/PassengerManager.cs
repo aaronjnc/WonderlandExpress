@@ -333,4 +333,5 @@ public class PassengerManager : MonoBehaviour
     {
         currentPass.Remove(pass);
     }
+
 }
