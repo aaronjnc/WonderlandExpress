@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TownUIManager : MonoBehaviour
 {
@@ -36,5 +37,13 @@ public class TownUIManager : MonoBehaviour
     public void DisplayError(string text)
     {
         errorText.text = text;
+    }
+
+
+    //REMOVE FROM THIS OBJECT. PUT SOMEWHERE ELSE
+    public void SwitchScene()
+    {
+        GameManager.Instance.load = true;
+        SceneManager.LoadScene("ILikeTrains");
     }
 }
