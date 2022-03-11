@@ -2482,9 +2482,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Leave Town
-
-    (doesn''t work yet)'
+  m_Text: Leave Town
 --- !u!222 &1726281190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2656,9 +2654,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1574960196}
-        m_TargetAssemblyTypeName: PassengerManager, Assembly-CSharp
-        m_MethodName: AcceptPass
+      - m_Target: {fileID: 1304240891}
+        m_TargetAssemblyTypeName: TownUIManager, Assembly-CSharp
+        m_MethodName: SwitchScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
