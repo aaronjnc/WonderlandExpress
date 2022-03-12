@@ -24,6 +24,7 @@ public class TrainMovement : MonoBehaviour
         if (GameManager.Instance.load)
         {
             nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
+            transform.position = GameManager.Instance.getTrainPosition();
         }
     }
     void FixedUpdate()
