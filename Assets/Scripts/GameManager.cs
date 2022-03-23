@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     [Tooltip("Name of current stop")]
     private string currentStop;
+    [Tooltip("List of current Passengers")]
+    public List<GameObject> passengers;
+    [Tooltip("Current amount of gold")]
+    public int gold = 0;
     public bool load = false;
     public static GameManager Instance
     {
@@ -26,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         _instance = this;
+        passengers = new List<GameObject>();
     }
     public void setTrainPosition(Vector3 pos)
     {
@@ -42,5 +47,17 @@ public class GameManager : MonoBehaviour
     public string GetCurrentStop()
     {
         return currentStop;
+    }
+    public int GetGold()
+    {
+        return gold;
+    }
+    public void AddGold(int amt)
+    {
+        gold += amt;
+    }
+    public List<GameObject> GetPassengers()
+    {
+        return passengers;
     }
 }
