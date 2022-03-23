@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Application is quitting")]
+    private static bool applicationIsQuitting = false;
     [Tooltip("Current position of the train")]
     private Vector3 trainPosition;
     [Tooltip("Current Game Manager")]
@@ -19,15 +21,29 @@ public class GameManager : MonoBehaviour
     {
         get
         {
+            if (applicationIsQuitting)
+            {
+                return null;
+            }
             if (_instance == null)
             {
-                Debug.Log("Game Manager is null");
+                _instance = FindObjectOfType<GameManager>();
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject();
+                    _instance = go.AddComponent<GameManager>();
+                }
             }
             return _instance;
         }
     }
     private void Awake()
     {
+        Application.quitting += () => applicationIsQuitting = true;
+        if (Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
         DontDestroyOnLoad(this);
         _instance = this;
         if (passengers == null)
