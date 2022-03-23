@@ -48,6 +48,18 @@ public class Passenger : MonoBehaviour
         
     }
 
+    //displays accompanying UI when mousing over this passenger
+    void OnMouseOver()
+    {
+        return;
+    }
+
+    //hides accompanying UI when no longer mousing over this passenger
+    void OnMouseExit()
+    {
+        return;
+    }
+
     //moves to the given position and sets the rendered to active
     public void Display(Vector3 pos)
     {

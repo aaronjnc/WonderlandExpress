@@ -30,7 +30,10 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         _instance = this;
-        passengers = new List<GameObject>();
+        if (passengers == null)
+        {
+            passengers = new List<GameObject>();
+        }
     }
     public void setTrainPosition(Vector3 pos)
     {
