@@ -91,6 +91,10 @@ public class PassengerManager : MonoBehaviour
     void Start()
     {
         //currentPass = new List<GameObject>();
+        if(GameManager.Instance != null)
+        {
+            currentPass = GameManager.Instance.GetPassengers();
+        }
         waitingPass = new List<GameObject>();
         SetupTown();
     }
@@ -263,6 +267,7 @@ public class PassengerManager : MonoBehaviour
         {
             Debug.Log("NewPassenger Null");
             uiMan.DisplayError("No more passengers waiting");
+            Debug.Log("GameManager list size: " + GameManager.Instance.GetPassengers().Count);
             return;
         }
         Passenger pass = GetCurrentWaitingPass().GetComponent<Passenger>();
@@ -331,6 +336,7 @@ public class PassengerManager : MonoBehaviour
     //what to do when you successfully drop off a passenger at the correct location
     public void DropOffSuccess(GameObject pass)
     {
+        Debug.Log("Passenger " + pass.GetComponent<Passenger>().GetName() + " successfully dropped off");
         currentPass.Remove(pass);
     }
 
