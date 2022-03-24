@@ -2654,9 +2654,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1304240891}
-        m_TargetAssemblyTypeName: TownUIManager, Assembly-CSharp
-        m_MethodName: SwitchScene
+      - m_Target: {fileID: 1574960196}
+        m_TargetAssemblyTypeName: PassengerManager, Assembly-CSharp
+        m_MethodName: LeaveTown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PassengerManager : MonoBehaviour
 {
@@ -131,6 +132,7 @@ public class PassengerManager : MonoBehaviour
     //Sets up a new town's display
     void SetupTown()
     {
+        PassActive();
         CheckPassengerDestination();
         GeneratePassengers();
         //Debug.Log("list length: " + waitingPass.Count);
@@ -138,6 +140,13 @@ public class PassengerManager : MonoBehaviour
         //Debug.Log("list length: " + waitingPass.Count);
         NewPassenger();
         //Debug.Log("list length: " + waitingPass.Count);
+    }
+
+    //What to do when leaving the town
+    public void LeaveTown()
+    {
+        PassInactive();
+        uiMan.SwitchScene();
     }
 
     //checks all current passengers and removes all passengers who have reached their destination
@@ -156,6 +165,24 @@ public class PassengerManager : MonoBehaviour
         foreach(GameObject pass in removed)
         {
             DropOffSuccess(pass);
+        }
+    }
+
+    //sets all current passengers to active
+    void PassActive()
+    {
+        foreach (GameObject pass in currentPass)
+        {
+            pass.SetActive(true);
+        }
+    }
+
+    //set all current passengers to inactive
+    public void PassInactive()
+    {
+        foreach (GameObject pass in currentPass)
+        {
+            pass.SetActive(false);
         }
     }
 
@@ -222,6 +249,7 @@ public class PassengerManager : MonoBehaviour
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
         newPass.GetComponent<Passenger>().Setup(name, wealth, happiness, destination, pm, am, dm);
+        DontDestroyOnLoad(newPass);
         return newPass;
 
     }
