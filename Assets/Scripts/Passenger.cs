@@ -110,4 +110,19 @@ public class Passenger : MonoBehaviour
     {
         return destination.GetName();
     }
+
+    public string GetMessage()
+    {
+        return passageMessage;
+    }
+
+    public string GetAccept()
+    {
+        return acceptMessage;
+    }
+
+    public string GetDeny()
+    {
+        return denyMessage;
+    }
 }
