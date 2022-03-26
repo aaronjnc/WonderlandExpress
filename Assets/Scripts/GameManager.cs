@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("Name of current stop")]
     private string currentStop;
     [Tooltip("List of current Passengers")]
-    public List<GameObject> passengers;
+    public GameObject[] passengers;
+    [Tooltip("Max number of passengers")]
+    public int maxCap = 5;
     [Tooltip("Current amount of gold")]
     public int gold = 0;
     public bool load = false;
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour
         _instance = this;
         if (passengers == null)
         {
-            passengers = new List<GameObject>();
+            passengers = new GameObject[maxCap];
         }
     }
     public void setTrainPosition(Vector3 pos)
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         gold += amt;
     }
-    public List<GameObject> GetPassengers()
+    public GameObject[] GetPassengers()
     {
         return passengers;
     }

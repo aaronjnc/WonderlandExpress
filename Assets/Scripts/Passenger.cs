@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Passenger : MonoBehaviour
 {
     [Header("General Passenger Stats")]
@@ -108,5 +109,20 @@ public class Passenger : MonoBehaviour
     public string GetDestinationName()
     {
         return destination.GetName();
+    }
+
+    public string GetMessage()
+    {
+        return passageMessage;
+    }
+
+    public string GetAccept()
+    {
+        return acceptMessage;
+    }
+
+    public string GetDeny()
+    {
+        return denyMessage;
     }
 }
