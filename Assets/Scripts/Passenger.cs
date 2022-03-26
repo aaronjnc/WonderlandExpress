@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Passenger : MonoBehaviour
 {
     [Header("General Passenger Stats")]
@@ -46,6 +47,18 @@ public class Passenger : MonoBehaviour
     void Update()
     {
         
+    }
+
+    //displays accompanying UI when mousing over this passenger
+    void OnMouseOver()
+    {
+        return;
+    }
+
+    //hides accompanying UI when no longer mousing over this passenger
+    void OnMouseExit()
+    {
+        return;
     }
 
     //moves to the given position and sets the rendered to active
@@ -96,5 +109,20 @@ public class Passenger : MonoBehaviour
     public string GetDestinationName()
     {
         return destination.GetName();
+    }
+
+    public string GetMessage()
+    {
+        return passageMessage;
+    }
+
+    public string GetAccept()
+    {
+        return acceptMessage;
+    }
+
+    public string GetDeny()
+    {
+        return denyMessage;
     }
 }
