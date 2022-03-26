@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,12 +18,12 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("All of the remove buttons used for the passengers. Must be listed in order from right to left")]
     public List<GameObject> removeButtons;
 
-    public void SetupButtons(int numPass)
+    public void SetupButtons(GameObject[] arr)
     {
         int currentNum = 0;
         foreach(GameObject button in removeButtons)
         {
-            button.SetActive(currentNum < numPass);
+            button.SetActive(arr[currentNum] != null);
             currentNum++;
         }
 
