@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -99,6 +100,7 @@ public class PassengerManager : MonoBehaviour
         {
             currentPass = GameManager.Instance.GetPassengers();
         }
+        FindCurrentPassNum();
         waitingPass = new List<GameObject>();
         SetupTown();
     }
@@ -224,7 +226,7 @@ public class PassengerManager : MonoBehaviour
             }
             displayPos += passOffset;
         }
-        uiMan.SetupButtons(currentPass.Count);
+        uiMan.SetupButtons(currentPass);
     }
 
     //displays all currently waiting passengers
@@ -258,12 +260,12 @@ public class PassengerManager : MonoBehaviour
     GameObject GeneratePassenger(Town town)
     {
         float startWealth = GetTownWealth(town);
-        float wealth = Random.Range(startWealth - wealthDev, startWealth + wealthDev);
-        float happiness = Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
-        string name = firstNames.ToArray()[Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[Random.Range(0, firstNames.ToArray().Length)];
-        string pm = pms.ToArray()[Random.Range(0, pms.ToArray().Length)];
-        string am = ams.ToArray()[Random.Range(0, ams.ToArray().Length)]; 
-        string dm = dms.ToArray()[Random.Range(0, dms.ToArray().Length)];
+        float wealth = UnityEngine.Random.Range(startWealth - wealthDev, startWealth + wealthDev);
+        float happiness = UnityEngine.Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
+        string name = firstNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)];
+        string pm = pms.ToArray()[UnityEngine.Random.Range(0, pms.ToArray().Length)];
+        string am = ams.ToArray()[UnityEngine.Random.Range(0, ams.ToArray().Length)]; 
+        string dm = dms.ToArray()[UnityEngine.Random.Range(0, dms.ToArray().Length)];
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
         newPass.GetComponent<Passenger>().Setup(name, wealth, happiness, destination, pm, am, dm);
@@ -313,7 +315,7 @@ public class PassengerManager : MonoBehaviour
         {
             Debug.Log("NewPassenger Null");
             uiMan.DisplayError("No more passengers waiting");
-            Debug.Log("GameManager list size: " + GameManager.Instance.GetPassengers().Count);
+            //Debug.Log("GameManager list size: " + currentPassNum);
             return;
         }
         Passenger pass = GetCurrentWaitingPass().GetComponent<Passenger>();
@@ -331,14 +333,14 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("No passengers to accept");
             return;
         }
-        if (currentPass.Count >= trainCap)
+        if (currentPassNum >= trainCap)
         {
             uiMan.DisplayError("Tried to add past train max capacity. Should not add");
             return;
         }
         //Debug.Log("accept: list length: " + waitingPass.Count);
         waitingPass.Remove(pass);
-        currentPass.Add(pass);
+        AddPass(pass);
         DisplayAllPass();
         NewPassenger();
     }
@@ -358,24 +360,45 @@ public class PassengerManager : MonoBehaviour
         Destroy(pass);
     }
 
+    //adds the passenger at the given index from the current passenger list. Used for button interaction
+    public void AddPass(GameObject pass)
+    {
+        Debug.Log("trying to add passenger");
+        for(int i = 0; i < currentPass.Length; i++)
+        {
+            if(currentPass[i] == null)
+            {
+                currentPass[i] = pass;
+                currentPassNum++;
+                return;
+            } 
+        }
+        Debug.LogWarning("could not find open space to add passenger. Should not have been allowed to add");
+        
+        //RemovePass(currentPass[pos]);
+
+    }
+
     //Removes the given passenger from the current passenger list. Used for button interaction
-    //public void RemovePass(GameObject pass)
-    //{
-    //    if (!currentPass.Contains(pass))
-   //     {
-   //         Debug.LogWarning("tried to remove nonexistant passenger");
-   //         return;
-    //    }
-    //    currentPass.Remove(pass);
-    //    DisplayPass();
-    //    Destroy(pass);
-    //}
+    public void RemovePass(GameObject pass)
+    {
+        int i = Array.IndexOf(currentPass, pass);
+        if (i < 0)
+        {
+            Debug.LogWarning("tried to remove nonexistant passenger");
+            return;
+        }
+        RemovePass(i);
+    }
 
     //Removes the passenger at the given index from the current passenger list. Used for button interaction
     public void RemovePass(int pos)
     {
         Debug.Log("trying to remove passenger " + pos);
         Destroy(currentPass[pos]);
+        currentPass[pos] = null;
+        currentPassNum--;
+        DisplayPass();
         //RemovePass(currentPass[pos]);
         
     }
@@ -384,7 +407,7 @@ public class PassengerManager : MonoBehaviour
     public void DropOffSuccess(GameObject pass)
     {
         Debug.Log("Passenger " + pass.GetComponent<Passenger>().GetName() + " successfully dropped off");
-        currentPass.Remove(pass);
+        RemovePass(pass);
     }
 
     //Get the number of passengers currently on the train

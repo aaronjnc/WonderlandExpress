@@ -48,10 +48,7 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(this);
         _instance = this;
-        if (passengers == null)
-        {
-            passengers = new GameObject[maxCap];
-        }
+        passengers = new GameObject[maxCap];
     }
     public void setTrainPosition(Vector3 pos)
     {
