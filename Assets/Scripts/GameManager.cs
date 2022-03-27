@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Application.quitting += () => applicationIsQuitting = true;
+        SceneManager.sceneLoaded += OnSceneLoad;
         if (Instance != this)
         {
             Destroy(this.gameObject);
@@ -77,5 +79,12 @@ public class GameManager : MonoBehaviour
     public GameObject[] GetPassengers()
     {
         return passengers;
+    }
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
