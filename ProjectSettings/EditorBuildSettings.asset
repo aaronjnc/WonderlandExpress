@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: ae4c14a86d445304f8819af541904b1f
+  - enabled: 1
     path: Assets/Scenes/ILikeTrains.unity
     guid: 6789b957bdb2f6c4a8ce018e69426455
   - enabled: 1

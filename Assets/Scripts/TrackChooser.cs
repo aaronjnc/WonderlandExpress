@@ -28,7 +28,7 @@ public class TrackChooser : MonoBehaviour
             return;
         if (hit.collider.gameObject == this.gameObject)
         {
-            trackPoint.SetCurrent(trackOption);
+            trackPoint.SetChosenTrack(trackOption);
         }
     }
     private void OnDestroy()
