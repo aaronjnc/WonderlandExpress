@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 public class TrainMovement : MonoBehaviour
 {
+    private static TrainMovement _instance;
+    public static TrainMovement Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
     [Tooltip("Maximum train velocity")]
     public float maxVelocity;
     [Tooltip("How quickly the train accelerates")]
     public float acceleration;
-    [HideInInspector]
-    [Tooltip("Current train velocity")]
+    [Tooltip("Current train velocity"), HideInInspector]
     public float velocity;
     [Tooltip("Reference to next track point")]
     public TrackPoint nextPoint;
@@ -19,12 +27,33 @@ public class TrainMovement : MonoBehaviour
     public float stoppingDistance;
     [Tooltip("Train is stopped")]
     private bool stopped = false;
+    [Tooltip("Pause Menu game object")]
+    [SerializeField] private GameObject pauseMenu;
+    [Tooltip("Player controls")]
+    private PlayerControls controls;
     private void Start()
     {
+        _instance = this;
         if (GameManager.Instance.load)
         {
             nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
             transform.position = GameManager.Instance.getTrainPosition();
+        }
+        controls = new PlayerControls();
+        controls.Menu.Pause.performed += Pause;
+        controls.Menu.Pause.Enable();
+    }
+    private void Pause(CallbackContext ctx)
+    {
+        if (pauseMenu.activeInHierarchy)
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
         }
     }
     void FixedUpdate()
@@ -32,7 +61,7 @@ public class TrainMovement : MonoBehaviour
         if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)
         {
             if (Vector3.Distance(transform.position, nextPoint.transform.position) < stoppingDistance
-                && nextPoint.trackPointType != TrackPoint.PointType.Continue)
+                && !nextPoint.continuous)
             {
                 if (currentVel == Vector3.zero)
                 {
@@ -53,22 +82,18 @@ public class TrainMovement : MonoBehaviour
         }
         else if (nextPoint.chosenNext != null)
         {
-            if (nextPoint.trackPointType != TrackPoint.PointType.Continue)
+            if (!nextPoint.continuous)
             {
                 velocity = 0;
                 currentVel = Vector3.zero;
             }
             TrackPoint previousChosen = nextPoint;
             nextPoint = nextPoint.chosenNext;
-            if (previousChosen.trackPointType == TrackPoint.PointType.Choice)
+            if (!previousChosen.continuous)
             {
-                previousChosen.chosenNext = null;
+                previousChosen.StopAction();
             }
             transform.right = nextPoint.transform.position - transform.position;
-            if (previousChosen.trackPointType == TrackPoint.PointType.Station)
-            {
-                nextPoint.StationStop(this.gameObject);
-            }
             stopped = false;
         }
         else
