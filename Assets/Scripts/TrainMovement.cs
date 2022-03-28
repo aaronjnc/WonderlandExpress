@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+
 
 public class TrainMovement : MonoBehaviour
 {
@@ -31,6 +33,7 @@ public class TrainMovement : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [Tooltip("Player controls")]
     private PlayerControls controls;
+    [SerializeField] private LayerMask choiceLayer;
     private void Start()
     {
         _instance = this;
@@ -42,6 +45,8 @@ public class TrainMovement : MonoBehaviour
         controls = new PlayerControls();
         controls.Menu.Pause.performed += Pause;
         controls.Menu.Pause.Enable();
+        controls.ClickEvents.Click.performed += Click;
+        controls.ClickEvents.Click.Enable();
     }
     private void Pause(CallbackContext ctx)
     {
@@ -55,6 +60,16 @@ public class TrainMovement : MonoBehaviour
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
         }
+    }
+
+    private void Click(CallbackContext ctx)
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector2(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue()));
+
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, choiceLayer);
+        if (!hit)
+            return;
+        hit.collider.gameObject.GetComponent<TrackChooser>().Clicked();
     }
     void FixedUpdate()
     {
