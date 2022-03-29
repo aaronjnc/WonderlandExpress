@@ -34,6 +34,7 @@ public class TrainMovement : MonoBehaviour
     [Tooltip("Player controls")]
     private PlayerControls controls;
     [SerializeField] private LayerMask choiceLayer;
+    [SerializeField] private List<FollowTrain> trainCars = new List<FollowTrain>();
     private void Start()
     {
         _instance = this;
@@ -42,6 +43,7 @@ public class TrainMovement : MonoBehaviour
             nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
             transform.position = GameManager.Instance.GetTrainPosition();
             transform.eulerAngles = GameManager.Instance.GetTrainRotation();
+            LoadFollowTrains();
         }
         controls = new PlayerControls();
         controls.Menu.Pause.performed += Pause;
@@ -121,6 +123,19 @@ public class TrainMovement : MonoBehaviour
             velocity = 0;
             currentVel = Vector3.zero;
             stopped = true;
+        }
+    }
+
+    public void LoadFollowTrains()
+    {
+        GameManager.Instance.LoadFollowTrain(trainCars);
+    }
+
+    public void SaveFollowTrains()
+    {
+        for (int i = 0; i < trainCars.Count; i++)
+        {
+            GameManager.Instance.AddFollowTrain(trainCars[i]);
         }
     }
 }
