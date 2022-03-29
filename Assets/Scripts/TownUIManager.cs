@@ -21,6 +21,9 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("All of the remove buttons used for the passengers. Must be listed in order from right to left")]
     public List<GameObject> removeButtons;
 
+    [Tooltip("The default remove button prefab to be used. Not yet used.")]
+    public GameObject removeButton;
+
     [Tooltip("The UI to show when mousing over a passenger")]
     public GameObject passengerStats;
 
@@ -95,6 +98,11 @@ public class TownUIManager : MonoBehaviour
     public static TownUIManager GetManager()
     {
         return Instance;
+    }
+
+    public void DisplayPassText(Passenger pass)
+    {
+        DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestinationName() + "\nGold: " + pass.GetGold() + "\n" + pass.GetMessage());
     }
 
     public void DisplayText(string text)
