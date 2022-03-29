@@ -40,7 +40,8 @@ public class TrainMovement : MonoBehaviour
         if (GameManager.Instance.load)
         {
             nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
-            transform.position = GameManager.Instance.getTrainPosition();
+            transform.position = GameManager.Instance.GetTrainPosition();
+            transform.eulerAngles = GameManager.Instance.GetTrainRotation();
         }
         controls = new PlayerControls();
         controls.Menu.Pause.performed += Pause;
@@ -83,6 +84,7 @@ public class TrainMovement : MonoBehaviour
                     currentVel = transform.right * velocity;
                 }
                 transform.position = Vector3.SmoothDamp(transform.position, nextPoint.transform.position, ref currentVel, 1, maxVelocity);
+                velocity = currentVel.magnitude;
                 if (Vector3.Distance(transform.position, nextPoint.transform.position) < .1)
                 {
                     transform.position = nextPoint.transform.position;
@@ -109,10 +111,15 @@ public class TrainMovement : MonoBehaviour
                 previousChosen.StopAction();
             }
             transform.right = nextPoint.transform.position - transform.position;
+            velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+            transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
+            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
             stopped = false;
         }
         else
         {
+            velocity = 0;
+            currentVel = Vector3.zero;
             stopped = true;
         }
     }
