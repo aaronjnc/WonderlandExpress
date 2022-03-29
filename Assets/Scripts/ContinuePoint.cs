@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ContinuePoint : TrackPoint
 {
+    private void Awake()
+    {
+        gameObject.name = transform.position.ToString();
+    }
     public override void StopAction()
     {
         return;

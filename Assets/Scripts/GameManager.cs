@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("Current amount of gold")]
     public int gold = 0;
     public bool load = false;
+    private List<Vector3> trainCarPos = new List<Vector3>();
+    private List<Vector3> trainCarRots = new List<Vector3>();
+    private List<string> trainCarStops = new List<string>();
     public static GameManager Instance
     {
         get
@@ -97,6 +100,22 @@ public class GameManager : MonoBehaviour
         if (scene.buildIndex == 0)
         {
             Destroy(this.gameObject);
+        }
+    }
+    public void AddFollowTrain(FollowTrain follow)
+    {
+        trainCarPos.Add(follow.transform.position);
+        trainCarRots.Add(follow.transform.eulerAngles);
+        trainCarStops.Add(follow.nextPoint.name);
+    }
+
+    public void LoadFollowTrain(List<FollowTrain> followers)
+    {
+        for (int i = 0; i < followers.Count; i++)
+        {
+            followers[i].transform.position = trainCarPos[i];
+            followers[i].transform.eulerAngles = trainCarRots[i];
+            followers[i].SetNextPoint(trainCarStops[i]);
         }
     }
 }

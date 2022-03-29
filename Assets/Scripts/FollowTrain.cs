@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowTrain : MonoBehaviour
 {
-    [SerializeField] private TrackPoint nextPoint;
+    public TrackPoint nextPoint;
     [SerializeField] private Rigidbody2D train;
     private void FixedUpdate()
     {
@@ -17,5 +17,10 @@ public class FollowTrain : MonoBehaviour
         float vel = TrainMovement.Instance.velocity;
         if (vel != 0)
             transform.position += transform.right * TrainMovement.Instance.velocity * Time.deltaTime;
+    }
+
+    public void SetNextPoint(string name)
+    {
+        nextPoint = GameObject.Find(name).GetComponent<TrackPoint>();
     }
 }

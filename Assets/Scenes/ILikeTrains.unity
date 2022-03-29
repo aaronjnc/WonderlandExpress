@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 75302879}
   - component: {fileID: 75302880}
   m_Layer: 0
-  m_Name: Station
+  m_Name: Town 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1679,7 +1679,7 @@ GameObject:
   - component: {fileID: 177957724}
   - component: {fileID: 177957723}
   m_Layer: 0
-  m_Name: Car
+  m_Name: Car1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2764,7 +2764,7 @@ GameObject:
   - component: {fileID: 282204101}
   - component: {fileID: 282204100}
   m_Layer: 0
-  m_Name: Choice
+  m_Name: Choice3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6889,7 +6889,7 @@ GameObject:
   - component: {fileID: 709887184}
   - component: {fileID: 709887185}
   m_Layer: 0
-  m_Name: Choice
+  m_Name: Choice1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8518,7 +8518,7 @@ GameObject:
   - component: {fileID: 862208574}
   - component: {fileID: 862208575}
   m_Layer: 0
-  m_Name: Choice
+  m_Name: Choice2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11140,7 +11140,7 @@ GameObject:
   - component: {fileID: 1137078803}
   - component: {fileID: 1137078804}
   m_Layer: 0
-  m_Name: Station
+  m_Name: Town 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13137,6 +13137,8 @@ MonoBehaviour:
   choiceLayer:
     serializedVersion: 2
     m_Bits: 64
+  trainCars:
+  - {fileID: 177957723}
 --- !u!50 &1408978672
 Rigidbody2D:
   serializedVersion: 4
