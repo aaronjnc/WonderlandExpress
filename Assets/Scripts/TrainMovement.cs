@@ -40,7 +40,8 @@ public class TrainMovement : MonoBehaviour
         if (GameManager.Instance.load)
         {
             nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
-            transform.position = GameManager.Instance.getTrainPosition();
+            transform.position = GameManager.Instance.GetTrainPosition();
+            transform.eulerAngles = GameManager.Instance.GetTrainRotation();
         }
         controls = new PlayerControls();
         controls.Menu.Pause.performed += Pause;
