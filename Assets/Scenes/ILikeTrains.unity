@@ -9671,7 +9671,7 @@ GameObject:
   - component: {fileID: 997957915}
   - component: {fileID: 997957916}
   m_Layer: 0
-  m_Name: Station
+  m_Name: Town
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

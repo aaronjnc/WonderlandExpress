@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private static bool applicationIsQuitting = false;
     [Tooltip("Current position of the train")]
     private Vector3 trainPosition;
+    [Tooltip("Rotation of the train")]
+    private Vector3 trainRotation;
     [Tooltip("Current Game Manager")]
     private static GameManager _instance;
     [Tooltip("Name of current stop")]
@@ -42,23 +44,33 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        Application.quitting += () => applicationIsQuitting = true;
-        SceneManager.sceneLoaded += OnSceneLoad;
         if (Instance != this)
         {
             Destroy(this.gameObject);
+            Destroy(this);
+            return;
         }
-        DontDestroyOnLoad(this);
         _instance = this;
+        DontDestroyOnLoad(this);
+        Application.quitting += () => applicationIsQuitting = true;
+        SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
     }
-    public void setTrainPosition(Vector3 pos)
+    public void SetTrainPosition(Vector3 pos)
     {
         trainPosition = pos;
     }
-    public Vector3 getTrainPosition()
+    public Vector3 GetTrainPosition()
     {
         return trainPosition;
+    }
+    public void SetTrainRotation(Vector3 rot)
+    {
+        trainRotation = rot;
+    }
+    public Vector3 GetTrainRotation()
+    {
+        return trainRotation;
     }
     public void SetCurrentStop(string stop)
     {
