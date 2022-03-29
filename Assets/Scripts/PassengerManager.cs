@@ -260,7 +260,8 @@ public class PassengerManager : MonoBehaviour
     GameObject GeneratePassenger(Town town)
     {
         float startWealth = GetTownWealth(town);
-        float wealth = UnityEngine.Random.Range(startWealth - wealthDev, startWealth + wealthDev);
+        float wealth = UnityEngine.Random.Range(.5f - wealthDev, .5f + wealthDev);
+        int gold = (int)(wealth * startWealth);
         float happiness = UnityEngine.Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
         string name = firstNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)];
         string pm = pms.ToArray()[UnityEngine.Random.Range(0, pms.ToArray().Length)];
@@ -268,7 +269,7 @@ public class PassengerManager : MonoBehaviour
         string dm = dms.ToArray()[UnityEngine.Random.Range(0, dms.ToArray().Length)];
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
-        newPass.GetComponent<Passenger>().Setup(name, wealth, happiness, destination, pm, am, dm);
+        newPass.GetComponent<Passenger>().Setup(name, gold, happiness, destination, pm, am, dm);
         DontDestroyOnLoad(newPass);
         return newPass;
 
@@ -279,7 +280,8 @@ public class PassengerManager : MonoBehaviour
     {
         float wealth = town.GetWealth();
         wealth *= wealthMod;
-        return Mathf.Max(0f, Mathf.Min(1f, wealth));
+        return wealth;
+        //return Mathf.Max(0f, Mathf.Min(1f, wealth));
     }
 
     //determines the number of passengers to come from a given town
@@ -315,11 +317,12 @@ public class PassengerManager : MonoBehaviour
         {
             Debug.Log("NewPassenger Null");
             uiMan.DisplayError("No more passengers waiting");
+            uiMan.DisplayText("");
             //Debug.Log("GameManager list size: " + currentPassNum);
             return;
         }
         Passenger pass = GetCurrentWaitingPass().GetComponent<Passenger>();
-        uiMan.DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestinationName());
+        uiMan.DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestinationName()  + "\nGold: " + pass.GetGold() + "\n" + pass.GetMessage());
     }
 
     //Accepts the current waiting passenger. Used for button interaction
@@ -407,6 +410,7 @@ public class PassengerManager : MonoBehaviour
     public void DropOffSuccess(GameObject pass)
     {
         Debug.Log("Passenger " + pass.GetComponent<Passenger>().GetName() + " successfully dropped off");
+        GetTown().AddWealth((float)pass.GetComponent<Passenger>().GetGold() / wealthMod);
         RemovePass(pass);
     }
 
