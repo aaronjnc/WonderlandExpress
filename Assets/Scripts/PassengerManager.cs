@@ -279,7 +279,6 @@ public class PassengerManager : MonoBehaviour
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
         newPass.GetComponent<Passenger>().Setup(name, gold, happiness, destination, pm, am, dm);
-        DontDestroyOnLoad(newPass);
         return newPass;
 
     }
@@ -375,6 +374,7 @@ public class PassengerManager : MonoBehaviour
     //adds the passenger at the given index from the current passenger list. Used for button interaction
     public void AddPass(GameObject pass)
     {
+        DontDestroyOnLoad(pass);
         Debug.Log("trying to add passenger");
         for(int i = 0; i < currentPass.Length; i++)
         {
