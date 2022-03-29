@@ -9,7 +9,9 @@ public class Passenger : MonoBehaviour
     [Tooltip("Passenger name")]
     public string passName;
     [Tooltip("The amount of gold a passenger will pay if you successfully transport them.")]
-    public float gold;
+    public int gold;
+    [Tooltip("The passenger's wealth, relative to their town. Used for determining wealth tier (not used yet)")]
+    public float wealth;
     [Tooltip("Passenger happiness")]
     [Range(0f, 1f)]
     public float happiness;
@@ -76,7 +78,7 @@ public class Passenger : MonoBehaviour
         happiness += diff;
     }
 
-    public float GetGold()
+    public int GetGold()
     {
         return gold;
     }

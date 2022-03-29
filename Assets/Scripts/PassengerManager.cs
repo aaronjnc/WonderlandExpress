@@ -11,6 +11,9 @@ public class PassengerManager : MonoBehaviour
     [Tooltip("UI manager for town passenger setting")]
     public TownUIManager uiMan;
 
+    [Tooltip("The town dictionary. used for finding current town")]
+    public TownDictionary townDict;
+
     [Header("Passengers")]
 
     [Tooltip("The prefab used to create passengers")]
@@ -99,7 +102,13 @@ public class PassengerManager : MonoBehaviour
         if(GameManager.Instance != null)
         {
             currentPass = GameManager.Instance.GetPassengers();
+            
         }
+        if(GameManager.Instance.GetCurrentStop() == null)
+        {
+            GameManager.Instance.SetCurrentStop(town.GetName());
+        }
+        townDict.FindCurrentTown(GameManager.Instance.GetCurrentStop());
         FindCurrentPassNum();
         waitingPass = new List<GameObject>();
         SetupTown();
@@ -300,13 +309,13 @@ public class PassengerManager : MonoBehaviour
     //gets the current town
     Town GetTown()
     {
-        return town;
+        return townDict.GetCurrentTown();
     }
 
     //gets a random town for a destination
     Town GetDestination()
     {
-        return dest;
+        return townDict.GenerateDestination();
     }
 
     //Sets up the new waiting passenger to ask for passage
@@ -322,7 +331,7 @@ public class PassengerManager : MonoBehaviour
             return;
         }
         Passenger pass = GetCurrentWaitingPass().GetComponent<Passenger>();
-        uiMan.DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestinationName()  + "\nGold: " + pass.GetGold() + "\n" + pass.GetMessage());
+        uiMan.DisplayPassText(pass);
     }
 
     //Accepts the current waiting passenger. Used for button interaction
@@ -411,6 +420,7 @@ public class PassengerManager : MonoBehaviour
     {
         Debug.Log("Passenger " + pass.GetComponent<Passenger>().GetName() + " successfully dropped off");
         GetTown().AddWealth((float)pass.GetComponent<Passenger>().GetGold() / wealthMod);
+        GameManager.Instance.AddGold(pass.GetComponent<Passenger>().GetGold());
         RemovePass(pass);
     }
 
