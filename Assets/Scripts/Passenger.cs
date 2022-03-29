@@ -8,8 +8,9 @@ public class Passenger : MonoBehaviour
     [Header("General Passenger Stats")]
     [Tooltip("Passenger name")]
     public string passName;
-    [Tooltip("Passenger wealth")]
-    [Range(0f,1f)]
+    [Tooltip("The amount of gold a passenger will pay if you successfully transport them.")]
+    public int gold;
+    [Tooltip("The passenger's wealth, relative to their town. Used for determining wealth tier (not used yet)")]
     public float wealth;
     [Tooltip("Passenger happiness")]
     [Range(0f, 1f)]
@@ -25,17 +26,20 @@ public class Passenger : MonoBehaviour
     public string denyMessage;
     [Tooltip("sprite renderer")]
     public SpriteRenderer sr;
+    //reference to the town UI manager
+    //private TownUIManager uiMan;
     // Start is called before the first frame update
     void Awake()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
         sr.enabled = false;
+        //uiMan = TownUIManager.GetManager();
     }
 
-    public void Setup(string pName, float pWealth, float pHappiness, Town pDestination, string pm, string am, string dm)
+    public void Setup(string pName, int pGold, float pHappiness, Town pDestination, string pm, string am, string dm)
     {
         passName = pName;
-        wealth = pWealth;
+        gold = pGold;
         happiness = pHappiness;
         destination = pDestination;
         passageMessage = pm;
@@ -47,18 +51,6 @@ public class Passenger : MonoBehaviour
     void Update()
     {
         
-    }
-
-    //displays accompanying UI when mousing over this passenger
-    void OnMouseOver()
-    {
-        return;
-    }
-
-    //hides accompanying UI when no longer mousing over this passenger
-    void OnMouseExit()
-    {
-        return;
     }
 
     //moves to the given position and sets the rendered to active
@@ -86,9 +78,9 @@ public class Passenger : MonoBehaviour
         happiness += diff;
     }
 
-    public float GetWealth()
+    public int GetGold()
     {
-        return wealth;
+        return gold;
     }
 
     public float GetHappiness()

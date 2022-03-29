@@ -13,6 +13,8 @@ public class Town : MonoBehaviour
     public float reputation = 30;
     [Tooltip("If the town is destroyed or not")]
     public bool destroyed = false;
+    [Tooltip("Towns that cannot be set as destinations from this town. \nUsed to prevent really long journeys for now")]
+    public List<Town> townBanList;
 
     // Start is called before the first frame update
     void Start()
@@ -74,5 +76,11 @@ public class Town : MonoBehaviour
     public bool IsDestroyed()
     {
         return destroyed;
+    }
+
+    //gets the town ban lsit
+    public List<Town> getBanList()
+    {
+        return townBanList;
     }
 }
