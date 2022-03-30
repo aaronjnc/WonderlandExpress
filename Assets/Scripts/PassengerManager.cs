@@ -12,7 +12,7 @@ public class PassengerManager : MonoBehaviour
     public TownUIManager uiMan;
 
     [Tooltip("The town dictionary. used for finding current town")]
-    public TownDictionary townDict;
+    private TownDictionary townDict;
 
     [Header("Passengers")]
 
@@ -54,7 +54,7 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("The default happiness of a passenger from 0 to 1")]
     [Range(0f, 1f)]
-    public float startHappiness = .5f;
+    public float startHappiness = .7f;
 
     [Tooltip("The maximum percentage deviation from the generated happiness value a passenger can have between 0 and .5. \neg. a passenger can be x% lower or x% higher than the general start value")]
     [Range(0f, .5f)]
@@ -108,6 +108,7 @@ public class PassengerManager : MonoBehaviour
         {
             GameManager.Instance.SetCurrentStop(town.GetName());
         }
+        townDict = TownDictionary.Instance;
         townDict.FindCurrentTown(GameManager.Instance.GetCurrentStop());
         FindCurrentPassNum();
         waitingPass = new List<GameObject>();
@@ -175,8 +176,8 @@ public class PassengerManager : MonoBehaviour
         {
             if (pass != null)
             {
-                Town destination = pass.GetComponent<Passenger>().GetDestination();
-                if (destination == town)
+                string destination = pass.GetComponent<Passenger>().GetDestination();
+                if (destination == town.GetName())
                 {
                     removed.Add(pass);
                 }
@@ -278,7 +279,7 @@ public class PassengerManager : MonoBehaviour
         string dm = dms.ToArray()[UnityEngine.Random.Range(0, dms.ToArray().Length)];
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
-        newPass.GetComponent<Passenger>().Setup(name, gold, happiness, destination, pm, am, dm);
+        newPass.GetComponent<Passenger>().Setup(name, gold, happiness, destination.GetName(), pm, am, dm);
         return newPass;
 
     }
@@ -391,7 +392,7 @@ public class PassengerManager : MonoBehaviour
 
     }
 
-    //Removes the given passenger from the current passenger list. Used for button interaction
+    //Removes the given passenger from the current passenger list. 
     public void RemovePass(GameObject pass)
     {
         int i = Array.IndexOf(currentPass, pass);
@@ -403,7 +404,14 @@ public class PassengerManager : MonoBehaviour
         RemovePass(i);
     }
 
-    //Removes the passenger at the given index from the current passenger list. Used for button interaction
+    //Forcibly removes the passenger from the given index. Used for button interaction
+    public void ForceRemovePass(int pos)
+    {
+        GetTown().RemoveRep((1 - currentPass[pos].GetComponent<Passenger>().GetHappiness() ) / repHapMod);
+        RemovePass(pos);
+    }
+
+    //Removes the passenger at the given index from the current passenger list. 
     public void RemovePass(int pos)
     {
         Debug.Log("trying to remove passenger " + pos);
@@ -420,6 +428,7 @@ public class PassengerManager : MonoBehaviour
     {
         Debug.Log("Passenger " + pass.GetComponent<Passenger>().GetName() + " successfully dropped off");
         GetTown().AddWealth((float)pass.GetComponent<Passenger>().GetGold() / wealthMod);
+        GetTown().AddRep(pass.GetComponent<Passenger>().GetHappiness() / repHapMod);
         GameManager.Instance.AddGold(pass.GetComponent<Passenger>().GetGold());
         RemovePass(pass);
     }

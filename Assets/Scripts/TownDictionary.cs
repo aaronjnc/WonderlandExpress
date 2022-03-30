@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TownDictionary : MonoBehaviour
 {
@@ -13,6 +14,26 @@ public class TownDictionary : MonoBehaviour
 
     [Tooltip("the current town")]
     public Town currentTown;
+
+    [Tooltip("Current Town Dictionary")]
+    private static TownDictionary _instance;
+
+    public static TownDictionary Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<TownDictionary>();
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject();
+                    _instance = go.AddComponent<TownDictionary>();
+                }
+            }
+            return _instance;
+        }
+    }
 
     //writes values from dictionary to two lists for things like the Inspector -- test. Don't use yet
     //void OnBeforeSerialize()
@@ -36,15 +57,30 @@ public class TownDictionary : MonoBehaviour
     //    }
     //}
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        if (Instance != this)
+        {
+            Destroy(this.gameObject);
+            Destroy(this);
+            return;
+        }
+        _instance = this;
+        DontDestroyOnLoad(this);
+        SceneManager.sceneLoaded += OnSceneLoad;
         for (int i = 0; i < townNames.Count && i < towns.Count; i++)
         {
             dict.Add(townNames[i], towns[i]);
+            //DontDestroyOnLoad(towns[i]);
 
         }
         Debug.Log(dict.Count);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     //gets the currently stored town
@@ -91,5 +127,13 @@ public class TownDictionary : MonoBehaviour
             }
         }
         return validTowns[UnityEngine.Random.Range(0, validTowns.Count)];
+    }
+
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
