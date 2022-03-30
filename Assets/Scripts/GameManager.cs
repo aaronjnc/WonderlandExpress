@@ -102,6 +102,14 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void ClearFollowTrains()
+    {
+        trainCarPos.Clear();
+        trainCarRots.Clear();
+        trainCarStops.Clear();
+    }
+
     public void AddFollowTrain(FollowTrain follow)
     {
         trainCarPos.Add(follow.transform.position);
