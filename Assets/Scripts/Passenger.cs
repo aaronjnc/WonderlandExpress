@@ -16,7 +16,7 @@ public class Passenger : MonoBehaviour
     [Range(0f, 1f)]
     public float happiness;
     [Tooltip("Passenger destination")]
-    public Town destination;
+    public string destination;
     [Header("Passenger lines")]
     [Tooltip("Passenger asking for passage")]
     public string passageMessage;
@@ -36,7 +36,7 @@ public class Passenger : MonoBehaviour
         //uiMan = TownUIManager.GetManager();
     }
 
-    public void Setup(string pName, int pGold, float pHappiness, Town pDestination, string pm, string am, string dm)
+    public void Setup(string pName, int pGold, float pHappiness, string pDestination, string pm, string am, string dm)
     {
         passName = pName;
         gold = pGold;
@@ -93,15 +93,15 @@ public class Passenger : MonoBehaviour
         return passName;
     }
 
-    public Town GetDestination()
+    public string GetDestination()
     {
         return destination;
     }
 
-    public string GetDestinationName()
-    {
-        return destination.GetName();
-    }
+    //public string GetDestinationName()
+    //{
+    //    return destination.GetName();
+    //}
 
     public string GetMessage()
     {
