@@ -133,6 +133,7 @@ public class TrainMovement : MonoBehaviour
 
     public void SaveFollowTrains()
     {
+        GameManager.Instance.ClearFollowTrains();
         for (int i = 0; i < trainCars.Count; i++)
         {
             GameManager.Instance.AddFollowTrain(trainCars[i]);
