@@ -12,6 +12,7 @@ public class StationPoint : TrackPoint
         GameManager.Instance.SetTrainRotation(TrainMovement.Instance.gameObject.transform.eulerAngles);
         GameManager.Instance.load = true;
         TrainMovement.Instance.SaveFollowTrains();
-        SceneManager.LoadScene(2);
+        if (!GameManager.Instance.trainSceneTesting)
+            SceneManager.LoadScene(2);
     }
 }

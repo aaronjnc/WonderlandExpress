@@ -33,13 +33,16 @@ public class TrainMovement : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [Tooltip("Player controls")]
     private PlayerControls controls;
-    [SerializeField] private LayerMask choiceLayer;
-    [SerializeField] private List<FollowTrain> trainCars = new List<FollowTrain>();
+    [Tooltip("Layer of track choice"), SerializeField] 
+    private LayerMask choiceLayer;
+    [Tooltip("List of following cars"), SerializeField] 
+    private List<FollowTrain> trainCars = new List<FollowTrain>();
     private void Start()
     {
         _instance = this;
         if (GameManager.Instance.load)
         {
+            TrackPoint loadPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>();
             nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
             transform.position = GameManager.Instance.GetTrainPosition();
             transform.eulerAngles = GameManager.Instance.GetTrainRotation();

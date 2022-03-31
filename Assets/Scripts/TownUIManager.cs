@@ -50,7 +50,6 @@ public class TownUIManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log("trying to raycast");
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0));
         mousePos = new Vector3(mousePos.x, mousePos.y, zOffset);
         //Vector3 cameraPos = Camera.main.transform.position;

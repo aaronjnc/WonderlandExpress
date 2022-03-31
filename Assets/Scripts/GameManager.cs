@@ -21,10 +21,16 @@ public class GameManager : MonoBehaviour
     public int maxCap = 5;
     [Tooltip("Current amount of gold")]
     public int gold = 0;
+    [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
+    [Tooltip("List of positions for follow cars")]
     private List<Vector3> trainCarPos = new List<Vector3>();
+    [Tooltip("List of rotations for follow cars")]
     private List<Vector3> trainCarRots = new List<Vector3>();
+    [Tooltip("List of next points for follow cars")]
     private List<string> trainCarStops = new List<string>();
+    [Tooltip("Disable passenger scene loading")]
+    public bool trainSceneTesting = false;
     public static GameManager Instance
     {
         get

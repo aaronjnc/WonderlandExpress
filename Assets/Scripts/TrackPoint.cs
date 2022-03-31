@@ -12,8 +12,8 @@ public abstract class TrackPoint : MonoBehaviour
     [Tooltip("This is not a stop point")]
     public bool continuous = true;
     [Tooltip("Track point has a choice"), HideInInspector] 
-    public bool trackChoice;
-    private void Start()
+    public bool trackChoice = false;
+    protected void Awake()
     {
         if (nextPoints.Length != 1)
         {
@@ -23,6 +23,10 @@ public abstract class TrackPoint : MonoBehaviour
         {
             SetChosenTrack(0);
         }
+    }
+    private void TollReached()
+    {
+
     }
     public virtual void SetChosenTrack(int i)
     {
