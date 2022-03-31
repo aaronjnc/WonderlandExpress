@@ -13316,6 +13316,8 @@ MonoBehaviour:
     m_Bits: 64
   trainCars:
   - {fileID: 177957723}
+  zoomedOut: 0
+  camTransition: {fileID: 1691787168}
 --- !u!50 &1408978672
 Rigidbody2D:
   serializedVersion: 4
@@ -15848,6 +15850,7 @@ GameObject:
   - component: {fileID: 1691787169}
   - component: {fileID: 1691787167}
   - component: {fileID: 1691787166}
+  - component: {fileID: 1691787168}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -15906,6 +15909,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1691787168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691787165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9e99e1eecc03b4ab2537054b3bf43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraSpeed: 10
+  cameraScaleSpeed: 4
+  zoomedOutPos: {x: 52.5, y: 3.6, z: -50}
+  train: {fileID: 1408978670}
 --- !u!224 &1691787169
 RectTransform:
   m_ObjectHideFlags: 0
