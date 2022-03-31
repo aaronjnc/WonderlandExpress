@@ -37,6 +37,10 @@ public class TrainMovement : MonoBehaviour
     private LayerMask choiceLayer;
     [Tooltip("List of following cars"), SerializeField] 
     private List<FollowTrain> trainCars = new List<FollowTrain>();
+    [Tooltip("Camera is zoomed out")]
+    public bool zoomedOut = false;
+    [Tooltip("Camera transition script"), SerializeField]
+    private CameraTransition camTransition;
     private void Start()
     {
         _instance = this;
@@ -53,7 +57,22 @@ public class TrainMovement : MonoBehaviour
         controls.Menu.Pause.Enable();
         controls.ClickEvents.Click.performed += Click;
         controls.ClickEvents.Click.Enable();
+        controls.ClickEvents.ZoomOut.performed += Zoom;
+        controls.ClickEvents.ZoomOut.Enable();
     }
+    private void Zoom(CallbackContext ctx)
+    {
+        if (zoomedOut)
+        {
+            camTransition.ZoomIn();
+        }
+        else
+        {
+            camTransition.ZoomOut();
+            zoomedOut = true;
+        }
+    }
+
     private void Pause(CallbackContext ctx)
     {
         if (pauseMenu.activeInHierarchy)
@@ -100,7 +119,8 @@ public class TrainMovement : MonoBehaviour
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
             }
-            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+            if (!zoomedOut)
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
         }
         else if (nextPoint.chosenNext != null)
         {
@@ -118,7 +138,8 @@ public class TrainMovement : MonoBehaviour
             transform.right = nextPoint.transform.position - transform.position;
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
-            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+            if (!zoomedOut)
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
             stopped = false;
         }
         else
