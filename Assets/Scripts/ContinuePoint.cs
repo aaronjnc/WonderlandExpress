@@ -6,6 +6,7 @@ public class ContinuePoint : TrackPoint
 {
     private void Awake()
     {
+        base.Awake();
         gameObject.name = transform.position.ToString();
     }
     public override void StopAction()

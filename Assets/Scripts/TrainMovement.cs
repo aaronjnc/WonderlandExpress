@@ -33,13 +33,20 @@ public class TrainMovement : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [Tooltip("Player controls")]
     private PlayerControls controls;
-    [SerializeField] private LayerMask choiceLayer;
-    [SerializeField] private List<FollowTrain> trainCars = new List<FollowTrain>();
+    [Tooltip("Layer of track choice"), SerializeField] 
+    private LayerMask choiceLayer;
+    [Tooltip("List of following cars"), SerializeField] 
+    private List<FollowTrain> trainCars = new List<FollowTrain>();
+    [Tooltip("Camera is zoomed out")]
+    public bool zoomedOut = false;
+    [Tooltip("Camera transition script"), SerializeField]
+    private CameraTransition camTransition;
     private void Start()
     {
         _instance = this;
         if (GameManager.Instance.load)
         {
+            TrackPoint loadPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>();
             nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
             transform.position = GameManager.Instance.GetTrainPosition();
             transform.eulerAngles = GameManager.Instance.GetTrainRotation();
@@ -50,7 +57,22 @@ public class TrainMovement : MonoBehaviour
         controls.Menu.Pause.Enable();
         controls.ClickEvents.Click.performed += Click;
         controls.ClickEvents.Click.Enable();
+        controls.ClickEvents.ZoomOut.performed += Zoom;
+        controls.ClickEvents.ZoomOut.Enable();
     }
+    private void Zoom(CallbackContext ctx)
+    {
+        if (zoomedOut)
+        {
+            camTransition.ZoomIn();
+        }
+        else
+        {
+            camTransition.ZoomOut();
+            zoomedOut = true;
+        }
+    }
+
     private void Pause(CallbackContext ctx)
     {
         if (pauseMenu.activeInHierarchy)
@@ -83,7 +105,7 @@ public class TrainMovement : MonoBehaviour
             {
                 if (currentVel == Vector3.zero)
                 {
-                    currentVel = transform.right * velocity;
+                    currentVel = -transform.up * velocity;
                 }
                 transform.position = Vector3.SmoothDamp(transform.position, nextPoint.transform.position, ref currentVel, 1, maxVelocity);
                 velocity = currentVel.magnitude;
@@ -97,7 +119,8 @@ public class TrainMovement : MonoBehaviour
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
             }
-            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+            if (!zoomedOut)
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
         }
         else if (nextPoint.chosenNext != null)
         {
@@ -112,10 +135,11 @@ public class TrainMovement : MonoBehaviour
             {
                 previousChosen.StopAction();
             }
-            transform.right = nextPoint.transform.position - transform.position;
+            transform.up = -(nextPoint.transform.position - transform.position);
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
-            Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+            if (!zoomedOut)
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
             stopped = false;
         }
         else
