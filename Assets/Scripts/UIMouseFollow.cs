@@ -51,8 +51,8 @@ public class UIMouseFollow : MonoBehaviour
     public void SetupUI(Passenger pass)
     {
         nameText.text = pass.GetName();
-        goldText.text = pass.GetGold().ToString();
-        happinessText.text = ((int)(pass.GetHappiness() * 100)).ToString();
+        goldText.text = pass.GetGold().ToString() + "g";
+        happinessText.text = ((int)(pass.GetHappiness() * 100)).ToString() + "%";
         destinationText.text = pass.GetDestination();
         MoveToMouse();
         cg.alpha = 1f;
