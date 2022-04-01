@@ -41,6 +41,7 @@ public class TrainMovement : MonoBehaviour
     public bool zoomedOut = false;
     [Tooltip("Camera transition script"), SerializeField]
     private CameraTransition camTransition;
+
     private void Start()
     {
         _instance = this;
@@ -162,5 +163,11 @@ public class TrainMovement : MonoBehaviour
         {
             GameManager.Instance.AddFollowTrain(trainCars[i]);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (controls != null)
+            controls.Disable();
     }
 }

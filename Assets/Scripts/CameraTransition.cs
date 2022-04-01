@@ -20,16 +20,18 @@ public class CameraTransition : MonoBehaviour
     private Camera cam;
     [Tooltip("Camera not zoomed in yet")]
     private bool stillZooming = false;
-    [Tooltip("Base size of camera"), SerializeField]
-    private int minZoom = 5;
+    [Tooltip("Base size of camera")]
+    private float minZoom;
     [Tooltip("Zoomed out size of camera"), SerializeField]
-    private int maxZoom = 30;
+    private float maxZoom = 30;
     private void Awake()
     {
         cam = GetComponent<Camera>();
+        minZoom = cam.orthographicSize;
     }
     public void ZoomOut()
     {
+        zoomingIn = false;
         zoomingOut = true;
         stillZooming = false;
         float dist = Vector3.Distance(transform.position, zoomedOutPos);
@@ -38,6 +40,7 @@ public class CameraTransition : MonoBehaviour
     }
     public void ZoomIn()
     {
+        zoomingOut = false;
         zoomingIn = true;
         Vector3 pos = train.position;
         pos.z = transform.position.z;
