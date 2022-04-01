@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public int maxCap = 5;
     [Tooltip("Current amount of gold")]
     public int gold = 0;
+    [Tooltip("Next toll price")]
+    public int tollPrice = 50;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
     [Tooltip("List of positions for follow cars")]
@@ -131,5 +133,32 @@ public class GameManager : MonoBehaviour
             followers[i].transform.eulerAngles = trainCarRots[i];
             followers[i].SetNextPoint(trainCarStops[i]);
         }
+    }
+
+    //checks the toll against the current gold, 
+    //returns true and removes toll cost from gold if gold > toll
+    //returns false otherwise
+    public bool CheckToll()
+    {
+        Debug.Log("CHecking toll");
+        if(gold >= tollPrice)
+        {
+            Debug.Log("Toll good");
+            gold -= tollPrice;
+            return true;
+        }
+        Debug.Log("Toll bad");
+        return false;
+    }
+
+    //multiplies toll by the given value
+    public void IncreaseToll(float mod)
+    {
+        tollPrice = (int)(tollPrice * mod);
+    }
+
+    public int GetToll()
+    {
+        return tollPrice;
     }
 }
