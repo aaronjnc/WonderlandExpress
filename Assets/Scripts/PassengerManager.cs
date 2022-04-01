@@ -166,7 +166,7 @@ public class PassengerManager : MonoBehaviour
     {
         uiMan.DisplayTown(GetTown());
         uiMan.DisplayGold(GameManager.Instance.GetGold());
-        //uiMan.DisplayToll();
+        uiMan.DisplayToll(GameManager.Instance.GetToll());
     }
 
     //What to do when leaving the town
