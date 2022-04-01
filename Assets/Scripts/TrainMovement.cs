@@ -105,7 +105,7 @@ public class TrainMovement : MonoBehaviour
             {
                 if (currentVel == Vector3.zero)
                 {
-                    currentVel = transform.right * velocity;
+                    currentVel = -transform.up * velocity;
                 }
                 transform.position = Vector3.SmoothDamp(transform.position, nextPoint.transform.position, ref currentVel, 1, maxVelocity);
                 velocity = currentVel.magnitude;
@@ -135,7 +135,7 @@ public class TrainMovement : MonoBehaviour
             {
                 previousChosen.StopAction();
             }
-            transform.right = nextPoint.transform.position - transform.position;
+            transform.up = -(nextPoint.transform.position - transform.position);
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
             if (!zoomedOut)
