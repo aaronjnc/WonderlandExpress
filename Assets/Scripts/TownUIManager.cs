@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using TMPro;
 
 public class TownUIManager : MonoBehaviour
 {
@@ -17,6 +18,15 @@ public class TownUIManager : MonoBehaviour
 
     [Tooltip("The Text space used for showing 'error' messages (train is full, must remove passenger, etc.)")]
     public Text errorText;
+
+    [Tooltip("The Text space used for showing town name")]
+    public TextMeshProUGUI townNameText;
+
+    [Tooltip("The Text space used for showing current gold")]
+    public TextMeshProUGUI goldText;
+
+    [Tooltip("The Text space used for showing the next toll price")]
+    public TextMeshProUGUI tollText;
 
     [Tooltip("All of the remove buttons used for the passengers. Must be listed in order from right to left")]
     public List<GameObject> removeButtons;
@@ -93,6 +103,43 @@ public class TownUIManager : MonoBehaviour
         }
 
     }
+
+    public void DisplayTown(Town t)
+    {
+        townNameText.text = t.GetName();
+    }
+
+    public void DisplayTown(string tName)
+    {
+        townNameText.text = tName;
+    }
+
+    public void DisplayGold(int g)
+    {
+        goldText.text = "Gold: " + g + "g";
+    }
+
+    public void DisplayToll(int t)
+    {
+        tollText.text = "Toll Price: " + t + "g";
+    }
+
+    //not needed yet. but will format gold to show a reasonable number if values get too high.
+    //public string formatGold(int gold)
+    //{
+        //if(gold > 1000000000)
+        //{
+        //    return ((float)gold) / 100
+        //}
+        //else if(gold > 1000000)
+        //{
+
+        //}
+        //else if(gold > 1000)
+        //{
+
+    //  }
+    //}
 
     public static TownUIManager GetManager()
     {

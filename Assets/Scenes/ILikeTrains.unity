@@ -6819,9 +6819,9 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1878778381}
   chosenNext: {fileID: 0}
-  continuous: 1
+  continuous: 0
   trackChoice: 0
-  tollCost: 5
+  tollMod: 1.2
   endGame: {fileID: 1392595841}
 --- !u!1 &594188144
 GameObject:
@@ -18157,7 +18157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9e99e1eecc03b4ab2537054b3bf43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 10
+  cameraSpeed: 20
   zoomedOutPos: {x: 52.5, y: 3.6, z: -10}
   train: {fileID: 1408978670}
   minZoom: 5
@@ -22686,8 +22686,9 @@ MonoBehaviour:
   passengers: []
   maxCap: 5
   gold: 0
+  tollPrice: 30
   load: 0
-  trainSceneTesting: 0
+  trainSceneTesting: 1
 --- !u!4 &2063867794
 Transform:
   m_ObjectHideFlags: 0

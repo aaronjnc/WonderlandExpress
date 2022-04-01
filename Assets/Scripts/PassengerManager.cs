@@ -150,6 +150,7 @@ public class PassengerManager : MonoBehaviour
     //Sets up a new town's display
     void SetupTown()
     {
+        SetupTownUI();
         PassActive();
         CheckPassengerDestination();
         GeneratePassengers();
@@ -158,6 +159,14 @@ public class PassengerManager : MonoBehaviour
         //Debug.Log("list length: " + waitingPass.Count);
         NewPassenger();
         //Debug.Log("list length: " + waitingPass.Count);
+    }
+
+    //sets up the town ui
+    void SetupTownUI()
+    {
+        uiMan.DisplayTown(GetTown());
+        uiMan.DisplayGold(GameManager.Instance.GetGold());
+        //uiMan.DisplayToll();
     }
 
     //What to do when leaving the town
@@ -430,6 +439,7 @@ public class PassengerManager : MonoBehaviour
         GetTown().AddWealth((float)pass.GetComponent<Passenger>().GetGold() / wealthMod);
         GetTown().AddRep(pass.GetComponent<Passenger>().GetHappiness() / repHapMod);
         GameManager.Instance.AddGold(pass.GetComponent<Passenger>().GetGold());
+        uiMan.DisplayGold(GameManager.Instance.GetGold());
         RemovePass(pass);
     }
 
