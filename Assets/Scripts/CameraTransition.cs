@@ -10,8 +10,6 @@ public class CameraTransition : MonoBehaviour
     private float cameraScaleSpeed;
     [Tooltip("Zoomed Out Camera Position"), SerializeField]
     private Vector3 zoomedOutPos;
-    [Tooltip("Base height of camera")]
-    private float cameraStartHeight;
     [Tooltip("Camera is zooming out")]
     private bool zoomingOut = false;
     [Tooltip("Camera is zooming in")]
@@ -20,51 +18,65 @@ public class CameraTransition : MonoBehaviour
     private Transform train;
     [Tooltip("Camera object")]
     private Camera cam;
+    [Tooltip("Camera not zoomed in yet")]
+    private bool stillZooming = false;
+    [Tooltip("Base size of camera"), SerializeField]
+    private int minZoom = 5;
+    [Tooltip("Zoomed out size of camera"), SerializeField]
+    private int maxZoom = 30;
     private void Awake()
     {
         cam = GetComponent<Camera>();
-        cameraStartHeight = transform.position.z;
     }
     public void ZoomOut()
     {
         zoomingOut = true;
+        stillZooming = false;
         float dist = Vector3.Distance(transform.position, zoomedOutPos);
         float time = Mathf.Abs(dist) / cameraSpeed;
-        cameraScaleSpeed = 25 / time;
+        cameraScaleSpeed = (maxZoom - minZoom) / time;
     }
     public void ZoomIn()
     {
         zoomingIn = true;
         Vector3 pos = train.position;
-        pos.z = cameraStartHeight;
+        pos.z = transform.position.z;
         float dist = Vector3.Distance(pos, zoomedOutPos);
         float time = Mathf.Abs(dist) / cameraSpeed;
-        cameraScaleSpeed = 20 / time;
+        cameraScaleSpeed = (maxZoom - minZoom) / time;
     }
     private void FixedUpdate()
     {
         if (zoomingOut)
         {
             transform.position = Vector3.MoveTowards(transform.position, zoomedOutPos, cameraSpeed*Time.deltaTime);
-            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + cameraScaleSpeed * Time.deltaTime, cam.orthographicSize, 30);
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + cameraScaleSpeed * Time.deltaTime, cam.orthographicSize, maxZoom);
             if (Vector3.Distance(transform.position, zoomedOutPos) < .001)
             {
-                cam.orthographicSize = 30;
+                transform.position = zoomedOutPos;
+                cam.orthographicSize = maxZoom;
                 zoomingOut = false;
             }
         }
         else if (zoomingIn)
         {
             Vector3 pos = train.position;
-            pos.z = cameraStartHeight;
+            pos.z = transform.position.z;
             transform.position = Vector3.MoveTowards(transform.position, pos, cameraSpeed * Time.deltaTime);
-            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - cameraScaleSpeed * Time.deltaTime, 5, 30);
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - cameraScaleSpeed * Time.deltaTime, minZoom, cam.orthographicSize);
             if (Vector3.Distance(transform.position, pos) < .01)
             {
-                cam.orthographicSize = 5;
+                if (cam.orthographicSize != minZoom)
+                    stillZooming = true;
                 zoomingIn = false;
                 TrainMovement.Instance.zoomedOut = false;
             }
+        }
+        else if (stillZooming)
+        {
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - cameraScaleSpeed * Time.deltaTime, minZoom, cam.orthographicSize);
+            if (cam.orthographicSize == minZoom)
+                stillZooming = false;
         }
     }
 }
