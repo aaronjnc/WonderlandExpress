@@ -14,10 +14,10 @@ public class TownUIManager : MonoBehaviour
     [Header("UI pieces")]
 
     [Tooltip("The Text space used for showing the passenger messages")]
-    public Text passMessageText;
+    public TextMeshProUGUI passMessageText;
 
     [Tooltip("The Text space used for showing 'error' messages (train is full, must remove passenger, etc.)")]
-    public Text errorText;
+    public TextMeshProUGUI errorText;
 
     [Tooltip("The Text space used for showing town name")]
     public TextMeshProUGUI townNameText;
