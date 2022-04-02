@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     private List<string> trainCarStops = new List<string>();
     [Tooltip("Disable passenger scene loading")]
     public bool trainSceneTesting = false;
+    [Tooltip("TrainUIInfo"), SerializeField]
+    private TrainUIInfo trainUIInfo;
+    public delegate void OnTollChange(int newToll, int newGold);
+    public event OnTollChange TollChangeEvent;
     public static GameManager Instance
     {
         get
@@ -140,11 +144,13 @@ public class GameManager : MonoBehaviour
     //returns false otherwise
     public bool CheckToll()
     {
-        Debug.Log("CHecking toll");
+        Debug.Log("Checking toll");
         if(gold >= tollPrice)
         {
             Debug.Log("Toll good");
             gold -= tollPrice;
+            if (TollChangeEvent != null)
+                TollChangeEvent(tollPrice, gold);
             return true;
         }
         Debug.Log("Toll bad");
@@ -155,6 +161,8 @@ public class GameManager : MonoBehaviour
     public void IncreaseToll(float mod)
     {
         tollPrice = (int)(tollPrice * mod);
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, gold);
     }
 
     public int GetToll()
