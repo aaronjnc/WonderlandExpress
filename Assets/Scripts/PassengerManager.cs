@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PassengerManager : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("UI manager for town passenger setting")]
     public TownUIManager uiMan;
+
+    [Tooltip("The town dictionary. used for finding current town")]
+    private TownDictionary townDict;
 
     [Header("Passengers")]
 
@@ -27,10 +32,13 @@ public class PassengerManager : MonoBehaviour
     public Vector3 waitingOffset = new Vector3(-1f, -.5f, 0f);
 
     [Tooltip("Passengers currently on the train")]
-    public List<GameObject> currentPass;
+    public GameObject[] currentPass;
 
     [Tooltip("maximum number of passengers on the train")]
     public int trainCap = 5;
+
+    [Tooltip("the current number of passengers on the train")]
+    public int currentPassNum;
 
     [Tooltip("Passengers waiting to get on the train")]
     public List<GameObject> waitingPass;
@@ -46,7 +54,7 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("The default happiness of a passenger from 0 to 1")]
     [Range(0f, 1f)]
-    public float startHappiness = .5f;
+    public float startHappiness = .7f;
 
     [Tooltip("The maximum percentage deviation from the generated happiness value a passenger can have between 0 and .5. \neg. a passenger can be x% lower or x% higher than the general start value")]
     [Range(0f, .5f)]
@@ -91,6 +99,18 @@ public class PassengerManager : MonoBehaviour
     void Start()
     {
         //currentPass = new List<GameObject>();
+        if(GameManager.Instance != null)
+        {
+            currentPass = GameManager.Instance.GetPassengers();
+            
+        }
+        if(GameManager.Instance.GetCurrentStop() == null)
+        {
+            GameManager.Instance.SetCurrentStop(town.GetName());
+        }
+        townDict = TownDictionary.Instance;
+        townDict.FindCurrentTown(GameManager.Instance.GetCurrentStop());
+        FindCurrentPassNum();
         waitingPass = new List<GameObject>();
         SetupTown();
     }
@@ -116,7 +136,10 @@ public class PassengerManager : MonoBehaviour
     {
         foreach(GameObject pass in currentPass)
         {
-            pass.GetComponent<Passenger>().Hide();
+            if (pass != null)
+            {
+                pass.GetComponent<Passenger>().Hide();
+            }
         }
         foreach(GameObject pass in waitingPass)
         {
@@ -127,6 +150,8 @@ public class PassengerManager : MonoBehaviour
     //Sets up a new town's display
     void SetupTown()
     {
+        SetupTownUI();
+        PassActive();
         CheckPassengerDestination();
         GeneratePassengers();
         //Debug.Log("list length: " + waitingPass.Count);
@@ -136,6 +161,21 @@ public class PassengerManager : MonoBehaviour
         //Debug.Log("list length: " + waitingPass.Count);
     }
 
+    //sets up the town ui
+    void SetupTownUI()
+    {
+        uiMan.DisplayTown(GetTown());
+        uiMan.DisplayGold(GameManager.Instance.GetGold());
+        uiMan.DisplayToll(GameManager.Instance.GetToll());
+    }
+
+    //What to do when leaving the town
+    public void LeaveTown()
+    {
+        PassInactive();
+        uiMan.SwitchScene();
+    }
+
     //checks all current passengers and removes all passengers who have reached their destination
     void CheckPassengerDestination()
     {
@@ -143,15 +183,42 @@ public class PassengerManager : MonoBehaviour
         Town town = GetTown();
         foreach (GameObject pass in currentPass)
         {
-            Town destination = pass.GetComponent<Passenger>().GetDestination();
-            if(destination == town)
+            if (pass != null)
             {
-                removed.Add(pass);
+                string destination = pass.GetComponent<Passenger>().GetDestination();
+                if (destination == town.GetName())
+                {
+                    removed.Add(pass);
+                }
             }
         }
         foreach(GameObject pass in removed)
         {
             DropOffSuccess(pass);
+        }
+    }
+
+    //sets all current passengers to active
+    void PassActive()
+    {
+        foreach (GameObject pass in currentPass)
+        {
+            if (pass != null)
+            {
+                pass.SetActive(true);
+            }
+        }
+    }
+
+    //set all current passengers to inactive
+    public void PassInactive()
+    {
+        foreach (GameObject pass in currentPass)
+        {
+            if (pass != null)
+            {
+                pass.SetActive(false);
+            }
         }
     }
 
@@ -172,10 +239,13 @@ public class PassengerManager : MonoBehaviour
         Vector3 displayPos = passLoc.transform.position;
         foreach(GameObject pass in currentPass)
         {
-            pass.GetComponent<Passenger>().Display(displayPos);
+            if (pass != null)
+            {
+                pass.GetComponent<Passenger>().Display(displayPos);
+            }
             displayPos += passOffset;
         }
-        uiMan.SetupButtons(currentPass.Count);
+        uiMan.SetupButtons(currentPass);
     }
 
     //displays all currently waiting passengers
@@ -209,15 +279,16 @@ public class PassengerManager : MonoBehaviour
     GameObject GeneratePassenger(Town town)
     {
         float startWealth = GetTownWealth(town);
-        float wealth = Random.Range(startWealth - wealthDev, startWealth + wealthDev);
-        float happiness = Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
-        string name = firstNames.ToArray()[Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[Random.Range(0, firstNames.ToArray().Length)];
-        string pm = pms.ToArray()[Random.Range(0, pms.ToArray().Length)];
-        string am = ams.ToArray()[Random.Range(0, ams.ToArray().Length)]; 
-        string dm = dms.ToArray()[Random.Range(0, dms.ToArray().Length)];
+        float wealth = UnityEngine.Random.Range(.5f - wealthDev, .5f + wealthDev);
+        int gold = (int)(wealth * startWealth);
+        float happiness = UnityEngine.Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
+        string name = firstNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)];
+        string pm = pms.ToArray()[UnityEngine.Random.Range(0, pms.ToArray().Length)];
+        string am = ams.ToArray()[UnityEngine.Random.Range(0, ams.ToArray().Length)]; 
+        string dm = dms.ToArray()[UnityEngine.Random.Range(0, dms.ToArray().Length)];
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
-        newPass.GetComponent<Passenger>().Setup(name, wealth, happiness, destination, pm, am, dm);
+        newPass.GetComponent<Passenger>().Setup(name, gold, happiness, destination.GetName(), pm, am, dm);
         return newPass;
 
     }
@@ -227,7 +298,8 @@ public class PassengerManager : MonoBehaviour
     {
         float wealth = town.GetWealth();
         wealth *= wealthMod;
-        return Mathf.Max(0f, Mathf.Min(1f, wealth));
+        return wealth;
+        //return Mathf.Max(0f, Mathf.Min(1f, wealth));
     }
 
     //determines the number of passengers to come from a given town
@@ -246,13 +318,13 @@ public class PassengerManager : MonoBehaviour
     //gets the current town
     Town GetTown()
     {
-        return town;
+        return townDict.GetCurrentTown();
     }
 
     //gets a random town for a destination
     Town GetDestination()
     {
-        return dest;
+        return townDict.GenerateDestination();
     }
 
     //Sets up the new waiting passenger to ask for passage
@@ -263,10 +335,12 @@ public class PassengerManager : MonoBehaviour
         {
             Debug.Log("NewPassenger Null");
             uiMan.DisplayError("No more passengers waiting");
+            uiMan.DisplayText("");
+            //Debug.Log("GameManager list size: " + currentPassNum);
             return;
         }
         Passenger pass = GetCurrentWaitingPass().GetComponent<Passenger>();
-        uiMan.DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestinationName());
+        uiMan.DisplayPassText(pass);
     }
 
     //Accepts the current waiting passenger. Used for button interaction
@@ -280,14 +354,14 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("No passengers to accept");
             return;
         }
-        if (currentPass.Count >= trainCap)
+        if (currentPassNum >= trainCap)
         {
             uiMan.DisplayError("Tried to add past train max capacity. Should not add");
             return;
         }
         //Debug.Log("accept: list length: " + waitingPass.Count);
         waitingPass.Remove(pass);
-        currentPass.Add(pass);
+        AddPass(pass);
         DisplayAllPass();
         NewPassenger();
     }
@@ -307,31 +381,79 @@ public class PassengerManager : MonoBehaviour
         Destroy(pass);
     }
 
-    //Removes the given passenger from the current passenger list. Used for button interaction
+    //adds the passenger at the given index from the current passenger list. Used for button interaction
+    public void AddPass(GameObject pass)
+    {
+        DontDestroyOnLoad(pass);
+        Debug.Log("trying to add passenger");
+        for(int i = 0; i < currentPass.Length; i++)
+        {
+            if(currentPass[i] == null)
+            {
+                currentPass[i] = pass;
+                currentPassNum++;
+                return;
+            } 
+        }
+        Debug.LogWarning("could not find open space to add passenger. Should not have been allowed to add");
+        
+        //RemovePass(currentPass[pos]);
+
+    }
+
+    //Removes the given passenger from the current passenger list. 
     public void RemovePass(GameObject pass)
     {
-        if (!currentPass.Contains(pass))
+        int i = Array.IndexOf(currentPass, pass);
+        if (i < 0)
         {
             Debug.LogWarning("tried to remove nonexistant passenger");
             return;
         }
-        currentPass.Remove(pass);
-        DisplayPass();
-        Destroy(pass);
+        RemovePass(i);
     }
 
-    //Removes the passenger at the given index from the current passenger list. Used for button interaction
+    //Forcibly removes the passenger from the given index. Used for button interaction
+    public void ForceRemovePass(int pos)
+    {
+        GetTown().RemoveRep((1 - currentPass[pos].GetComponent<Passenger>().GetHappiness() ) / repHapMod);
+        RemovePass(pos);
+    }
+
+    //Removes the passenger at the given index from the current passenger list. 
     public void RemovePass(int pos)
     {
         Debug.Log("trying to remove passenger " + pos);
-        RemovePass(currentPass[pos]);
+        Destroy(currentPass[pos]);
+        currentPass[pos] = null;
+        currentPassNum--;
+        DisplayPass();
+        //RemovePass(currentPass[pos]);
         
     }
 
     //what to do when you successfully drop off a passenger at the correct location
     public void DropOffSuccess(GameObject pass)
     {
-        currentPass.Remove(pass);
+        Debug.Log("Passenger " + pass.GetComponent<Passenger>().GetName() + " successfully dropped off");
+        GetTown().AddWealth((float)pass.GetComponent<Passenger>().GetGold() / wealthMod);
+        GetTown().AddRep(pass.GetComponent<Passenger>().GetHappiness() / repHapMod);
+        GameManager.Instance.AddGold(pass.GetComponent<Passenger>().GetGold());
+        uiMan.DisplayGold(GameManager.Instance.GetGold());
+        RemovePass(pass);
     }
 
+    //Get the number of passengers currently on the train
+    void FindCurrentPassNum()
+    {
+        int numPass = 0;
+        foreach(GameObject p in currentPass)
+        {
+            if(p != null)
+            {
+                numPass++;
+            }
+        }
+        currentPassNum = numPass;
+    }
 }

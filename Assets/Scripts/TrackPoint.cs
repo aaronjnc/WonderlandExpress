@@ -3,41 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TrackPoint : MonoBehaviour
+public abstract class TrackPoint : MonoBehaviour
 {
-    public TrackPoint[] nextPoints;
-    [HideInInspector]
+    [Tooltip("Next points in track"), SerializeField]
+    protected TrackPoint[] nextPoints;
+    [Tooltip("Next point in track"), HideInInspector]
     public TrackPoint chosenNext;
-    public enum PointType
+    [Tooltip("This is not a stop point")]
+    public bool continuous = true;
+    [Tooltip("Track point has a choice"), HideInInspector] 
+    public bool trackChoice = false;
+    protected void Awake()
     {
-        Continue,
-        Station,
-        Choice,
-        Toll,
-    }
-    public PointType trackPointType;
-    private void Start()
-    {
-        if (trackPointType != PointType.Choice)
+        if (nextPoints.Length != 1)
         {
-            SetCurrent(0);
+            trackChoice = true;
+        }
+        if (!trackChoice)
+        {
+            SetChosenTrack(0);
         }
     }
-    public void SetCurrent(int i)
+    private void TollReached()
+    {
+
+    }
+    public virtual void SetChosenTrack(int i)
     {
         chosenNext = nextPoints[i];
     }
-    public void TollStop(GameObject train)
-    {
-        //reduce train money by cost of toll
-        //fail if not enough money
-    }
-    public void StationStop(GameObject train)
-    {
-        GameManager.Instance.setTrainPosition(train.transform.position);
-        GameManager.Instance.SetCurrentStop(gameObject.name);
-        SceneManager.LoadScene(1);
-    }
+    public abstract void StopAction();
+
     private void OnDrawGizmos()
     {
         if (nextPoints == null)

@@ -1,39 +1,91 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Application is quitting")]
+    private static bool applicationIsQuitting = false;
     [Tooltip("Current position of the train")]
     private Vector3 trainPosition;
+    [Tooltip("Rotation of the train")]
+    private Vector3 trainRotation;
     [Tooltip("Current Game Manager")]
     private static GameManager _instance;
     [Tooltip("Name of current stop")]
     private string currentStop;
+    [Tooltip("List of current Passengers")]
+    public GameObject[] passengers;
+    [Tooltip("Max number of passengers")]
+    public int maxCap = 5;
+    [Tooltip("Current amount of gold")]
+    public int gold = 0;
+    [Tooltip("Next toll price")]
+    public int tollPrice = 50;
+    [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
+    [Tooltip("List of positions for follow cars")]
+    private List<Vector3> trainCarPos = new List<Vector3>();
+    [Tooltip("List of rotations for follow cars")]
+    private List<Vector3> trainCarRots = new List<Vector3>();
+    [Tooltip("List of next points for follow cars")]
+    private List<string> trainCarStops = new List<string>();
+    [Tooltip("Disable passenger scene loading")]
+    public bool trainSceneTesting = false;
+    [Tooltip("TrainUIInfo"), SerializeField]
+    private TrainUIInfo trainUIInfo;
+    public delegate void OnTollChange(int newToll, int newGold);
+    public event OnTollChange TollChangeEvent;
     public static GameManager Instance
     {
         get
         {
+            if (applicationIsQuitting)
+            {
+                return null;
+            }
             if (_instance == null)
             {
-                Debug.Log("Game Manager is null");
+                _instance = FindObjectOfType<GameManager>();
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject();
+                    _instance = go.AddComponent<GameManager>();
+                }
             }
             return _instance;
         }
     }
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (Instance != this)
+        {
+            Destroy(this.gameObject);
+            Destroy(this);
+            return;
+        }
         _instance = this;
+        DontDestroyOnLoad(this);
+        Application.quitting += () => applicationIsQuitting = true;
+        SceneManager.sceneLoaded += OnSceneLoad;
+        passengers = new GameObject[maxCap];
     }
-    public void setTrainPosition(Vector3 pos)
+    public void SetTrainPosition(Vector3 pos)
     {
         trainPosition = pos;
     }
-    public Vector3 getTrainPosition()
+    public Vector3 GetTrainPosition()
     {
         return trainPosition;
+    }
+    public void SetTrainRotation(Vector3 rot)
+    {
+        trainRotation = rot;
+    }
+    public Vector3 GetTrainRotation()
+    {
+        return trainRotation;
     }
     public void SetCurrentStop(string stop)
     {
@@ -42,5 +94,79 @@ public class GameManager : MonoBehaviour
     public string GetCurrentStop()
     {
         return currentStop;
+    }
+    public int GetGold()
+    {
+        return gold;
+    }
+    public void AddGold(int amt)
+    {
+        gold += amt;
+    }
+    public GameObject[] GetPassengers()
+    {
+        return passengers;
+    }
+    private void OnSceneLoad(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex == 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void ClearFollowTrains()
+    {
+        trainCarPos.Clear();
+        trainCarRots.Clear();
+        trainCarStops.Clear();
+    }
+
+    public void AddFollowTrain(FollowTrain follow)
+    {
+        trainCarPos.Add(follow.transform.position);
+        trainCarRots.Add(follow.transform.eulerAngles);
+        trainCarStops.Add(follow.nextPoint.name);
+    }
+
+    public void LoadFollowTrain(List<FollowTrain> followers)
+    {
+        for (int i = 0; i < followers.Count; i++)
+        {
+            followers[i].transform.position = trainCarPos[i];
+            followers[i].transform.eulerAngles = trainCarRots[i];
+            followers[i].SetNextPoint(trainCarStops[i]);
+        }
+    }
+
+    //checks the toll against the current gold, 
+    //returns true and removes toll cost from gold if gold > toll
+    //returns false otherwise
+    public bool CheckToll()
+    {
+        Debug.Log("Checking toll");
+        if(gold >= tollPrice)
+        {
+            Debug.Log("Toll good");
+            gold -= tollPrice;
+            if (TollChangeEvent != null)
+                TollChangeEvent(tollPrice, gold);
+            return true;
+        }
+        Debug.Log("Toll bad");
+        return false;
+    }
+
+    //multiplies toll by the given value
+    public void IncreaseToll(float mod)
+    {
+        tollPrice = (int)(tollPrice * mod);
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, gold);
+    }
+
+    public int GetToll()
+    {
+        return tollPrice;
     }
 }
