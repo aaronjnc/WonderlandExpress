@@ -31,6 +31,15 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("All of the remove buttons used for the passengers. Must be listed in order from right to left")]
     public List<GameObject> removeButtons;
 
+    [Tooltip("The accept button")]
+    public Button acceptButton;
+
+    [Tooltip("The deny button")]
+    public Button denyButton;
+
+    [Tooltip("The leave button")]
+    public Button leaveButton;
+
     [Tooltip("The default remove button prefab to be used. Not yet used.")]
     public GameObject removeButton;
 
@@ -179,5 +188,17 @@ public class TownUIManager : MonoBehaviour
     public void HidePassengerStats()
     {
         passengerStats.SetActive(false);
+    }
+
+    //sets whether or not the buttons are interactable
+    public void CanInteract(bool ci)
+    {
+        acceptButton.interactable = ci;
+        denyButton.interactable = ci;
+        leaveButton.interactable = ci;
+        foreach(GameObject b in removeButtons)
+        {
+            b.GetComponent<Button>().interactable = ci;
+        }
     }
 }
