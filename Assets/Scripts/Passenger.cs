@@ -32,7 +32,15 @@ public class Passenger : MonoBehaviour
     [Tooltip("sprite renderer")]
     public SpriteRenderer sr;
     [Header("Movement Stats")]
+    [Tooltip("speed at which the passenger moves")]
     public double speed = .05;
+    [Tooltip("max distance for any given bounce")]
+    public float bounceDist = .4f;
+    //[Tooltip("Height of each bounce")]
+    //public float bounceHeight = .1f;
+    [Tooltip("how far to the side they can tilt on each bounce")]
+    public float tiltAngle = 30f;
+
     //reference to the town UI manager
     //private TownUIManager uiMan;
     // Start is called before the first frame update
@@ -180,19 +188,44 @@ public class Passenger : MonoBehaviour
     //move to the designated location
     public async Task MoveTo(Vector3 pos)
     {
+        //determine stats for the bouncing step animation.
+        float bounceHeight = UnityEngine.Random.Range(0.2f, 0.5f);
+        float distance = 0;
+        float totalDist = (pos - transform.position).magnitude;
+        int bounceCount = (int)(totalDist / bounceDist);
+        float period = totalDist / (float)bounceCount;
+        Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
+        Debug.Log("bounce height: " + bounceHeight);
+
+
+        Vector3 travelPos = transform.position;
         Debug.Log("start movement: " + speed);
-        while(transform.position != pos)
+        while(travelPos != pos)
         {
-            Debug.Log((pos - transform.position).magnitude);
-            if((pos - transform.position).magnitude <= speed)
+            //Debug.Log((pos - travelPos).magnitude);
+            if((pos - travelPos).magnitude <= speed)
             {
                 Debug.Log("almost done");
+                travelPos = pos;
                 transform.position = pos;
+                transform.eulerAngles = Vector3.zero;
             }
             else
             {
                 //Debug.Log("moving " + ((pos - transform.position).normalized).magnitude + ", " + speed);
-                transform.position += (pos - transform.position).normalized * (float)speed;
+                
+
+                travelPos += (pos - travelPos).normalized * (float)speed;
+
+                distance += (float)speed;
+                float bounceOffset = bounceHeight / 2 * -Mathf.Cos(((2 * Mathf.PI) / period) * distance) + bounceHeight / 2;
+                float angleOffset = tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance); 
+
+                transform.position = travelPos + new Vector3(0, bounceOffset, 0);
+
+                transform.eulerAngles = new Vector3(0f, 0f, angleOffset);
+                //Debug.DrawRay(travelPos, pos, Color.red, .1f);
+                //Debug.DrawRay(transform.position, travelPos, Color.green, .1f);
             }
             await Task.Yield();
         }
