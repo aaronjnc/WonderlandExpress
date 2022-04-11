@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 using TMPro;
+using System.Threading.Tasks;
 
 public class TownUIManager : MonoBehaviour
 {
@@ -25,11 +26,23 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("The Text space used for showing current gold")]
     public TextMeshProUGUI goldText;
 
+    [Tooltip("The Text space used for showing increases in gold")]
+    public TextMeshProUGUI goldIncrementText;
+
     [Tooltip("The Text space used for showing the next toll price")]
     public TextMeshProUGUI tollText;
 
     [Tooltip("All of the remove buttons used for the passengers. Must be listed in order from right to left")]
     public List<GameObject> removeButtons;
+
+    [Tooltip("The accept button")]
+    public Button acceptButton;
+
+    [Tooltip("The deny button")]
+    public Button denyButton;
+
+    [Tooltip("The leave button")]
+    public Button leaveButton;
 
     [Tooltip("The default remove button prefab to be used. Not yet used.")]
     public GameObject removeButton;
@@ -46,6 +59,12 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("camera z offset for detecting object")]
     public float camOffset = -10f;
 
+    [Tooltip("whether the ui can be interacted with or not")]
+    public bool interact = true;
+
+    [Tooltip("the rate that number tick up at per frame")]
+    public int tickRate = 1;
+
     //instance of TownUIManager
     private static TownUIManager Instance;
 
@@ -56,28 +75,44 @@ public class TownUIManager : MonoBehaviour
             Destroy(this);
         }
         Instance = this;
+        passMessageText.text = "";
+        errorText.text = "";
+        townNameText.text = "";
+        goldText.text = "";
+        goldIncrementText.text = "";
+        tollText.text = "";
     }
 
     void FixedUpdate()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0));
-        mousePos = new Vector3(mousePos.x, mousePos.y, zOffset);
-        //Vector3 cameraPos = Camera.main.transform.position;
-        Vector3 cameraPos = new Vector3(mousePos.x, mousePos.y, camOffset);
-        //Debug.Log("mouse: " + mousePos);
-        RaycastHit2D hit = Physics2D.Raycast(cameraPos, (mousePos - cameraPos) * 100, Mathf.Infinity);
-        Debug.DrawRay(cameraPos, (mousePos - cameraPos) * 100, Color.red, 0.1f);
-        if ( hit.collider != null )
+        if (interact)
         {
-            //Debug.Log("Hit " + hit.collider.gameObject);
-            GameObject obj = hit.collider.gameObject;
-            Passenger pass = obj.GetComponent<Passenger>();
-            if(pass != null)
+
+
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0));
+            mousePos = new Vector3(mousePos.x, mousePos.y, zOffset);
+            //Vector3 cameraPos = Camera.main.transform.position;
+            Vector3 cameraPos = new Vector3(mousePos.x, mousePos.y, camOffset);
+            //Debug.Log("mouse: " + mousePos);
+            RaycastHit2D hit = Physics2D.Raycast(cameraPos, (mousePos - cameraPos) * 100, Mathf.Infinity);
+            Debug.DrawRay(cameraPos, (mousePos - cameraPos) * 100, Color.red, 0.1f);
+            if (hit.collider != null)
             {
-                if(currentPassDisplay != pass)
+                //Debug.Log("Hit " + hit.collider.gameObject);
+                GameObject obj = hit.collider.gameObject;
+                Passenger pass = obj.GetComponent<Passenger>();
+                if (pass != null)
                 {
-                    currentPassDisplay = pass;
-                    ShowPassengerStats(pass);
+                    if (currentPassDisplay != pass)
+                    {
+                        currentPassDisplay = pass;
+                        ShowPassengerStats(pass);
+                    }
+                }
+                else
+                {
+                    HidePassengerStats();
+                    currentPassDisplay = null;
                 }
             }
             else
@@ -85,11 +120,6 @@ public class TownUIManager : MonoBehaviour
                 HidePassengerStats();
                 currentPassDisplay = null;
             }
-        }
-        else
-        {
-            HidePassengerStats();
-            currentPassDisplay = null;
         }
     }
 
@@ -119,9 +149,41 @@ public class TownUIManager : MonoBehaviour
         goldText.text = "Gold: " + g + "g";
     }
 
+    public void DisplayIncrement(int g)
+    {
+        goldIncrementText.text = "+" + g + "g";
+    }
+
+    public void HideIncrement()
+    {
+        goldIncrementText.text = "";
+    }
+
     public void DisplayToll(int t)
     {
         tollText.text = "Toll Price: " + t + "g";
+    }
+
+    public async Task AdjustGold(int current, int final)
+    {
+
+        DisplayGold(current);
+        DisplayIncrement(final - current);
+        while(current < final)
+        {
+            if(final - current > tickRate)
+            {
+                current = final;
+            }
+            else
+            {
+                current += tickRate;
+            }
+            DisplayGold(current);
+            await Task.Yield();
+        }
+        
+        
     }
 
     //not needed yet. but will format gold to show a reasonable number if values get too high.
@@ -179,5 +241,18 @@ public class TownUIManager : MonoBehaviour
     public void HidePassengerStats()
     {
         passengerStats.SetActive(false);
+    }
+
+    //sets whether or not the buttons are interactable
+    public void CanInteract(bool ci)
+    {
+        acceptButton.interactable = ci;
+        denyButton.interactable = ci;
+        leaveButton.interactable = ci;
+        foreach(GameObject b in removeButtons)
+        {
+            b.GetComponent<Button>().interactable = ci;
+        }
+        interact = ci;
     }
 }
