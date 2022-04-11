@@ -194,12 +194,17 @@ public class Passenger : MonoBehaviour
         float totalDist = (pos - transform.position).magnitude;
         int bounceCount = (int)(totalDist / bounceDist);
         float period = totalDist / (float)bounceCount;
-        Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
-        Debug.Log("bounce height: " + bounceHeight);
-
+        //Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
+        //Debug.Log("bounce height: " + bounceHeight);
+        float startTime = Time.time;
+        int startFrame = Time.frameCount;
+        Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
+        int counter = 0;
+        
+        
 
         Vector3 travelPos = transform.position;
-        Debug.Log("start movement: " + speed);
+        //Debug.Log("start movement: " + speed);
         while(travelPos != pos)
         {
             //Debug.Log((pos - travelPos).magnitude);
@@ -209,11 +214,18 @@ public class Passenger : MonoBehaviour
                 travelPos = pos;
                 transform.position = pos;
                 transform.eulerAngles = Vector3.zero;
+
+                float endTime = Time.time;
+                int endFrame = Time.frameCount;
+                float timeDiff = endTime - startTime;
+                int frameDiff = endFrame - startFrame;
+                Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
+
             }
             else
             {
                 //Debug.Log("moving " + ((pos - transform.position).normalized).magnitude + ", " + speed);
-                
+                counter++;
 
                 travelPos += (pos - travelPos).normalized * (float)speed;
 
@@ -229,7 +241,6 @@ public class Passenger : MonoBehaviour
             }
             await Task.Yield();
         }
-        
 
     }
 }
