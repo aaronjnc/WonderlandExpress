@@ -50,6 +50,16 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("The UI to show when mousing over a passenger")]
     public GameObject passengerStats;
 
+    [Tooltip("The Conductor")]
+    public SpriteRenderer conductor;
+
+    [Header("UI Sprites")]
+
+    [Tooltip("Conductor sprites. 0=default, 1=yes, 2=no")]
+    public Sprite[] conductorSprites;
+
+    [Header("UI Stats")]
+
     [Tooltip("current object being displayed")]
     public Passenger currentPassDisplay;
 
@@ -235,7 +245,7 @@ public class TownUIManager : MonoBehaviour
     public void ShowPassengerStats(Passenger pass)
     {
         passengerStats.SetActive(true);
-        passengerStats.GetComponent<UIMouseFollow>().SetupUI(pass);
+        passengerStats.GetComponent<PassUIFollow>().SetupUI(pass);
     }
 
     public void HidePassengerStats()
@@ -254,5 +264,11 @@ public class TownUIManager : MonoBehaviour
             b.GetComponent<Button>().interactable = ci;
         }
         interact = ci;
+    }
+
+    //sets the conductor to the given state. 0=default, 1=yes, 2=no
+    public void SetConductorImage(int state)
+    {
+        conductor.sprite = conductorSprites[state];
     }
 }
