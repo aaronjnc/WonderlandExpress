@@ -83,27 +83,15 @@ public class PassengerManager : MonoBehaviour
     [Tooltip("modifier for converting between town reputation and number of passengers \n rep * mod = num")]
     public float passRepMod = .05f;
 
-    [Header("Passenger names/lines")]
-
-    [Tooltip("Possible passenger first names")]
-    public List<string> firstNames = new List<string>();
-
-    [Tooltip("Possible passenger last names")]
-    public List<string> lastNames = new List<string>();
-
-    [Tooltip("Possible passenger passage messages")]
-    public List<string> pms = new List<string>();
-
-    [Tooltip("Possible passenger accept messages")]
-    public List<string> ams = new List<string>();
-
-    [Tooltip("Possible passenger deny messages")]
-    public List<string> dms = new List<string>();
 
     [Header("Test variables")]
     public Town town;
 
     public Town dest;
+
+    public GameObject testTownDictionary;
+
+    public bool useTestDict = false;
 
     // Start is called before the first frame update
     void Start()
@@ -118,7 +106,15 @@ public class PassengerManager : MonoBehaviour
         {
             GameManager.Instance.SetCurrentStop(town.GetName());
         }
-        townDict = TownDictionary.Instance;
+        if (useTestDict)
+        {
+            testTownDictionary.SetActive(true);
+            townDict = testTownDictionary.GetComponent<TownDictionary>();
+        }
+        else
+        {
+            townDict = TownDictionary.Instance;
+        }
         townDict.FindCurrentTown(GameManager.Instance.GetCurrentStop());
         FindCurrentPassNum();
         waitingPass = new List<GameObject>();
@@ -394,6 +390,7 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("Tried to add past train max capacity. Should not add");
             return;
         }
+        uiMan.SetConductorImage(1);
         uiMan.CanInteract(false);
         //Debug.Log("accept: list length: " + waitingPass.Count);
         uiMan.DisplayText(pass.GetComponent<Passenger>().GetAccept());
@@ -401,6 +398,7 @@ public class PassengerManager : MonoBehaviour
         await pass.GetComponent<Passenger>().MoveTo(OnTrainLoc.transform.position);
         AddPass(pass);
         DisplayPass();
+        uiMan.SetConductorImage(0);
         MoveWaitingPass();
         NewPassenger();
         
@@ -416,10 +414,12 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("No passengers to deny");
             return;
         }
+        uiMan.SetConductorImage(2);
         uiMan.CanInteract(false);
         uiMan.DisplayText(pass.GetComponent<Passenger>().GetDeny());
         waitingPass.Remove(pass);
         await pass.GetComponent<Passenger>().MoveTo(OffPlatformLoc.transform.position);
+        uiMan.SetConductorImage(0);
         MoveWaitingPass();
         NewPassenger();
         Destroy(pass);

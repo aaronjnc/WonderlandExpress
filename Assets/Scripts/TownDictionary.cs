@@ -103,6 +103,21 @@ public class TownDictionary : MonoBehaviour
         }
     }
 
+    //get the associated town
+    public Town FindTown(string townName)
+    {
+        Town town;
+        if (dict.TryGetValue(townName, out town))
+        {
+            return town;
+        }
+        else
+        {
+            Debug.LogError("Could not find town " + townName);
+            return null;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
