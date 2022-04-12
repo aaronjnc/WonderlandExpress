@@ -2376,6 +2376,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61603766}
   m_CullTransparentMesh: 1
+--- !u!114 &64734965 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &65122938
 GameObject:
   m_ObjectHideFlags: 0
@@ -2833,13 +2844,14 @@ RectTransform:
   m_Children:
   - {fileID: 870311479}
   - {fileID: 140163760}
+  - {fileID: 762440953}
   m_Father: {fileID: 846628105}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 184.78809, y: -57.815186}
-  m_SizeDelta: {x: 369.57605, y: 115.63025}
+  m_AnchoredPosition: {x: 200, y: -77.5}
+  m_SizeDelta: {x: 400, y: 155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &75359781
 MonoBehaviour:
@@ -2893,6 +2905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldText: {fileID: 870311480}
   tollPriceText: {fileID: 140163761}
+  jabberPriceText: {fileID: 762440954}
 --- !u!1 &75574166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,7 +2999,7 @@ GameObject:
   - component: {fileID: 84033916}
   - component: {fileID: 84033915}
   m_Layer: 0
-  m_Name: Town 20
+  m_Name: Town 15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4543,6 +4556,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &138620970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &140163759
 GameObject:
   m_ObjectHideFlags: 0
@@ -4577,7 +4601,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 105.3, y: -88.1}
+  m_AnchoredPosition: {x: 105.3, y: -78}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &140163761
@@ -4663,7 +4687,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -63.710953, w: 0}
+  m_margin: {x: 0, y: 0, z: -183.38905, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5647,7 +5671,7 @@ GameObject:
   - component: {fileID: 168109068}
   - component: {fileID: 168109067}
   m_Layer: 0
-  m_Name: Town 29
+  m_Name: Town 24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8032,7 +8056,7 @@ GameObject:
   - component: {fileID: 273007883}
   - component: {fileID: 273007882}
   m_Layer: 0
-  m_Name: Town 17 Text (4)
+  m_Name: Town 19 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12074,6 +12098,17 @@ Transform:
   m_Father: {fileID: 632708394}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &384327797 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &385557885
 GameObject:
   m_ObjectHideFlags: 0
@@ -15884,7 +15919,7 @@ GameObject:
   - component: {fileID: 508984060}
   - component: {fileID: 508984061}
   m_Layer: 0
-  m_Name: Town 27
+  m_Name: Town 22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16859,7 +16894,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 541978247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b0b68e2d434e04b9d85f280a04e821, type: 3}
+  m_Script: {fileID: 11500000, guid: f8e7d73da77170c41985668cf31e7123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nextPoints:
@@ -16867,6 +16902,7 @@ MonoBehaviour:
   chosenNext: {fileID: 0}
   continuous: 0
   trackChoice: 0
+  endGame: {fileID: 1392595841}
 --- !u!1 &544841834
 GameObject:
   m_ObjectHideFlags: 0
@@ -17318,7 +17354,7 @@ GameObject:
   - component: {fileID: 556003772}
   - component: {fileID: 556003771}
   m_Layer: 0
-  m_Name: Town 21
+  m_Name: Town 16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18215,7 +18251,7 @@ GameObject:
   - component: {fileID: 585992871}
   - component: {fileID: 585992872}
   m_Layer: 0
-  m_Name: Town 22
+  m_Name: Town 17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18418,6 +18454,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &592301005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &592596778
 GameObject:
   m_ObjectHideFlags: 0
@@ -19638,7 +19685,7 @@ GameObject:
   - component: {fileID: 628047139}
   - component: {fileID: 628047138}
   m_Layer: 0
-  m_Name: Town 26
+  m_Name: Town 21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20099,7 +20146,7 @@ GameObject:
   - component: {fileID: 647597921}
   - component: {fileID: 647597920}
   m_Layer: 0
-  m_Name: Town 17 Text (4)
+  m_Name: Town 22 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21855,7 +21902,7 @@ GameObject:
   - component: {fileID: 702706904}
   - component: {fileID: 702706905}
   m_Layer: 0
-  m_Name: Town 25
+  m_Name: Town 20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22321,6 +22368,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &716594791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &718356383
 GameObject:
   m_ObjectHideFlags: 0
@@ -22870,6 +22928,17 @@ MonoBehaviour:
   chosenNext: {fileID: 0}
   continuous: 1
   trackChoice: 0
+--- !u!114 &735889005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &745037464
 GameObject:
   m_ObjectHideFlags: 0
@@ -23747,6 +23816,140 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &762440952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 762440953}
+  - component: {fileID: 762440955}
+  - component: {fileID: 762440954}
+  m_Layer: 5
+  m_Name: JabberwockPrice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &762440953
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762440952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 75359780}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 105.3, y: -128}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &762440954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762440952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Jabberwocky Price: '
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: -189.01233, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &762440955
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762440952}
+  m_CullTransparentMesh: 1
 --- !u!1 &763787217
 GameObject:
   m_ObjectHideFlags: 0
@@ -24693,6 +24896,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &785973957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &790033125
 GameObject:
   m_ObjectHideFlags: 0
@@ -25478,7 +25692,7 @@ GameObject:
   - component: {fileID: 823945646}
   - component: {fileID: 823945645}
   m_Layer: 0
-  m_Name: Town 17 Text (4)
+  m_Name: Town 23 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26907,7 +27121,7 @@ GameObject:
   - component: {fileID: 868262938}
   - component: {fileID: 868262937}
   m_Layer: 0
-  m_Name: Town 23
+  m_Name: Town 18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27148,7 +27362,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -183.25713, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -27776,7 +27990,7 @@ GameObject:
   - component: {fileID: 896279316}
   - component: {fileID: 896279315}
   m_Layer: 0
-  m_Name: Town 5 Text
+  m_Name: Town 4 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31968,7 +32182,7 @@ GameObject:
   - component: {fileID: 1043277757}
   - component: {fileID: 1043277756}
   m_Layer: 0
-  m_Name: Town 24
+  m_Name: Town 19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34352,7 +34566,7 @@ GameObject:
   - component: {fileID: 1113012910}
   - component: {fileID: 1113012909}
   m_Layer: 0
-  m_Name: Town 6 Text
+  m_Name: Town 5 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37097,7 +37311,7 @@ GameObject:
   - component: {fileID: 1202031483}
   - component: {fileID: 1202031482}
   m_Layer: 0
-  m_Name: Town 4 Text
+  m_Name: Town 3 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39322,6 +39536,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 3}
   m_SizeDelta: {x: 10, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1298798187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1304591307
 GameObject:
   m_ObjectHideFlags: 0
@@ -40457,7 +40682,7 @@ GameObject:
   - component: {fileID: 1345962516}
   - component: {fileID: 1345962515}
   m_Layer: 0
-  m_Name: Town 28
+  m_Name: Town 23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41501,6 +41726,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1384781766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1385624519
 GameObject:
   m_ObjectHideFlags: 0
@@ -42480,7 +42716,7 @@ GameObject:
   - component: {fileID: 1419739464}
   - component: {fileID: 1419739463}
   m_Layer: 0
-  m_Name: Town 19 Text
+  m_Name: Town 14 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42873,7 +43109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b0b68e2d434e04b9d85f280a04e821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextPoints: []
+  nextPoints:
+  - {fileID: 541978249}
   chosenNext: {fileID: 0}
   continuous: 1
   trackChoice: 0
@@ -43408,7 +43645,7 @@ GameObject:
   - component: {fileID: 1434489481}
   - component: {fileID: 1434489480}
   m_Layer: 0
-  m_Name: Town 18
+  m_Name: Town 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43659,6 +43896,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1442988961 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1445385775
 GameObject:
   m_ObjectHideFlags: 0
@@ -47221,6 +47469,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1558984794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1560644321
 GameObject:
   m_ObjectHideFlags: 0
@@ -48060,6 +48319,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1609303591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1615071952
 GameObject:
   m_ObjectHideFlags: 0
@@ -48718,6 +48988,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1641185798 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1641618955
 GameObject:
   m_ObjectHideFlags: 0
@@ -50169,6 +50450,17 @@ MonoBehaviour:
   chosenNext: {fileID: 0}
   continuous: 1
   trackChoice: 0
+--- !u!114 &1678241260 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1679605303
 GameObject:
   m_ObjectHideFlags: 0
@@ -50498,6 +50790,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1688262130 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1688635987
 GameObject:
   m_ObjectHideFlags: 0
@@ -53161,7 +53464,7 @@ GameObject:
   - component: {fileID: 1798351017}
   - component: {fileID: 1798351016}
   m_Layer: 0
-  m_Name: Town 2 Text
+  m_Name: Town 1 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53863,7 +54166,7 @@ GameObject:
   - component: {fileID: 1826191527}
   - component: {fileID: 1826191526}
   m_Layer: 0
-  m_Name: Town 19
+  m_Name: Town 14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54555,7 +54858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextPoints:
-  - {fileID: 1978594191}
+  - {fileID: 1137078804}
   chosenNext: {fileID: 0}
   continuous: 1
   trackChoice: 0
@@ -54870,6 +55173,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1858374869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1859402377
 GameObject:
   m_ObjectHideFlags: 0
@@ -55224,6 +55538,126 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[9]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373986}
     - target: {fileID: 2565957021020103512, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: m_Name
       value: TownDictionary
@@ -55272,8 +55706,1263 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[0]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[1]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[3]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[4]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[5]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[6]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[7]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[8]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[9]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[10]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[11]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[12]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[13]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[14]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 2565957021815244395, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920582236074575, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920582501907299, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[9]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[10]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920582502484440, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[11]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[9]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[10]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[0]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[1]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[2]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[3]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[4]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[5]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[6]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920582652242461, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920583117853045, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920583150197415, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[0]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[1]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[3]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[4]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[5]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[6]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[7]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[9]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[10]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[11]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[12]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[13]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[8]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920583159036813, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[9]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[0]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[1]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[3]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[4]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[5]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[6]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[7]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[9]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[10]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[11]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[12]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[13]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[14]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[15]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920583229918062, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[0]
+      value: 
+      objectReference: {fileID: 384327797}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[1]
+      value: 
+      objectReference: {fileID: 138620970}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1298798187}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[3]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[4]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[5]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[6]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[7]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[8]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[9]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[10]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[11]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[12]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[13]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[14]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920583273335602, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[2]
+      value: 
+      objectReference: {fileID: 1858374869}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[3]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[4]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[5]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[6]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[7]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[8]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[9]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[10]
+      value: 
+      objectReference: {fileID: 1870373984}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[11]
+      value: 
+      objectReference: {fileID: 1870373983}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[12]
+      value: 
+      objectReference: {fileID: 1870373982}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[13]
+      value: 
+      objectReference: {fileID: 1870373981}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[14]
+      value: 
+      objectReference: {fileID: 1870373980}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[15]
+      value: 
+      objectReference: {fileID: 1870373979}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townBanList.Array.data[16]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 1442988961}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1678241260}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1558984794}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1870373986}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1384781766}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 592301005}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920583649224687, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[7]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 735889005}
+    - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 64734965}
+    - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920584004040674, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1870373978}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[0]
+      value: 
+      objectReference: {fileID: 716594791}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[1]
+      value: 
+      objectReference: {fileID: 1688262130}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[2]
+      value: 
+      objectReference: {fileID: 1609303591}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[3]
+      value: 
+      objectReference: {fileID: 785973957}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[4]
+      value: 
+      objectReference: {fileID: 1641185798}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[5]
+      value: 
+      objectReference: {fileID: 1870373985}
+    - target: {fileID: 6824920584039817931, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: townDestinations.Array.data[6]
+      value: 
+      objectReference: {fileID: 1870373978}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+--- !u!114 &1870373978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373979 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373981 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373982 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373983 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373984 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373985 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1870373986 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6824920582947701525, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+  m_PrefabInstance: {fileID: 1870373977}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4a8f574376c624dbd1f7db8f47e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1870452931
 GameObject:
   m_ObjectHideFlags: 0
@@ -61132,7 +62821,7 @@ GameObject:
   - component: {fileID: 2058334589}
   - component: {fileID: 2058334588}
   m_Layer: 0
-  m_Name: Town 17 Text (4)
+  m_Name: Town 21 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61302,7 +62991,7 @@ GameObject:
   - component: {fileID: 2063792228}
   - component: {fileID: 2063792227}
   m_Layer: 0
-  m_Name: Town 17 Text
+  m_Name: Town 13 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61494,9 +63183,9 @@ MonoBehaviour:
   maxCap: 5
   gold: 0
   tollPrice: 30
+  jabberwockyMod: 1.5
   load: 0
   trainSceneTesting: 0
-  trainUIInfo: {fileID: 75359783}
 --- !u!4 &2063867794
 Transform:
   m_ObjectHideFlags: 0
@@ -63376,7 +65065,7 @@ GameObject:
   - component: {fileID: 2136086692}
   - component: {fileID: 2136086691}
   m_Layer: 0
-  m_Name: Town 7 Text
+  m_Name: Town 6 Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

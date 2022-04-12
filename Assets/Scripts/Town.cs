@@ -15,7 +15,7 @@ public class Town : MonoBehaviour
     [Tooltip("If the town is destroyed or not")]
     public bool destroyed = false;
     [Tooltip("Towns that cannot be set as destinations from this town. \nUsed to prevent really long journeys for now")]
-    public List<Town> townBanList;
+    public List<Town> townDestinations;
 
     // Start is called before the first frame update
     void Start()
@@ -96,8 +96,8 @@ public class Town : MonoBehaviour
     }
 
     //gets the town ban lsit
-    public List<Town> getBanList()
+    public List<Town> GetAllowedList()
     {
-        return townBanList;
+        return townDestinations;
     }
 }

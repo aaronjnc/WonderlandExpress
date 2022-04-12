@@ -398,6 +398,7 @@ public class PassengerManager : MonoBehaviour
         await pass.GetComponent<Passenger>().MoveTo(OnTrainLoc.transform.position);
         AddPass(pass);
         DisplayPass();
+        GameManager.Instance.AddPassenger();
         uiMan.SetConductorImage(0);
         MoveWaitingPass();
         NewPassenger();
@@ -472,6 +473,7 @@ public class PassengerManager : MonoBehaviour
         Destroy(currentPass[pos]);
         currentPass[pos] = null;
         currentPassNum--;
+        GameManager.Instance.RemovePassenger();
         DisplayPass();
         //RemovePass(currentPass[pos]);
         
