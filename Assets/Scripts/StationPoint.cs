@@ -13,6 +13,12 @@ public class StationPoint : TrackPoint
         base.Awake();
         text.text = gameObject.name;
     }
+
+    public string GetTownName()
+    {
+        return text.text;
+    }
+
     public override void StopAction()
     {
         GameManager.Instance.SetTrainPosition(TrainMovement.Instance.gameObject.transform.position);

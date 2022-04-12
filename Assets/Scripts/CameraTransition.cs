@@ -9,7 +9,9 @@ public class CameraTransition : MonoBehaviour
     [Tooltip("Camera scale change speed")]
     private float cameraScaleSpeed;
     [Tooltip("Zoomed Out Camera Position"), SerializeField]
-    private Vector3 zoomedOutPos;
+    private Vector3 rightZoomedOut;
+    [Tooltip("Zoomed out camera position for fantasy"), SerializeField]
+    private Vector3 leftZoomedOut;
     [Tooltip("Camera is zooming out")]
     private bool zoomingOut = false;
     [Tooltip("Camera is zooming in")]
@@ -23,7 +25,13 @@ public class CameraTransition : MonoBehaviour
     [Tooltip("Base size of camera")]
     private float minZoom;
     [Tooltip("Zoomed out size of camera"), SerializeField]
-    private float maxZoom = 30;
+    private float maxRegularZoom = 30;
+    [Tooltip("Zoomed out size of fantasy camera"), SerializeField]
+    private float maxFantasyZoom = 60;
+    [Tooltip("Destination of camera")]
+    private Vector3 dest = Vector3.zero;
+    [Tooltip("Maximum zoom given current destination")]
+    private float maxZoom = 0;
     private void Awake()
     {
         cam = GetComponent<Camera>();
@@ -31,10 +39,20 @@ public class CameraTransition : MonoBehaviour
     }
     public void ZoomOut()
     {
+        if (transform.position.x < 0)
+        {
+            dest = leftZoomedOut;
+            maxZoom = maxFantasyZoom;
+        }
+        else
+        {
+            dest = rightZoomedOut;
+            maxZoom = maxRegularZoom;
+        }
         zoomingIn = false;
         zoomingOut = true;
         stillZooming = false;
-        float dist = Vector3.Distance(transform.position, zoomedOutPos);
+        float dist = Vector3.Distance(transform.position, dest);
         float time = Mathf.Abs(dist) / cameraSpeed;
         cameraScaleSpeed = (maxZoom - minZoom) / time;
     }
@@ -44,7 +62,11 @@ public class CameraTransition : MonoBehaviour
         zoomingIn = true;
         Vector3 pos = train.position;
         pos.z = transform.position.z;
-        float dist = Vector3.Distance(pos, zoomedOutPos);
+        float dist = Vector3.Distance(pos, transform.position);
+        /*if (transform.position.x < 0)
+            dist = Vector3.Distance(pos, leftZoomedOut);
+        else
+            dist = Vector3.Distance(pos, rightZoomedOut);*/
         float time = Mathf.Abs(dist) / cameraSpeed;
         cameraScaleSpeed = (maxZoom - minZoom) / time;
     }
@@ -52,11 +74,11 @@ public class CameraTransition : MonoBehaviour
     {
         if (zoomingOut)
         {
-            transform.position = Vector3.MoveTowards(transform.position, zoomedOutPos, cameraSpeed*Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, dest, cameraSpeed*Time.deltaTime);
             cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + cameraScaleSpeed * Time.deltaTime, cam.orthographicSize, maxZoom);
-            if (Vector3.Distance(transform.position, zoomedOutPos) < .001)
+            if (Vector3.Distance(transform.position, dest) < .001)
             {
-                transform.position = zoomedOutPos;
+                transform.position = dest;
                 cam.orthographicSize = maxZoom;
                 zoomingOut = false;
             }

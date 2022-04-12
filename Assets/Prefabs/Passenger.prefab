@@ -97,14 +97,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba59d5bcf492c04fa0325b6fa3d8232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstName: 
+  lastName: 
   passName: 
   gold: 0
+  wealth: 0
   happiness: 0
-  destination: {fileID: 0}
+  destination: 
   passageMessage: 
   acceptMessage: 
   denyMessage: 
   sr: {fileID: 0}
+  speed: 0.05
+  bounceDist: 0.4
+  tiltAngle: 8
 --- !u!61 &1885707816040889484
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Target Frame Rate - DO NOT CHANGE WITHOUT MENTIONING FIRST")]
+    [SerializeField]
+    private int targetFR = 30;
     [Tooltip("Application is quitting")]
     private static bool applicationIsQuitting = false;
     [Tooltip("Current position of the train")]
@@ -59,6 +62,7 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        Application.targetFrameRate = targetFR;
         if (Instance != this)
         {
             Destroy(this.gameObject);

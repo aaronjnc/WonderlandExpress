@@ -12,6 +12,8 @@ public class TollPoint : TrackPoint
     private GameObject endGame;
     public override void StopAction()
     {
+        if (GameManager.Instance.trainSceneTesting)
+            return;
         Debug.Log("TollPoint activation");
         if (GameManager.Instance.CheckToll())
         {
