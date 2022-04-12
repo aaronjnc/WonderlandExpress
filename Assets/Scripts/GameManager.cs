@@ -22,10 +22,16 @@ public class GameManager : MonoBehaviour
     public GameObject[] passengers;
     [Tooltip("Max number of passengers")]
     public int maxCap = 5;
+    [Tooltip("Current number of passengers")]
+    private int passengerCount = 0;
     [Tooltip("Current amount of gold")]
     public int gold = 0;
     [Tooltip("Next toll price")]
     public int tollPrice = 50;
+    [Tooltip("Jabberwocky relative price"), SerializeField]
+    private float jabberwockyMod = 1.5f;
+    [Tooltip("Jabberwocky price")]
+    private int jabberwockyPrice = 75;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
     [Tooltip("List of positions for follow cars")]
@@ -36,8 +42,6 @@ public class GameManager : MonoBehaviour
     private List<string> trainCarStops = new List<string>();
     [Tooltip("Disable passenger scene loading")]
     public bool trainSceneTesting = false;
-    [Tooltip("TrainUIInfo"), SerializeField]
-    private TrainUIInfo trainUIInfo;
     public delegate void OnTollChange(int newToll, int newGold);
     public event OnTollChange TollChangeEvent;
     public static GameManager Instance
@@ -165,6 +169,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseToll(float mod)
     {
         tollPrice = (int)(tollPrice * mod);
+        jabberwockyPrice = (int)(tollPrice * jabberwockyMod);
         if (TollChangeEvent != null)
             TollChangeEvent(tollPrice, gold);
     }
@@ -172,5 +177,41 @@ public class GameManager : MonoBehaviour
     public int GetToll()
     {
         return tollPrice;
+    }
+
+    public int GetJabberwockyPrice()
+    {
+        return jabberwockyPrice;
+    }
+
+    public void PayJabberwocky()
+    {
+        gold -= jabberwockyPrice;
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, gold);
+    }
+
+    public void RemovePassenger()
+    {
+        passengerCount -= 1;
+    }
+
+    public void AddPassenger()
+    {
+        passengerCount += 1;
+    }
+
+    public int GetPassengerCount()
+    {
+        return passengerCount;
+    }
+
+    public void EatPassenger(int i)
+    {
+        RemovePassenger();
+        Passenger pass = passengers[i].GetComponent<Passenger>();
+        Debug.Log(pass.firstName + " " + pass.lastName + " was eaten :(");
+        Destroy(passengers[i]);
+        passengers[i] = null;
     }
 }

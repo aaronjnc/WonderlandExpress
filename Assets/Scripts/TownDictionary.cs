@@ -127,21 +127,21 @@ public class TownDictionary : MonoBehaviour
     //Generates a random destination town from all towns available to the current town
     public Town GenerateDestination()
     {
-        List<Town> banList = currentTown.getBanList();
-        if(banList == null)
+        List<Town> allowedList = currentTown.GetAllowedList();
+        /*if(allowedList == null)
         {
-            banList = new List<Town>();
+            allowedList = new List<Town>();
         }
-        banList.Add(currentTown);
+        allowedList.Add(currentTown);
         List<Town> validTowns = new List<Town>();
         foreach(Town town in dict.Values)
         {
-            if (!banList.Contains(town))
+            if (!allowedList.Contains(town))
             {
                 validTowns.Add(town);
             }
-        }
-        return validTowns[UnityEngine.Random.Range(0, validTowns.Count)];
+        }*/
+        return allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
