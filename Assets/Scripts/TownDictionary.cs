@@ -128,19 +128,6 @@ public class TownDictionary : MonoBehaviour
     public Town GenerateDestination()
     {
         List<Town> allowedList = currentTown.GetAllowedList();
-        /*if(allowedList == null)
-        {
-            allowedList = new List<Town>();
-        }
-        allowedList.Add(currentTown);
-        List<Town> validTowns = new List<Town>();
-        foreach(Town town in dict.Values)
-        {
-            if (!allowedList.Contains(town))
-            {
-                validTowns.Add(town);
-            }
-        }*/
         return allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
     }
 

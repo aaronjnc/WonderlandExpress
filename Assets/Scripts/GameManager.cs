@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Jabberwocky relative price"), SerializeField]
     private float jabberwockyMod = 1.5f;
     [Tooltip("Jabberwocky price")]
-    private int jabberwockyPrice = 75;
+    private int jabberwockyPrice;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
     [Tooltip("List of positions for follow cars")]
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     private List<string> trainCarStops = new List<string>();
     [Tooltip("Disable passenger scene loading")]
     public bool trainSceneTesting = false;
-    public delegate void OnTollChange(int newToll, int newGold);
+    public delegate void OnTollChange(int newToll, int newGold, int jabberPrice);
     public event OnTollChange TollChangeEvent;
     public static GameManager Instance
     {
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
         Application.quitting += () => applicationIsQuitting = true;
         SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
+        jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
     }
     public void SetTrainPosition(Vector3 pos)
     {
@@ -158,7 +159,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Toll good");
             gold -= tollPrice;
             if (TollChangeEvent != null)
-                TollChangeEvent(tollPrice, gold);
+                TollChangeEvent(tollPrice, gold, jabberwockyPrice);
             return true;
         }
         Debug.Log("Toll bad");
@@ -171,7 +172,7 @@ public class GameManager : MonoBehaviour
         tollPrice = (int)(tollPrice * mod);
         jabberwockyPrice = (int)(tollPrice * jabberwockyMod);
         if (TollChangeEvent != null)
-            TollChangeEvent(tollPrice, gold);
+            TollChangeEvent(tollPrice, gold, jabberwockyPrice);
     }
 
     public int GetToll()
@@ -188,7 +189,7 @@ public class GameManager : MonoBehaviour
     {
         gold -= jabberwockyPrice;
         if (TollChangeEvent != null)
-            TollChangeEvent(tollPrice, gold);
+            TollChangeEvent(tollPrice, gold, jabberwockyPrice);
     }
 
     public void RemovePassenger()
