@@ -44,6 +44,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Train Whistle"",
+                    ""type"": ""Button"",
+                    ""id"": ""03c819ca-765e-4772-892d-70720aebfb29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -66,6 +75,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ZoomOut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""599e5261-bf0c-446a-ab99-51382cf71d5b"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Train Whistle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -106,6 +126,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_ClickEvents = asset.FindActionMap("ClickEvents", throwIfNotFound: true);
         m_ClickEvents_Click = m_ClickEvents.FindAction("Click", throwIfNotFound: true);
         m_ClickEvents_ZoomOut = m_ClickEvents.FindAction("ZoomOut", throwIfNotFound: true);
+        m_ClickEvents_TrainWhistle = m_ClickEvents.FindAction("Train Whistle", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Pause = m_Menu.FindAction("Pause", throwIfNotFound: true);
@@ -170,12 +191,14 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IClickEventsActions m_ClickEventsActionsCallbackInterface;
     private readonly InputAction m_ClickEvents_Click;
     private readonly InputAction m_ClickEvents_ZoomOut;
+    private readonly InputAction m_ClickEvents_TrainWhistle;
     public struct ClickEventsActions
     {
         private @PlayerControls m_Wrapper;
         public ClickEventsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Click => m_Wrapper.m_ClickEvents_Click;
         public InputAction @ZoomOut => m_Wrapper.m_ClickEvents_ZoomOut;
+        public InputAction @TrainWhistle => m_Wrapper.m_ClickEvents_TrainWhistle;
         public InputActionMap Get() { return m_Wrapper.m_ClickEvents; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -191,6 +214,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ZoomOut.started -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnZoomOut;
                 @ZoomOut.performed -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnZoomOut;
                 @ZoomOut.canceled -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnZoomOut;
+                @TrainWhistle.started -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnTrainWhistle;
+                @TrainWhistle.performed -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnTrainWhistle;
+                @TrainWhistle.canceled -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnTrainWhistle;
             }
             m_Wrapper.m_ClickEventsActionsCallbackInterface = instance;
             if (instance != null)
@@ -201,6 +227,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @ZoomOut.started += instance.OnZoomOut;
                 @ZoomOut.performed += instance.OnZoomOut;
                 @ZoomOut.canceled += instance.OnZoomOut;
+                @TrainWhistle.started += instance.OnTrainWhistle;
+                @TrainWhistle.performed += instance.OnTrainWhistle;
+                @TrainWhistle.canceled += instance.OnTrainWhistle;
             }
         }
     }
@@ -242,6 +271,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnClick(InputAction.CallbackContext context);
         void OnZoomOut(InputAction.CallbackContext context);
+        void OnTrainWhistle(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
