@@ -18,6 +18,9 @@ public class PassengerManager : MonoBehaviour
     [Tooltip("The passenger generator. used for generating passenger names and lines")]
     public PassengerGenerator passGen;
 
+    [Tooltip("The audio manager. Used for playing audio")]
+    public TownAudioManager audioMan;
+
     [Header("Passengers")]
 
     [Tooltip("The prefab used to create passengers")]
@@ -83,6 +86,8 @@ public class PassengerManager : MonoBehaviour
     [Tooltip("modifier for converting between town reputation and number of passengers \n rep * mod = num")]
     public float passRepMod = .05f;
 
+    [Tooltip("Timing variables")]
+    public float leaveDelay = 1f;
 
     [Header("Test variables")]
     public Town town;
@@ -180,7 +185,15 @@ public class PassengerManager : MonoBehaviour
     //What to do when leaving the town
     public void LeaveTown()
     {
+        audioMan.SelectAudio();
         PassInactive();
+        Invoke("LeaveDelayed",leaveDelay);
+        
+    }
+
+    //Leaving town but fr this time
+    public void LeaveDelayed()
+    {
         uiMan.SwitchScene();
     }
 
@@ -382,14 +395,17 @@ public class PassengerManager : MonoBehaviour
         GameObject pass = GetCurrentWaitingPass();
         if (pass == null)
         {
+            audioMan.SelectAudio();
             uiMan.DisplayError("No passengers to accept");
             return;
         }
         if (currentPassNum >= trainCap)
         {
+            audioMan.SelectAudio();
             uiMan.DisplayError("Tried to add past train max capacity. Should not add");
             return;
         }
+        audioMan.AcceptAudio();
         uiMan.SetConductorImage(1);
         uiMan.CanInteract(false);
         //Debug.Log("accept: list length: " + waitingPass.Count);
@@ -412,9 +428,11 @@ public class PassengerManager : MonoBehaviour
         GameObject pass = GetCurrentWaitingPass();
         if(pass == null)
         {
+            audioMan.SelectAudio();
             uiMan.DisplayError("No passengers to deny");
             return;
         }
+        audioMan.DenyAudio();
         uiMan.SetConductorImage(2);
         uiMan.CanInteract(false);
         uiMan.DisplayText(pass.GetComponent<Passenger>().GetDeny());
@@ -462,6 +480,7 @@ public class PassengerManager : MonoBehaviour
     //Forcibly removes the passenger from the given index. Used for button interaction
     public async void ForceRemovePass(int pos)
     {
+        audioMan.RemoveAudio();
         GetTown().RemoveRep((1 - currentPass[pos].GetComponent<Passenger>().GetHappiness() ) / repHapMod);
         RemovePass(pos);
     }
