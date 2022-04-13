@@ -5745,7 +5745,7 @@ PrefabInstance:
       objectReference: {fileID: 1415727081}
     - target: {fileID: 6048996201104018399, guid: b12f973bd17515c45b45a27b41a1dab3, type: 3}
       propertyPath: useTestDict
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048996201104018399, guid: b12f973bd17515c45b45a27b41a1dab3, type: 3}
       propertyPath: passOffset.x
