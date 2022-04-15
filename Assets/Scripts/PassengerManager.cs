@@ -44,6 +44,9 @@ public class PassengerManager : MonoBehaviour
     [Tooltip("The empty GameObject which shows where passengers should go when leaving the platform")]
     public GameObject OffPlatformLoc;
 
+    [Tooltip("The empty GameObject which shows where passengers should go when being kicked off of the train")]
+    public GameObject RemovedLoc;
+
     [Tooltip("Passengers currently on the train")]
     public GameObject[] currentPass;
 
@@ -186,16 +189,16 @@ public class PassengerManager : MonoBehaviour
     public void LeaveTown()
     {
         audioMan.SelectAudio();
-        PassInactive();
-        Invoke("LeaveDelayed",leaveDelay);
+        Invoke("PassInactive",leaveDelay);
+        uiMan.Invoke("SwitchScene",leaveDelay);
         
     }
 
     //Leaving town but fr this time
-    public void LeaveDelayed()
-    {
-        uiMan.SwitchScene();
-    }
+    //public void LeaveDelayed()
+    //{
+    //    uiMan.SwitchScene();
+    //}
 
     //checks all current passengers and removes all passengers who have reached their destination
     async Task CheckPassengerDestination()
@@ -296,7 +299,7 @@ public class PassengerManager : MonoBehaviour
         int counter = 0;
         foreach (GameObject pass in waitingPass)
         {
-            t[counter] = pass.GetComponent<Passenger>().MoveTo(displayPos);
+            t[counter] = pass.GetComponent<Passenger>().MoveTo(displayPos, false);
             displayPos = new Vector3(waitingOffset.x + displayPos.x, waitingOffset.y + displayPos.y, waitingOffset.z + displayPos.z);
             counter++;
         }
@@ -411,7 +414,7 @@ public class PassengerManager : MonoBehaviour
         //Debug.Log("accept: list length: " + waitingPass.Count);
         uiMan.DisplayText(pass.GetComponent<Passenger>().GetAccept());
         waitingPass.Remove(pass);
-        await pass.GetComponent<Passenger>().MoveTo(OnTrainLoc.transform.position);
+        await pass.GetComponent<Passenger>().MoveTo(OnTrainLoc.transform.position, false);
         AddPass(pass);
         DisplayPass();
         GameManager.Instance.AddPassenger();
@@ -437,7 +440,7 @@ public class PassengerManager : MonoBehaviour
         uiMan.CanInteract(false);
         uiMan.DisplayText(pass.GetComponent<Passenger>().GetDeny());
         waitingPass.Remove(pass);
-        await pass.GetComponent<Passenger>().MoveTo(OffPlatformLoc.transform.position);
+        await pass.GetComponent<Passenger>().MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.SetConductorImage(0);
         MoveWaitingPass();
         NewPassenger();
@@ -480,8 +483,15 @@ public class PassengerManager : MonoBehaviour
     //Forcibly removes the passenger from the given index. Used for button interaction
     public async void ForceRemovePass(int pos)
     {
+        Passenger passScript = currentPass[pos].GetComponent<Passenger>();
         audioMan.RemoveAudio();
-        GetTown().RemoveRep((1 - currentPass[pos].GetComponent<Passenger>().GetHappiness() ) / repHapMod);
+        uiMan.CanInteract(false);
+        passScript.Display(OnTrainLoc.transform.position);
+        await passScript.MoveTo(RemovedLoc.transform.position, true);
+        GetTown().RemoveRep((1 - passScript.GetHappiness() ) / repHapMod);
+        await Task.Delay(100);
+        await passScript.MoveTo(OffPlatformLoc.transform.position, false);
+        uiMan.CanInteract(true);
         RemovePass(pos);
     }
 
@@ -503,18 +513,21 @@ public class PassengerManager : MonoBehaviour
     {
         Passenger passScript = pass.GetComponent<Passenger>();
         Debug.Log("Passenger " + passScript.GetName() + " successfully dropped off");
+        uiMan.CanInteract(false);
         GetTown().AddWealth((float)passScript.GetGold() / wealthMod);
         GetTown().AddRep(passScript.GetHappiness() / repHapMod);
         passScript.Display(OnTrainLoc.transform.position);
-        await passScript.MoveTo(waitingLoc.transform.position);
+        await passScript.MoveTo(waitingLoc.transform.position, false);
         int currentGold = GameManager.Instance.GetGold();
         int newGold = passScript.GetGold();
+        await Task.Delay(100);
         var t = new Task[2];
-        t[0] = passScript.MoveTo(OffPlatformLoc.transform.position);
+        t[0] = passScript.MoveTo(OffPlatformLoc.transform.position, false);
         t[1] = uiMan.AdjustGold(currentGold, currentGold + newGold);
         await Task.WhenAll(t);
         uiMan.HideIncrement();
         GameManager.Instance.AddGold(newGold);
+        uiMan.CanInteract(true);
         RemovePass(pass);
     }
 
