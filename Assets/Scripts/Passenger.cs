@@ -185,14 +185,28 @@ public class Passenger : MonoBehaviour
         return denyMessage;
     }
 
-    //move to the designated location
-    public async Task MoveTo(Vector3 pos)
+    //move to the designated location. trown: false-> bounce multiple times, true -> bounce once and much higher
+    public async Task MoveTo(Vector3 pos, bool thrown)
     {
         //determine stats for the bouncing step animation.
-        float bounceHeight = UnityEngine.Random.Range(0.2f, 0.5f);
+        float bounceHeight = 3.5f;
+        if (!thrown)
+        {
+            bounceHeight = UnityEngine.Random.Range(0.2f, 0.5f);
+        }
         float distance = 0;
         float totalDist = (pos - transform.position).magnitude;
-        int bounceCount = (int)(totalDist / bounceDist);
+        int bounceCount = 1;
+        if (!thrown)
+        {
+            bounceCount = (int)(totalDist / bounceDist);
+        }
+        float moveSpeed = (float)speed;
+        if (thrown)
+        {
+            moveSpeed *= 2.5f;
+        }
+
         float period = totalDist / (float)bounceCount;
         //Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
         //Debug.Log("bounce height: " + bounceHeight);
@@ -208,7 +222,7 @@ public class Passenger : MonoBehaviour
         while(travelPos != pos)
         {
             //Debug.Log((pos - travelPos).magnitude);
-            if((pos - travelPos).magnitude <= speed)
+            if((pos - travelPos).magnitude <= moveSpeed)
             {
                 Debug.Log("almost done");
                 travelPos = pos;
@@ -227,11 +241,20 @@ public class Passenger : MonoBehaviour
                 //Debug.Log("moving " + ((pos - transform.position).normalized).magnitude + ", " + speed);
                 counter++;
 
-                travelPos += (pos - travelPos).normalized * (float)speed;
+                travelPos += (pos - travelPos).normalized * moveSpeed;
 
-                distance += (float)speed;
+                distance += moveSpeed;
                 float bounceOffset = bounceHeight / 2 * -Mathf.Cos(((2 * Mathf.PI) / period) * distance) + bounceHeight / 2;
-                float angleOffset = tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance); 
+                float angleOffset;
+                if (thrown)
+                {
+                    angleOffset = -(360 / totalDist) * distance;
+                }
+                else
+                {
+                    angleOffset = tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance);
+                }
+
 
                 transform.position = travelPos + new Vector3(0, bounceOffset, 0);
 
