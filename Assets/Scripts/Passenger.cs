@@ -344,7 +344,7 @@ public class Passenger : MonoBehaviour
                 }
                 else
                 {
-                    angleOffset = tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance);
+                    angleOffset = -tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance);
                 }
 
 
