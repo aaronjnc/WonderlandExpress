@@ -290,8 +290,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 39}
-  m_SizeDelta: {x: 380, y: 151.2293}
+  m_AnchoredPosition: {x: 0, y: -33.79431}
+  m_SizeDelta: {x: 380, y: 97.6407}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &88365501
 CanvasRenderer:
@@ -738,8 +738,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -32}
-  m_SizeDelta: {x: 160, y: 40}
+  m_AnchoredPosition: {x: 0, y: -40.559}
+  m_SizeDelta: {x: 170, y: 57.117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401749901
 MonoBehaviour:
@@ -774,7 +774,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Destination:'
+  m_Text: 'Destination:
+
+    Town 8'
 --- !u!222 &401749902
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -929,7 +931,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 117}
-  m_SizeDelta: {x: 160, y: 40}
+  m_SizeDelta: {x: 170, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719047898
 MonoBehaviour:
@@ -1491,11 +1493,15 @@ MonoBehaviour:
   - Ben
   - Riley
   - Jarred
+  - Joseph
+  - Mitchell
+  - Meghan
+  - Jordyn
   rwLastNames:
   - Grace
   - King
   - Sansom
-  - Caard
+  - Card
   - Smith
   - Hertel
   - Freeman
@@ -1504,26 +1510,87 @@ MonoBehaviour:
   - Davis
   - Delvasto
   - Tromantano
-  wlFirstNames: []
-  wlLastNames: []
+  - Dasilva
+  - Dunning
+  - Tankersly
+  - Fishkin
+  wlFirstNames:
+  - Tweedle
+  - Tweedle
+  - Jiminy
+  - George
+  wlLastNames:
+  - Dee
+  - Dum
+  - Cricket
+  - Foreman
   ppms:
   - I know it's not much, but will this be enough?
   pams:
   - Thank you so much, this means everything to me!
   pdms:
   - What will I do now?
+  pdoms:
+  - You'll never know how much this meant to me
   mpms:
   - This should be enough, right?
   mams:
   - Alright, thank you.
   mdms:
   - Ah, alright.
+  mdoms:
+  - Thanks for the lift
   rpms:
   - Hurry up and let me on already.
   rams:
   - Took you long enough
   rdms:
   - 'This is preposterous! '
+  rdoms:
+  - Could've been faster
+  traits:
+  - None
+  - Shady
+  - Carefree
+  - Antisocial
+  - Social
+  - Irritable
+  descriptions:
+  - ' '
+  - A shady character. Can you trust them?
+  - A laidback fellow. Won't get unhappy no matter what.
+  - Much happier by themself. Won't like a crowded train.
+  - Much happier with others. Won't like an empty train.
+  - A grumpy person. Will generally get unhappy.
+  tpms:
+  - '**UNUSED**'
+  - Oh I can't wait to get back. They're gonna pay...
+  - Oh I just love riding the train!
+  - I uh.. n-need a ride
+  - Oh hello there! Would you be able to take me?
+  - I need a ride.
+  tams:
+  - '**UNUSED**'
+  - Just wait till I see the looks on their faces...
+  - Thank you!
+  - '*nods*'
+  - Oh, aren't you just the sweetest!
+  - Yeah, sure. Thanks
+  tdms:
+  - '**UNUSED**'
+  - What?? But I need to make them pay!
+  - Oh, that's alright. I'll just catch the next one.
+  - Oh, okay
+  - Aw, I was looking forward to talking to you.
+  - Are you kidding me? Ugh, just what I need today.
+  tdoms:
+  - '**UNUSED**'
+  - The time has come...
+  - Thank you for taking me!
+  - thanks...
+  - I hope we meet again!
+  - Wish that trip had been shorter.
+  traitChance: 0.35
 --- !u!4 &994262447
 Transform:
   m_ObjectHideFlags: 0
@@ -3632,8 +3699,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 234.6}
-  m_SizeDelta: {x: 380, y: 206.02}
+  m_AnchoredPosition: {x: 0, y: 188.10403}
+  m_SizeDelta: {x: 380, y: 299.0118}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1463774280
 CanvasRenderer:
@@ -5114,7 +5181,7 @@ GameObject:
   - component: {fileID: 2009165613}
   - component: {fileID: 2009165612}
   m_Layer: 5
-  m_Name: DestinationBigTent
+  m_Name: TraitText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5136,8 +5203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -97.74518}
-  m_SizeDelta: {x: 160, y: 67.4904}
+  m_AnchoredPosition: {x: 0, y: -102.42609}
+  m_SizeDelta: {x: 170, y: 58.1285}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2009165612
 MonoBehaviour:
@@ -5172,9 +5239,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'TownName
-
-'
+  m_Text: 'Trait:'
 --- !u!222 &2009165613
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5362,7 +5427,8 @@ MonoBehaviour:
   nameText: {fileID: 719047898}
   goldText: {fileID: 2024418767}
   happinessText: {fileID: 1068141572}
-  destinationText: {fileID: 2009165612}
+  destinationText: {fileID: 401749901}
+  traitText: {fileID: 2009165612}
 --- !u!225 &2039452046
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5840,6 +5906,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048996201104018399, guid: b12f973bd17515c45b45a27b41a1dab3, type: 3}
+      propertyPath: happinessDev
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6048996201104018399, guid: b12f973bd17515c45b45a27b41a1dab3, type: 3}
       propertyPath: passOffset.x
       value: -2.15
       objectReference: {fileID: 0}
@@ -5858,6 +5928,10 @@ PrefabInstance:
     - target: {fileID: 6048996201104018399, guid: b12f973bd17515c45b45a27b41a1dab3, type: 3}
       propertyPath: pms.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6048996201104018399, guid: b12f973bd17515c45b45a27b41a1dab3, type: 3}
+      propertyPath: startHappiness
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 6048996201104018399, guid: b12f973bd17515c45b45a27b41a1dab3, type: 3}
       propertyPath: waitingOffset.x

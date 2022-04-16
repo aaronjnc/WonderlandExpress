@@ -165,7 +165,7 @@ public class PassengerManager : MonoBehaviour
     async void SetupTown()
     {
         SetupTownUI();
-        passGen.InitializeNames(currentPass);
+        passGen.Initialize(currentPass);
         PassActive();
         GeneratePassengers();
         DisplayAllPass();
@@ -522,6 +522,8 @@ public class PassengerManager : MonoBehaviour
         int currentGold = GameManager.Instance.GetGold();
         int newGold = passScript.GetGold();
         await Task.Delay(100);
+        passScript.DropOff(GetTown());
+        uiMan.DisplayText(pass.GetComponent<Passenger>().GetDropOff());
         var t = new Task[2];
         t[0] = passScript.MoveTo(OffPlatformLoc.transform.position, false);
         t[1] = uiMan.AdjustGold(currentGold, currentGold + newGold);

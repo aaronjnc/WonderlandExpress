@@ -14,6 +14,8 @@ public class PassUIFollow : UIMouseFollow
     public Text happinessText;
     [Tooltip("Destination text box")]
     public Text destinationText;
+    [Tooltip("Trait text box")]
+    public Text traitText;
     // Start is called before the first frame update
 
     public void SetupUI(Passenger pass)
@@ -21,7 +23,8 @@ public class PassUIFollow : UIMouseFollow
         nameText.text = pass.GetName();
         goldText.text = pass.GetGold().ToString() + "g";
         happinessText.text = ((int)(pass.GetHappiness() * 100)).ToString() + "%";
-        destinationText.text = pass.GetDestination();
+        destinationText.text = "Destination:\n" + pass.GetDestination();
+        traitText.text = "Trait: " + pass.GetTrait();
         MoveToMouse();
         Enable();
     }

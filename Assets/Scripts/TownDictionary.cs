@@ -11,6 +11,8 @@ public class TownDictionary : MonoBehaviour
     public List<Town> towns = new List<Town>();
     //the dictionary to be used.
     public Dictionary<string, Town> dict = new Dictionary<string, Town>();
+    //list of all destroyed towns
+    public List<Town> destroyed = new List<Town>();
 
     [Tooltip("the current town")]
     public Town currentTown;
@@ -143,5 +145,13 @@ public class TownDictionary : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    //Destroys the town and adds it to the destroyed list
+    public void DestroyTown(string town)
+    {
+        Town t = FindTown(town);
+        t.DestroyTown();
+        destroyed.Add(t);
     }
 }

@@ -221,7 +221,7 @@ public class TownUIManager : MonoBehaviour
 
     public void DisplayPassText(Passenger pass)
     {
-        DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestination() + "\nGold: " + pass.GetGold() + "\n" + pass.GetMessage());
+        DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestination() + "\nGold: " + pass.GetGold() + "\n" + pass.GetMessage() + "\n\nTrait: " + pass.GetTrait() + "\n" + pass.GetTraitDescription());
     }
 
     public void DisplayText(string text)
