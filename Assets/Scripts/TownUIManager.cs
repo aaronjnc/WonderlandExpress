@@ -91,6 +91,7 @@ public class TownUIManager : MonoBehaviour
         goldText.text = "";
         goldIncrementText.text = "";
         tollText.text = "";
+        passengerStats.SetActive(false);
     }
 
     void FixedUpdate()

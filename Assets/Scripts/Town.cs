@@ -84,7 +84,7 @@ public class Town : MonoBehaviour
     //Set the town's stats to 0 when a town is destroyed
     public void DestroyTown()
     {
-        wealth = 0;
+        wealth = 1;
         reputation = 0;
         destroyed = true;
     }
