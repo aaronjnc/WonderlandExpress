@@ -66,28 +66,28 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("The maximum percentage deviation from the generated wealth value a passenger can have between 0 and .5. \neg. a passenger can be x% lower or x% higher than the general value for a town")]
     [Range(0f, .5f)]
-    public float wealthDev = .5f;
+    public float wealthDev = 0.5f;
 
     [Tooltip("The default happiness of a passenger from 0 to 1")]
     [Range(0f, 1f)]
-    public float startHappiness = .7f;
+    public float startHappiness = 0.7f;
 
     [Tooltip("The maximum percentage deviation from the generated happiness value a passenger can have between 0 and .5. \neg. a passenger can be x% lower or x% higher than the general start value")]
     [Range(0f, .5f)]
-    public float happinessDev = .1f;
+    public float happinessDev = 0.1f;
 
     [Header("modifiers for calculations")]
 
     [Tooltip("modifier for converting between town and passenger wealth. \nPassenger->Town: divide by modifer \nTown->Passenger: multiply by modifier ")]
     [Min(0f)]
-    public float wealthMod = .2f;
+    public float wealthMod = 0.2f;
 
     [Tooltip("modifier for converting between town rep and passenger happiness. \nPassenger->Town: divide by modifer \nTown->Passenger: multiply by modifier ")]
     [Min(0f)]
-    public float repHapMod = .2f;
+    public float repHapMod = 0.2f;
 
     [Tooltip("modifier for converting between town reputation and number of passengers \n rep * mod = num")]
-    public float passRepMod = .05f;
+    public float passRepMod = 0.05f;
 
     [Tooltip("Timing variables")]
     public float leaveDelay = 1f;
@@ -517,6 +517,7 @@ public class PassengerManager : MonoBehaviour
         GetTown().AddWealth((float)passScript.GetGold() / wealthMod);
         GetTown().AddRep(passScript.GetHappiness() / repHapMod);
         passScript.Display(OnTrainLoc.transform.position);
+
         await passScript.MoveTo(waitingLoc.transform.position, false);
         int currentGold = GameManager.Instance.GetGold();
         int newGold = passScript.GetGold();

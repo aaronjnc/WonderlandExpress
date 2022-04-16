@@ -128,7 +128,13 @@ public class TownDictionary : MonoBehaviour
     public Town GenerateDestination()
     {
         List<Town> allowedList = currentTown.GetAllowedList();
-        return allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
+        Town dest = allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
+        while (dest.IsDestroyed() && allowedList.Count > 1)
+        {
+            allowedList.Remove(dest);
+            dest = allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
+        }
+        return dest;
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
