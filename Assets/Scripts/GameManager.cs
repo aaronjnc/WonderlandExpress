@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private int passengerCount = 0;
     [Tooltip("Current amount of gold")]
     public int gold = 0;
+    [Tooltip("Rate at which passenger happiness decreases. measured in %/sec")]
+    public float happinessDecayRate = 1f;
     [Tooltip("Next toll price")]
     public int tollPrice = 50;
     [Tooltip("Jabberwocky relative price"), SerializeField]
@@ -80,6 +82,21 @@ public class GameManager : MonoBehaviour
         passengers = new GameObject[maxCap];
         jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
     }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 1) {
+            foreach (GameObject pass in passengers)
+            {
+                if (pass != null)
+                {
+                    Debug.Log(happinessDecayRate / 100f / (float)targetFR);
+                    pass.GetComponent<Passenger>().OnTrainMove(happinessDecayRate / 100f / (float)targetFR, passengerCount);
+                }
+            }
+        }
+    }
+
     public void SetTrainPosition(Vector3 pos)
     {
         trainPosition = pos;
