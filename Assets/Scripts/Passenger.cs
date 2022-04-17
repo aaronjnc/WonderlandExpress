@@ -280,8 +280,15 @@ public class Passenger : MonoBehaviour
     //move to the designated location. trown: false-> bounce multiple times, true -> bounce once and much higher
     public async Task MoveTo(Vector3 pos, bool thrown)
     {
+        Sprite sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
         //determine stats for the bouncing step animation.
-        float bounceHeight = 3.5f;
+        float bounceHeight = 4.5f;
+        float moveSpeed = (float)speed;
+        if (thrown)
+        {
+            //pos -= new Vector3(0, (bc.bounds.center.y - transform.position.y), 0);
+            moveSpeed *= 3.0f;
+        }
         if (!thrown)
         {
             bounceHeight = UnityEngine.Random.Range(0.2f, 0.5f);
@@ -293,11 +300,7 @@ public class Passenger : MonoBehaviour
         {
             bounceCount = (int)(totalDist / bounceDist);
         }
-        float moveSpeed = (float)speed;
-        if (thrown)
-        {
-            moveSpeed *= 2.5f;
-        }
+        
 
         float period = totalDist / (float)bounceCount;
         //Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
@@ -306,7 +309,7 @@ public class Passenger : MonoBehaviour
         int startFrame = Time.frameCount;
         Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
         int counter = 0;
-        
+
         
 
         Vector3 travelPos = transform.position;
@@ -326,6 +329,9 @@ public class Passenger : MonoBehaviour
                 float timeDiff = endTime - startTime;
                 int frameDiff = endFrame - startFrame;
                 Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
+                Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y / 4);// sprite.bounds.center;
+                Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
+                Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, 1f);
 
             }
             else
@@ -337,20 +343,28 @@ public class Passenger : MonoBehaviour
 
                 distance += moveSpeed;
                 float bounceOffset = bounceHeight / 2 * -Mathf.Cos(((2 * Mathf.PI) / period) * distance) + bounceHeight / 2;
+                Vector3 bounce = new Vector3(0, bounceOffset, 0);
                 float angleOffset;
                 if (thrown)
                 {
-                    angleOffset = -(360 / totalDist) * distance;
+                    angleOffset = (360 / totalDist) * moveSpeed;
+                    Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y/4);// sprite.bounds.center;
+                    transform.RotateAround(centerOfRotation, Vector3.forward, angleOffset);
+                    Vector3 diff = (centerOfRotation - transform.position) * -Mathf.Cos(((2 * Mathf.PI) / period) * distance) + (centerOfRotation - transform.position);
+                    bounce -= diff;
+                    //Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, .5f);
                 }
                 else
                 {
                     angleOffset = -tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance);
+                    transform.eulerAngles = new Vector3(0f, 0f, angleOffset);
                 }
 
 
-                transform.position = travelPos + new Vector3(0, bounceOffset, 0);
+                transform.position = travelPos + bounce;
 
-                transform.eulerAngles = new Vector3(0f, 0f, angleOffset);
+                
+                
                 //Debug.DrawRay(travelPos, pos, Color.red, .1f);
                 //Debug.DrawRay(transform.position, travelPos, Color.green, .1f);
             }
