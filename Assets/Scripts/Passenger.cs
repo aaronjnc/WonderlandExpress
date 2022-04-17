@@ -29,6 +29,8 @@ public class Passenger : MonoBehaviour
     public string acceptMessage;
     [Tooltip("Passenger when passage is denied")]
     public string denyMessage;
+    [Tooltip("Passenger when dropped off")]
+    public string dropOffMessage;
     [Tooltip("sprite renderer")]
     public SpriteRenderer sr;
     [Header("Movement Stats")]
@@ -40,7 +42,13 @@ public class Passenger : MonoBehaviour
     //public float bounceHeight = .1f;
     [Tooltip("how far to the side they can tilt on each bounce")]
     public float tiltAngle = 30f;
-
+    [Header("Trait Settings")]
+    [Tooltip("The trait that this passenger has. Dictates certain things they can do")]
+    public string trait = "None";
+    [Tooltip("Description of the passenger's trait")]
+    public string traitDescription = "";
+    [Tooltip("The amount that money is multiplied by if the passenger is shady")]
+    public int shadyGoldMod = 3;
     //reference to the town UI manager
     //private TownUIManager uiMan;
     // Start is called before the first frame update
@@ -51,7 +59,7 @@ public class Passenger : MonoBehaviour
         //uiMan = TownUIManager.GetManager();
     }
 
-    public void Setup(string fName, string lName, int pGold, float pWealth, float pHappiness, string pDestination, string pm, string am, string dm)
+    public void Setup(string fName, string lName, int pGold, float pWealth, float pHappiness, string pDestination, string pm, string am, string dm, string dom)
     {
         firstName = fName;
         lastName = lName;
@@ -63,9 +71,10 @@ public class Passenger : MonoBehaviour
         passageMessage = pm;
         acceptMessage = am;
         denyMessage = dm;
+        dropOffMessage = dom;
     }
 
-    public void Setup(string pName, int pGold, float pWealth, float pHappiness, string pDestination, string pm, string am, string dm)
+    public void Setup(string pName, int pGold, float pWealth, float pHappiness, string pDestination, string pm, string am, string dm, string dom)
     {
         passName = pName;
         gold = pGold;
@@ -75,6 +84,7 @@ public class Passenger : MonoBehaviour
         passageMessage = pm;
         acceptMessage = am;
         denyMessage = dm;
+        dropOffMessage = dom;
     }
 
     public void Setup(int pGold, float pWealth, float pHappiness, string pDestination)
@@ -92,17 +102,34 @@ public class Passenger : MonoBehaviour
         passName = first + " " + last;
     }
 
-    public void SetLines(string pm, string am, string dm)
+    public void SetLines(string pm, string am, string dm, string dom)
     {
         passageMessage = pm;
         acceptMessage = am;
         denyMessage = dm;
+        dropOffMessage = dom;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SetTrait(string pTrait, string description)
+    {
+        trait = pTrait;
+        traitDescription = description;
+    }
+
+    public string GetTrait()
+    {
+        return trait;
+    }
+
+    public string GetTraitDescription()
+    {
+        return traitDescription;
     }
 
     //moves to the given position and sets the rendered to active
@@ -121,18 +148,40 @@ public class Passenger : MonoBehaviour
     //decreases happiness by the given amount
     public void DecreaseHappiness(float diff)
     {
-        happiness -= diff;
+
+            happiness -= diff;
+        if(happiness <= 0f)
+        {
+            happiness = 0f;
+        }
+        if (happiness >= 1f)
+        {
+            happiness = 0f;
+        }
     }
 
     //increases happiness by the given amount
     public void IncreaseHappiness(float diff)
     {
         happiness += diff;
+        if (happiness <= 0f)
+        {
+            happiness = 0f;
+        }
+        if (happiness >= 1f)
+        {
+            happiness = 0f;
+        }
     }
 
     public int GetGold()
     {
+        if (trait == "Shady")
+        {
+            return gold * shadyGoldMod;
+        }
         return gold;
+
     }
 
     public float GetWealth()
@@ -185,14 +234,71 @@ public class Passenger : MonoBehaviour
         return denyMessage;
     }
 
-    //move to the designated location
-    public async Task MoveTo(Vector3 pos)
+    public string GetDropOff()
+    {
+        return dropOffMessage;
+    }
+
+    public void DropOff(Town t)
+    {
+        if (trait == "Shady")
+        {
+            t.DestroyTown();
+        }
+    }
+
+    //reduces happiness as train moves. decrease = amount happiness typically drops by, numPassengers = number of passengers
+    public void OnTrainMove(float decrease, int numPassengers)
+    {
+        switch (trait)
+        {
+            case "Carefree":
+                decrease = 0f;
+                break;
+
+            case "Antisocial":
+                decrease *= (float)(numPassengers - 2);
+                break;
+
+            case "Social":
+                decrease *= (float)(3 - numPassengers);
+                break;
+
+            case "Irritable":
+                decrease *= 2;
+                break;
+
+            default:
+                break;
+        }
+        
+        DecreaseHappiness(decrease);
+    
+
+    }
+
+    //move to the designated location. trown: false-> bounce multiple times, true -> bounce once and much higher
+    public async Task MoveTo(Vector3 pos, bool thrown)
     {
         //determine stats for the bouncing step animation.
-        float bounceHeight = UnityEngine.Random.Range(0.2f, 0.5f);
+        float bounceHeight = 3.5f;
+        if (!thrown)
+        {
+            bounceHeight = UnityEngine.Random.Range(0.2f, 0.5f);
+        }
         float distance = 0;
         float totalDist = (pos - transform.position).magnitude;
-        int bounceCount = (int)(totalDist / bounceDist);
+        int bounceCount = 1;
+        if (!thrown)
+        {
+            bounceCount = (int)(totalDist / bounceDist);
+        }
+        float moveSpeed = (float)speed;
+        if (thrown)
+        {
+            moveSpeed *= 2.5f;
+        }
+
         float period = totalDist / (float)bounceCount;
         //Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
         //Debug.Log("bounce height: " + bounceHeight);
@@ -208,7 +314,7 @@ public class Passenger : MonoBehaviour
         while(travelPos != pos)
         {
             //Debug.Log((pos - travelPos).magnitude);
-            if((pos - travelPos).magnitude <= speed)
+            if((pos - travelPos).magnitude <= moveSpeed)
             {
                 Debug.Log("almost done");
                 travelPos = pos;
@@ -227,11 +333,20 @@ public class Passenger : MonoBehaviour
                 //Debug.Log("moving " + ((pos - transform.position).normalized).magnitude + ", " + speed);
                 counter++;
 
-                travelPos += (pos - travelPos).normalized * (float)speed;
+                travelPos += (pos - travelPos).normalized * moveSpeed;
 
-                distance += (float)speed;
+                distance += moveSpeed;
                 float bounceOffset = bounceHeight / 2 * -Mathf.Cos(((2 * Mathf.PI) / period) * distance) + bounceHeight / 2;
-                float angleOffset = tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance); 
+                float angleOffset;
+                if (thrown)
+                {
+                    angleOffset = -(360 / totalDist) * distance;
+                }
+                else
+                {
+                    angleOffset = -tiltAngle * Mathf.Sin(((2 * Mathf.PI) / (period * 2)) * distance);
+                }
+
 
                 transform.position = travelPos + new Vector3(0, bounceOffset, 0);
 

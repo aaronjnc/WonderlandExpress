@@ -11,6 +11,8 @@ public class TownDictionary : MonoBehaviour
     public List<Town> towns = new List<Town>();
     //the dictionary to be used.
     public Dictionary<string, Town> dict = new Dictionary<string, Town>();
+    //list of all destroyed towns
+    public List<Town> destroyed = new List<Town>();
 
     [Tooltip("the current town")]
     public Town currentTown;
@@ -128,7 +130,13 @@ public class TownDictionary : MonoBehaviour
     public Town GenerateDestination()
     {
         List<Town> allowedList = currentTown.GetAllowedList();
-        return allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
+        Town dest = allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
+        while (dest.IsDestroyed() && allowedList.Count > 1)
+        {
+            allowedList.Remove(dest);
+            dest = allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
+        }
+        return dest;
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -137,5 +145,13 @@ public class TownDictionary : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    //Destroys the town and adds it to the destroyed list
+    public void DestroyTown(string town)
+    {
+        Town t = FindTown(town);
+        t.DestroyTown();
+        destroyed.Add(t);
     }
 }

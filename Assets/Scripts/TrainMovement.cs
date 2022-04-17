@@ -37,11 +37,12 @@ public class TrainMovement : MonoBehaviour
     private LayerMask choiceLayer;
     [Tooltip("List of following cars"), SerializeField] 
     private List<FollowTrain> trainCars = new List<FollowTrain>();
-    [Tooltip("Camera is zoomed out")]
+    [Tooltip("Camera is zoomed out"), HideInInspector]
     public bool zoomedOut = false;
     [Tooltip("Camera transition script"), SerializeField]
     private CameraTransition camTransition;
-
+    [Tooltip("Train audio manager"), SerializeField]
+    private TrainAudioManager trainAudioManager;
     private void Start()
     {
         _instance = this;
@@ -104,6 +105,7 @@ public class TrainMovement : MonoBehaviour
             if (Vector3.Distance(transform.position, nextPoint.transform.position) < stoppingDistance
                 && !nextPoint.continuous)
             {
+                trainAudioManager.SlowDown();
                 if (currentVel == Vector3.zero)
                 {
                     currentVel = -transform.up * velocity;
@@ -119,6 +121,14 @@ public class TrainMovement : MonoBehaviour
             {
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
+                if (velocity == maxVelocity)
+                {
+                    trainAudioManager.ConstantSpeed();
+                }
+                else
+                {
+                    trainAudioManager.SpeedUp();
+                }
             }
             if (!zoomedOut)
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);

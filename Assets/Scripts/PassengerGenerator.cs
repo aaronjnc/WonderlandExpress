@@ -31,6 +31,9 @@ public class PassengerGenerator : MonoBehaviour
     [Tooltip("Possible passenger deny messages")]
     public List<string> pdms = new List<string>();
 
+    [Tooltip("Possible passenger dropoff messages")]
+    public List<string> pdoms = new List<string>();
+
     [Header("Moderate Passenger Lines")]
 
     [Tooltip("Possible passenger passage messages")]
@@ -41,6 +44,9 @@ public class PassengerGenerator : MonoBehaviour
 
     [Tooltip("Possible passenger deny messages")]
     public List<string> mdms = new List<string>();
+
+    [Tooltip("Possible passenger dropoff messages")]
+    public List<string> mdoms = new List<string>();
 
     [Header("Rich Passenger Lines")]
 
@@ -53,6 +59,32 @@ public class PassengerGenerator : MonoBehaviour
     [Tooltip("Possible passenger deny messages")]
     public List<string> rdms = new List<string>();
 
+    [Tooltip("Possible passenger dropoff messages")]
+    public List<string> rdoms = new List<string>();
+
+    [Header("Traits")]
+
+    [Tooltip("Trait names. First should be 'Normal', followed by all other traits")]
+    public List<string> traits = new List<string>();
+
+    [Tooltip("Trait descriptions. Must follow same order as traits")]
+    public List<string> descriptions = new List<string>();
+
+    [Tooltip("Passenger messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    public List<string> tpms = new List<string>();
+
+    [Tooltip("Accept messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    public List<string> tams = new List<string>();
+
+    [Tooltip("Deny messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    public List<string> tdms = new List<string>();
+
+    [Tooltip("Drop off messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    public List<string> tdoms = new List<string>();
+
+    [Tooltip("Chance of a passenger getting a trait other than 'Normal'")]
+    public float traitChance = 0.35f;
+
     [Header("Other Stats")]
 
     [Tooltip("Barrier for poor passenger.\n Any passenger with wealth below this number is considered poor.")]
@@ -64,8 +96,8 @@ public class PassengerGenerator : MonoBehaviour
     //whether or not the player is in wonderland
     bool wonderland;
 
-    //takes in an array of the current passengers and removes their names from the list of possible options.
-    public void InitializeNames(GameObject[] passengers)
+    //takes in an array of the current passengers and removes their names and traits from the list of possible options.
+    public void Initialize(GameObject[] passengers)
     {
         IsWonderland();
         foreach(GameObject obj in passengers)
@@ -83,15 +115,29 @@ public class PassengerGenerator : MonoBehaviour
                     rwFirstNames.Remove(pass.GetFirst());
                     rwLastNames.Remove(pass.GetLast());
                 }
+                if(pass.GetTrait() != traits[0])
+                {
+                    int traitNum = traits.IndexOf(pass.GetTrait());
+                    traits.RemoveAt(traitNum);
+                    descriptions.RemoveAt(traitNum);
+                    tpms.RemoveAt(traitNum);
+                    tams.RemoveAt(traitNum);
+                    tdms.RemoveAt(traitNum);
+                    tdoms.RemoveAt(traitNum);
+
+                }
             }
         }
     }
+
+    //takes in an array of the current pas
 
     //takes a given passenger and assigns them a name and lines 
     public void SetupPassenger(Passenger pass)
     {
         GenerateName(pass);
-        GenerateLines(pass);
+        GenerateTrait(pass);
+        
     }
 
     //generates a random name for the passenger and removes the name from the lists
@@ -117,31 +163,69 @@ public class PassengerGenerator : MonoBehaviour
     }
 
     //generates random lines for the passenger
-    public void GenerateLines(Passenger pass)
+    public void GenerateLines(Passenger pass, int traitNum)
     {
         float wealth = pass.GetWealth();
         string pm;
         string am;
         string dm;
-        if(wealth < poor)
+        string dom;
+        if (traitNum != 0)
         {
-            pm = ppms.ToArray()[UnityEngine.Random.Range(0, ppms.ToArray().Length)];
-            am = pams.ToArray()[UnityEngine.Random.Range(0, pams.ToArray().Length)];
-            dm = pdms.ToArray()[UnityEngine.Random.Range(0, pdms.ToArray().Length)];
-        }
-        else if(wealth > rich)
-        {
-            pm = rpms.ToArray()[UnityEngine.Random.Range(0, rpms.ToArray().Length)];
-            am = rams.ToArray()[UnityEngine.Random.Range(0, rams.ToArray().Length)];
-            dm = rdms.ToArray()[UnityEngine.Random.Range(0, rdms.ToArray().Length)];
+            pm = tpms[traitNum];
+            tpms.RemoveAt(traitNum);
+            am = tams[traitNum];
+            tams.RemoveAt(traitNum);
+            dm = tdms[traitNum];
+            tdms.RemoveAt(traitNum);
+            dom = tdoms[traitNum];
+            tdoms.RemoveAt(traitNum);
+
         }
         else
         {
-            pm = mpms.ToArray()[UnityEngine.Random.Range(0, mpms.ToArray().Length)];
-            am = mams.ToArray()[UnityEngine.Random.Range(0, mams.ToArray().Length)];
-            dm = mdms.ToArray()[UnityEngine.Random.Range(0, mdms.ToArray().Length)];
+            if (wealth < poor)
+            {
+                pm = ppms.ToArray()[UnityEngine.Random.Range(0, ppms.ToArray().Length)];
+                am = pams.ToArray()[UnityEngine.Random.Range(0, pams.ToArray().Length)];
+                dm = pdms.ToArray()[UnityEngine.Random.Range(0, pdms.ToArray().Length)];
+                dom = pdoms.ToArray()[UnityEngine.Random.Range(0, pdoms.ToArray().Length)];
+            }
+            else if (wealth > rich)
+            {
+                pm = rpms.ToArray()[UnityEngine.Random.Range(0, rpms.ToArray().Length)];
+                am = rams.ToArray()[UnityEngine.Random.Range(0, rams.ToArray().Length)];
+                dm = rdms.ToArray()[UnityEngine.Random.Range(0, rdms.ToArray().Length)];
+                dom = rdoms.ToArray()[UnityEngine.Random.Range(0, rdoms.ToArray().Length)];
+            }
+            else
+            {
+                pm = mpms.ToArray()[UnityEngine.Random.Range(0, mpms.ToArray().Length)];
+                am = mams.ToArray()[UnityEngine.Random.Range(0, mams.ToArray().Length)];
+                dm = mdms.ToArray()[UnityEngine.Random.Range(0, mdms.ToArray().Length)];
+                dom = mdoms.ToArray()[UnityEngine.Random.Range(0, mdoms.ToArray().Length)];
+            }
         }
-        pass.SetLines(pm, am, dm);
+        pass.SetLines(pm, am, dm, dom);
+    }
+
+    //generates trait for the passenger
+    public void GenerateTrait(Passenger pass)
+    {
+        int traitNum = 0;
+        if(UnityEngine.Random.Range(0f, 1f) <= traitChance)
+        {
+            traitNum = UnityEngine.Random.Range(1, traits.Count);
+            pass.SetTrait(traits[traitNum], descriptions[traitNum]);
+            traits.RemoveAt(traitNum);
+            descriptions.RemoveAt(traitNum);
+        }
+        else
+        {
+            pass.SetTrait(traits[0], descriptions[0]);
+        }
+
+        GenerateLines(pass, traitNum);
     }
 
 
