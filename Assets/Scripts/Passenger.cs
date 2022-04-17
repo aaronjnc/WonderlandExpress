@@ -282,12 +282,12 @@ public class Passenger : MonoBehaviour
     {
         Sprite sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
         //determine stats for the bouncing step animation.
-        float bounceHeight = 5.5f;
+        float bounceHeight = 4.5f;
         float moveSpeed = (float)speed;
         if (thrown)
         {
             //pos -= new Vector3(0, (bc.bounds.center.y - transform.position.y), 0);
-            moveSpeed *= 3.5f;
+            moveSpeed *= 3.0f;
         }
         if (!thrown)
         {
@@ -329,6 +329,9 @@ public class Passenger : MonoBehaviour
                 float timeDiff = endTime - startTime;
                 int frameDiff = endFrame - startFrame;
                 Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
+                Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y / 4);// sprite.bounds.center;
+                Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
+                Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, 1f);
 
             }
             else
@@ -345,11 +348,11 @@ public class Passenger : MonoBehaviour
                 if (thrown)
                 {
                     angleOffset = (360 / totalDist) * moveSpeed;
-                    Vector3 centerOfRotation = sprite.bounds.center;
+                    Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y/4);// sprite.bounds.center;
                     transform.RotateAround(centerOfRotation, Vector3.forward, angleOffset);
-                    //Vector3 diff = (sprite.bounds.extents.y * transform.up.normalized);
-                    //bounce += diff;
-                    //Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, .1f);
+                    Vector3 diff = (centerOfRotation - transform.position) * -Mathf.Cos(((2 * Mathf.PI) / period) * distance) + (centerOfRotation - transform.position);
+                    bounce -= diff;
+                    //Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, .5f);
                 }
                 else
                 {
