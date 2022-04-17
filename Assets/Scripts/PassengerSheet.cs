@@ -19,9 +19,13 @@ public class PassengerSheet : MonoBehaviour
     private void Awake()
     {
         t = GetComponent<RectTransform>();
+        UpdatePassengers();
+    }
+    public void UpdatePassengers()
+    {
         passengers = new Passenger[GameManager.Instance.GetPassengerCount()];
         int i = 0;
-        foreach(GameObject p in GameManager.Instance.GetPassengers())
+        foreach (GameObject p in GameManager.Instance.GetPassengers())
         {
             if (p == null)
                 continue;
