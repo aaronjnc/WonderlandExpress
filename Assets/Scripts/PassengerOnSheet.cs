@@ -39,8 +39,8 @@ public class PassengerOnSheet : MonoBehaviour
     {
         passengerName.text = "Name: " + passenger.firstName + " " + passenger.lastName;
         destination.text = "Destination: " + passenger.destination;
-        gold.text = "Destination: " + passenger.gold;
-        happiness.text = "Destination: " + Mathf.Round(passenger.happiness*100) + "%";
+        gold.text = "Payment: " + passenger.gold;
+        happiness.text = "Happiness: " + Mathf.Round(passenger.happiness*100) + "%";
         trait.text = "Trait: " + passenger.trait;
     }
 }

@@ -6,6 +6,8 @@ public class JabberwockyPoint : TrackPoint
 {
     [Tooltip("End game canvas"), SerializeField]
     private GameObject endGame;
+    [SerializeField]
+    private PassengerSheet sheet;
     public override void StopAction()
     {
         if (GameManager.Instance.gold > GameManager.Instance.GetJabberwockyPrice())
@@ -17,6 +19,7 @@ public class JabberwockyPoint : TrackPoint
         {
             int random = Random.Range(0, GameManager.Instance.GetPassengerCount());
             GameManager.Instance.EatPassenger(random);
+            sheet.UpdatePassengers();
         }
         else
         {
