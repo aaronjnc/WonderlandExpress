@@ -43,6 +43,9 @@ public class TrainMovement : MonoBehaviour
     private CameraTransition camTransition;
     [Tooltip("Train audio manager"), SerializeField]
     private TrainAudioManager trainAudioManager;
+    private Quaternion lookRotation;
+    [SerializeField]
+    private float rotationSpeed = 100;
     private void Start()
     {
         _instance = this;
@@ -61,6 +64,8 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.Click.Enable();
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
+        lookRotation = transform.rotation;
+        rotationSpeed = 70;
     }
     private void Zoom(CallbackContext ctx)
     {
@@ -102,6 +107,10 @@ public class TrainMovement : MonoBehaviour
     {
         if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)
         {
+            if (transform.rotation != lookRotation)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            }
             if (Vector3.Distance(transform.position, nextPoint.transform.position) < stoppingDistance
                 && !nextPoint.continuous)
             {
@@ -146,7 +155,10 @@ public class TrainMovement : MonoBehaviour
             {
                 previousChosen.StopAction();
             }
-            transform.up = -(nextPoint.transform.position - transform.position);
+            Vector3 diff = -(nextPoint.transform.position - transform.position);
+            diff.Normalize();
+            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            lookRotation = Quaternion.Euler(0, 0, rot - 90);
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
             if (!zoomedOut)
