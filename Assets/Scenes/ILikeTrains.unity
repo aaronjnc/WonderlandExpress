@@ -6099,7 +6099,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextPoint: {fileID: 1649657387}
   train: {fileID: 1408978670}
-  distanceBehind: 6.5
+  distanceBehind: 8.85
+  rotationSpeed: 70
 --- !u!50 &177957724
 Rigidbody2D:
   serializedVersion: 4
@@ -6179,13 +6180,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177957722}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5, y: -13.183, z: -1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -8.85, y: -13.183, z: -1}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!61 &177957727
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26311,7 +26312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &766337235
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46498,7 +46499,7 @@ MonoBehaviour:
   zoomedOut: 0
   camTransition: {fileID: 1691787168}
   trainAudioManager: {fileID: 1328246594}
-  rotationSpeed: 100
+  rotationSpeed: 70
 --- !u!50 &1408978672
 Rigidbody2D:
   serializedVersion: 4

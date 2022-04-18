@@ -7,29 +7,48 @@ public class FollowTrain : MonoBehaviour
     public TrackPoint nextPoint;
     [SerializeField] private Transform train;
     [SerializeField] private float distanceBehind;
-    private void FixedUpdate()
+    private Quaternion lookRotation;
+    [SerializeField]
+    private float rotationSpeed;
+    private void Start()
     {
+        lookRotation = transform.rotation;
+    }
+    private void FixedUpdate()
+    {    
         if (Vector3.Distance(transform.position, nextPoint.transform.position) < .06)
         {
             transform.position = nextPoint.transform.position;
             nextPoint = nextPoint.chosenNext;
-            transform.right = nextPoint.transform.position - transform.position;
+            Vector3 diff = -(nextPoint.transform.position - transform.position);
+            diff.Normalize();
+            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            lookRotation = Quaternion.Euler(0, 0, rot - 90);
+        }
+        if (transform.rotation != lookRotation)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
         float vel = TrainMovement.Instance.velocity;
         if (vel != 0)
-            transform.position += transform.right * TrainMovement.Instance.velocity * Time.deltaTime;   
+            transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, vel * Time.deltaTime);
     }
 
     public void SetNextPoint(string name)
     {
         nextPoint = GameObject.Find(name).GetComponent<TrackPoint>();
-        if (-train.up == transform.right)
+        if (train.up == transform.up)
         {
-            transform.position = train.position - (transform.right * distanceBehind);
+            Debug.Log(train.up + " " + transform.up);
+            transform.position = train.position - (transform.up * distanceBehind);
         }
+        Vector3 diff = -(nextPoint.transform.position - transform.position);
+        diff.Normalize();
+        float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        lookRotation = Quaternion.Euler(0, 0, rot - 90);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.position = train.position - (transform.right * distanceBehind);
+        transform.position = train.position - (transform.up * distanceBehind);
     }
 }
