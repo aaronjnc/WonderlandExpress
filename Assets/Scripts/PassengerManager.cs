@@ -168,6 +168,7 @@ public class PassengerManager : MonoBehaviour
         passGen.Initialize(currentPass);
         PassActive();
         GeneratePassengers();
+        StartBGAudio();
         DisplayAllPass();
         await CheckPassengerDestination();
         //Debug.Log("list length: " + waitingPass.Count);
@@ -183,6 +184,20 @@ public class PassengerManager : MonoBehaviour
         uiMan.DisplayTown(GetTown());
         uiMan.DisplayGold(GameManager.Instance.GetGold());
         uiMan.DisplayToll(GameManager.Instance.GetToll());
+    }
+
+    //starts playing bg audio
+    void StartBGAudio()
+    {
+        if (GetTown().IsDestroyed())
+        {
+            audioMan.PlayBGAudio("destroyed");
+        }
+        else
+        {
+            audioMan.PlayBGAudio(waitingPass.Count - 1);
+        }
+       
     }
 
     //What to do when leaving the town
