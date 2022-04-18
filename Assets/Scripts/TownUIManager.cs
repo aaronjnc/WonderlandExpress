@@ -182,7 +182,7 @@ public class TownUIManager : MonoBehaviour
         DisplayIncrement(final - current);
         while(current < final)
         {
-            if(final - current > tickRate)
+            if(final - current < tickRate)
             {
                 current = final;
             }

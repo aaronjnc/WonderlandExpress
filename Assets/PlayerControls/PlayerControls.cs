@@ -53,6 +53,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ContinueText"",
+                    ""type"": ""Button"",
+                    ""id"": ""523fa882-10c4-4309-bca4-822148653fe5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -86,6 +95,39 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Train Whistle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d1ecb0c2-06d6-41b3-8fab-8fb0590ec5f5"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ContinueText"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4bb79fc8-3950-4a74-ad5d-7fde6675d124"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ContinueText"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a89ec7d-ee62-43b6-875d-b89ba9e85e49"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ContinueText"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -127,6 +169,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_ClickEvents_Click = m_ClickEvents.FindAction("Click", throwIfNotFound: true);
         m_ClickEvents_ZoomOut = m_ClickEvents.FindAction("ZoomOut", throwIfNotFound: true);
         m_ClickEvents_TrainWhistle = m_ClickEvents.FindAction("Train Whistle", throwIfNotFound: true);
+        m_ClickEvents_ContinueText = m_ClickEvents.FindAction("ContinueText", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Pause = m_Menu.FindAction("Pause", throwIfNotFound: true);
@@ -192,6 +235,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_ClickEvents_Click;
     private readonly InputAction m_ClickEvents_ZoomOut;
     private readonly InputAction m_ClickEvents_TrainWhistle;
+    private readonly InputAction m_ClickEvents_ContinueText;
     public struct ClickEventsActions
     {
         private @PlayerControls m_Wrapper;
@@ -199,6 +243,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Click => m_Wrapper.m_ClickEvents_Click;
         public InputAction @ZoomOut => m_Wrapper.m_ClickEvents_ZoomOut;
         public InputAction @TrainWhistle => m_Wrapper.m_ClickEvents_TrainWhistle;
+        public InputAction @ContinueText => m_Wrapper.m_ClickEvents_ContinueText;
         public InputActionMap Get() { return m_Wrapper.m_ClickEvents; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -217,6 +262,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @TrainWhistle.started -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnTrainWhistle;
                 @TrainWhistle.performed -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnTrainWhistle;
                 @TrainWhistle.canceled -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnTrainWhistle;
+                @ContinueText.started -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnContinueText;
+                @ContinueText.performed -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnContinueText;
+                @ContinueText.canceled -= m_Wrapper.m_ClickEventsActionsCallbackInterface.OnContinueText;
             }
             m_Wrapper.m_ClickEventsActionsCallbackInterface = instance;
             if (instance != null)
@@ -230,6 +278,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @TrainWhistle.started += instance.OnTrainWhistle;
                 @TrainWhistle.performed += instance.OnTrainWhistle;
                 @TrainWhistle.canceled += instance.OnTrainWhistle;
+                @ContinueText.started += instance.OnContinueText;
+                @ContinueText.performed += instance.OnContinueText;
+                @ContinueText.canceled += instance.OnContinueText;
             }
         }
     }
@@ -272,6 +323,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnZoomOut(InputAction.CallbackContext context);
         void OnTrainWhistle(InputAction.CallbackContext context);
+        void OnContinueText(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
