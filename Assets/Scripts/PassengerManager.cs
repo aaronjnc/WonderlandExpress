@@ -419,7 +419,7 @@ public class PassengerManager : MonoBehaviour
         DisplayPass();
         GameManager.Instance.AddPassenger();
         uiMan.SetConductorImage(0);
-        MoveWaitingPass();
+        await MoveWaitingPass();
         NewPassenger();
         
     }
@@ -442,14 +442,14 @@ public class PassengerManager : MonoBehaviour
         waitingPass.Remove(pass);
         await pass.GetComponent<Passenger>().MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.SetConductorImage(0);
-        MoveWaitingPass();
+        await MoveWaitingPass();
         NewPassenger();
         Destroy(pass);
         
     }
 
     //adds the passenger at the given index from the current passenger list. Used for button interaction
-    public async void AddPass(GameObject pass)
+    public void AddPass(GameObject pass)
     {
         DontDestroyOnLoad(pass);
         Debug.Log("trying to add passenger");

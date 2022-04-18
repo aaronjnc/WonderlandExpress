@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class GameManager : MonoBehaviour
     public float happinessDecayRate = 1f;
     [Tooltip("Next toll price")]
     public int tollPrice = 50;
+    [Tooltip("the value the toll is multiplied by at every sucessful pass")]
+    public float tollMod = 1.2f;
     [Tooltip("Jabberwocky relative price"), SerializeField]
     private float jabberwockyMod = 1.5f;
     [Tooltip("Jabberwocky price")]
@@ -44,7 +47,7 @@ public class GameManager : MonoBehaviour
     private List<string> trainCarStops = new List<string>();
     [Tooltip("Disable passenger scene loading")]
     public bool trainSceneTesting = false;
-    public delegate void OnTollChange(int newToll, int newGold, int jabberPrice);
+    public delegate Task OnTollChange(int currentToll, int newToll, int currentGold, int newGold, int jabberwocky);
     public event OnTollChange TollChangeEvent;
     public static GameManager Instance
     {
@@ -166,7 +169,7 @@ public class GameManager : MonoBehaviour
     }
 
     //checks the toll against the current gold, 
-    //returns true and removes toll cost from gold if gold > toll
+    //returns true if gold > toll
     //returns false otherwise
     public bool CheckToll()
     {
@@ -174,22 +177,42 @@ public class GameManager : MonoBehaviour
         if(gold >= tollPrice)
         {
             Debug.Log("Toll good");
-            gold -= tollPrice;
-            if (TollChangeEvent != null)
-                TollChangeEvent(tollPrice, gold, jabberwockyPrice);
+            
             return true;
         }
         Debug.Log("Toll bad");
         return false;
     }
 
-    //multiplies toll by the given value
-    public void IncreaseToll(float mod)
+    //pays the toll and increases its value
+    public async Task TollPass()
     {
-        tollPrice = (int)(tollPrice * mod);
+        int oldGold = gold;
+        gold -= tollPrice;
+        int oldToll = tollPrice;
+        tollPrice = (int)(tollPrice * tollMod);
         jabberwockyPrice = (int)(tollPrice * jabberwockyMod);
         if (TollChangeEvent != null)
-            TollChangeEvent(tollPrice, gold, jabberwockyPrice);
+            await TollChangeEvent(oldToll, tollPrice, oldGold, gold, jabberwockyPrice);
+    }
+
+    //pays the toll, reducing gold by the amount given by the current toll
+    public void PayToll()
+    {
+        int oldGold = gold;
+        gold -= tollPrice;
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
+    }
+
+    //multiplies toll by the given value
+    public void IncreaseToll()
+    {
+        int oldToll = tollPrice;
+        tollPrice = (int)(tollPrice * tollMod);
+        jabberwockyPrice = (int)(tollPrice * jabberwockyMod);
+        if (TollChangeEvent != null)
+            TollChangeEvent(oldToll, tollPrice, gold, gold, jabberwockyPrice);
     }
 
     public int GetToll()
@@ -206,7 +229,7 @@ public class GameManager : MonoBehaviour
     {
         gold -= jabberwockyPrice;
         if (TollChangeEvent != null)
-            TollChangeEvent(tollPrice, gold, jabberwockyPrice);
+            TollChangeEvent(tollPrice, tollPrice, gold, gold, jabberwockyPrice);
     }
 
     public void RemovePassenger()
