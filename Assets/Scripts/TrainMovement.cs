@@ -45,7 +45,7 @@ public class TrainMovement : MonoBehaviour
     private TrainAudioManager trainAudioManager;
     private Quaternion lookRotation;
     [SerializeField]
-    private float rotationSpeed = 100;
+    private float rotationSpeed;
     private void Start()
     {
         _instance = this;
@@ -65,7 +65,6 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
         lookRotation = transform.rotation;
-        rotationSpeed = 70;
     }
     private void Zoom(CallbackContext ctx)
     {
