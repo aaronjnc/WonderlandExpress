@@ -74,6 +74,11 @@ public class TownMouseOverUI : MonoBehaviour
                 currentTownDisplay = null;
             }
         }
+        else
+        {
+            HideTownStats();
+            currentTownDisplay = null;
+        }
     }
 
 
@@ -86,5 +91,10 @@ public class TownMouseOverUI : MonoBehaviour
     public void HideTownStats()
     {
         townStats.SetActive(false);
+    }
+
+    public void SetInteract(bool canInteract)
+    {
+        interact = canInteract;
     }
 }
