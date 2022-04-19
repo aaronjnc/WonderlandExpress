@@ -8,23 +8,21 @@ public class JabberwockyPoint : TrackPoint
     private GameObject endGame;
     [SerializeField]
     private PassengerSheet sheet;
-    public override void StopAction()
+    public DialogueManager dm;
+    public async override void StopAction()
     {
         if (GameManager.Instance.gold > GameManager.Instance.GetJabberwockyPrice())
         {
-            GameManager.Instance.PayJabberwocky();
-            Debug.Log("You survived");
+            await dm.DisplayDialog("jwSuccess");
         }
         else if (GameManager.Instance.GetPassengerCount() > 0) 
         {
-            int random = Random.Range(0, GameManager.Instance.GetPassengerCount());
-            GameManager.Instance.EatPassenger(random);
+            await dm.DisplayDialog("jwFailure");
             sheet.UpdatePassengers();
         }
         else
         {
-            Time.timeScale = 0;
-            endGame.SetActive(true);
+            await dm.DisplayDialog("jwGameOver");
         }
     }
 }

@@ -225,11 +225,12 @@ public class GameManager : MonoBehaviour
         return jabberwockyPrice;
     }
 
-    public void PayJabberwocky()
+    public async Task PayJabberwocky()
     {
+        int oldGold = gold;
         gold -= jabberwockyPrice;
         if (TollChangeEvent != null)
-            TollChangeEvent(tollPrice, tollPrice, gold, gold, jabberwockyPrice);
+            await TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
     }
 
     public void RemovePassenger()
@@ -247,11 +248,13 @@ public class GameManager : MonoBehaviour
         return passengerCount;
     }
 
-    public void EatPassenger(int i)
+    public async Task EatPassenger(int i, GameObject start, GameObject jw)
     {
         RemovePassenger();
         Passenger pass = passengers[i].GetComponent<Passenger>();
         Debug.Log(pass.firstName + " " + pass.lastName + " was eaten :(");
+        pass.Display(start.transform.position);
+        await pass.MoveTo(jw.transform.position, true);
         Destroy(passengers[i]);
         passengers[i] = null;
     }
