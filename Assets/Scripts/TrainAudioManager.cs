@@ -16,6 +16,8 @@ public class TrainAudioManager : MonoBehaviour
     [Tooltip("Train max speed audio clip"), SerializeField]
     private AudioClip trainRegular;
     PlayerControls controls;
+    [HideInInspector]
+    public int state = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,7 @@ public class TrainAudioManager : MonoBehaviour
             trainAudioSource.loop = false;
             trainAudioSource.clip = trainAccelerate;
             trainAudioSource.Play();
+            state = 1;
             StartCoroutine("playEngineSound");
         }
     }
@@ -47,6 +50,7 @@ public class TrainAudioManager : MonoBehaviour
             trainAudioSource.loop = false;
             trainAudioSource.clip = trainDecelerate;
             trainAudioSource.Play();
+            state = 2;
         }
     }
     public void ConstantSpeed()
@@ -56,6 +60,7 @@ public class TrainAudioManager : MonoBehaviour
             trainAudioSource.loop = true;
             trainAudioSource.clip = trainRegular;
             trainAudioSource.Play();
+            state = 0;
         }
     }
     IEnumerator playEngineSound()
