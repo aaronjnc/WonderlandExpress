@@ -891,7 +891,7 @@ MonoBehaviour:
   targetFR: 30
   passengers: []
   maxCap: 5
-  gold: 0
+  gold: 12
   happinessDecayRate: 1
   tollPrice: 30
   tollMod: 1.2
@@ -17631,6 +17631,7 @@ MonoBehaviour:
   trainAccelerate: {fileID: 0}
   trainDecelerate: {fileID: 0}
   trainRegular: {fileID: 0}
+  state: 0
 --- !u!4 &508132509
 Transform:
   m_ObjectHideFlags: 0
@@ -22426,7 +22427,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3625043607559282579, guid: 045b15ec09bba42448d89db77fa6f20a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c4233f23dd4b21644ad1d72df1b11be8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
