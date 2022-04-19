@@ -44,6 +44,10 @@ public class DialogueManager : MonoBehaviour
     [Tooltip("The town mouseover script, to disable mouseover ui while running")]
     public TownMouseOverUI tmo;
     [Space]
+    [Tooltip("Passenger train. Used for throwing passengers")]
+    public GameObject passTrain;
+    [Tooltip("Jabberwocky head. Used to determine where to throw passengers when being eaten")]
+    public GameObject jwHead;
     [Tooltip("End game canvas obect"), SerializeField]
     private GameObject endGame;
 
@@ -138,6 +142,16 @@ public class DialogueManager : MonoBehaviour
             {
                 Time.timeScale = 0;
                 endGame.SetActive(true);
+            }
+            else if(d.uniqueInteraction == "PayJW")
+            {
+                await GameManager.Instance.PayJabberwocky();
+                Debug.Log("You survived");
+            }
+            else if(d.uniqueInteraction == "FailJW")
+            {
+                int random = Random.Range(0, GameManager.Instance.GetPassengerCount());
+                await GameManager.Instance.EatPassenger(random, passTrain, jwHead);
             }
         }
         Debug.Log("all dialogs complete");
