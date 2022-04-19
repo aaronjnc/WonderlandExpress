@@ -46,6 +46,7 @@ public class TrainMovement : MonoBehaviour
     private Quaternion lookRotation;
     [SerializeField]
     private float rotationSpeed;
+    private float previousTime;
     private void Start()
     {
         _instance = this;
@@ -65,9 +66,12 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
         lookRotation = transform.rotation;
+        trainAudioManager.SpeedUp();
     }
     private void Zoom(CallbackContext ctx)
     {
+        if (Time.timeScale == 0)
+            return;
         if (zoomedOut)
         {
             camTransition.ZoomIn();
@@ -84,11 +88,12 @@ public class TrainMovement : MonoBehaviour
         if (pauseMenu.activeInHierarchy)
         {
             pauseMenu.SetActive(false);
-            Time.timeScale = 1;
+            Time.timeScale = previousTime;
         }
         else
         {
             pauseMenu.SetActive(true);
+            previousTime = Time.timeScale;
             Time.timeScale = 0;
         }
     }
@@ -129,14 +134,6 @@ public class TrainMovement : MonoBehaviour
             {
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
-                if (velocity == maxVelocity)
-                {
-                    trainAudioManager.ConstantSpeed();
-                }
-                else
-                {
-                    trainAudioManager.SpeedUp();
-                }
             }
             if (!zoomedOut)
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
@@ -160,6 +157,7 @@ public class TrainMovement : MonoBehaviour
             lookRotation = Quaternion.Euler(0, 0, rot - 90);
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
+            trainAudioManager.SpeedUp();
             if (!zoomedOut)
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
             stopped = false;
