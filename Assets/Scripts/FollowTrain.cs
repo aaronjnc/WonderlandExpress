@@ -40,7 +40,7 @@ public class FollowTrain : MonoBehaviour
         if (train.up == transform.up)
         {
             Debug.Log(train.up + " " + transform.up);
-            transform.position = train.position - (transform.up * distanceBehind);
+            transform.position = train.position + (transform.up * distanceBehind);
         }
         Vector3 diff = -(nextPoint.transform.position - transform.position);
         diff.Normalize();
@@ -49,6 +49,6 @@ public class FollowTrain : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.position = train.position - (transform.up * distanceBehind);
+        transform.position = train.position + (transform.up * distanceBehind);
     }
 }

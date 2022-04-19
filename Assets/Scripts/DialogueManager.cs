@@ -104,12 +104,14 @@ public class DialogueManager : MonoBehaviour
 
     public void HideDisplay()
     {
+        Time.timeScale = 1;
         dialogObject.SetActive(false);
     }
 
     //shows dialog corresponding to the given string
     public async Task DisplayDialog(string path)
     {
+        Time.timeScale = 0;
         conductorTalking = true;
         tmo.SetInteract(false);
         ct.SetInteracting(false);
