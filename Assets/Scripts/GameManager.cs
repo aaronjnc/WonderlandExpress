@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
+    [Tooltip("Target Frame Rate - DO NOT CHANGE WITHOUT MENTIONING FIRST")]
+    [SerializeField]
+    private int targetFR = 30;
     [Tooltip("Application is quitting")]
     private static bool applicationIsQuitting = false;
     [Tooltip("Current position of the train")]
@@ -19,10 +23,20 @@ public class GameManager : MonoBehaviour
     public GameObject[] passengers;
     [Tooltip("Max number of passengers")]
     public int maxCap = 5;
+    [Tooltip("Current number of passengers")]
+    private int passengerCount = 0;
     [Tooltip("Current amount of gold")]
     public int gold = 0;
+    [Tooltip("Rate at which passenger happiness decreases. measured in %/sec")]
+    public float happinessDecayRate = 1f;
     [Tooltip("Next toll price")]
     public int tollPrice = 50;
+    [Tooltip("the value the toll is multiplied by at every sucessful pass")]
+    public float tollMod = 1.2f;
+    [Tooltip("Jabberwocky relative price"), SerializeField]
+    private float jabberwockyMod = 1.5f;
+    [Tooltip("Jabberwocky price")]
+    private int jabberwockyPrice;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
     [Tooltip("List of positions for follow cars")]
@@ -33,9 +47,7 @@ public class GameManager : MonoBehaviour
     private List<string> trainCarStops = new List<string>();
     [Tooltip("Disable passenger scene loading")]
     public bool trainSceneTesting = false;
-    [Tooltip("TrainUIInfo"), SerializeField]
-    private TrainUIInfo trainUIInfo;
-    public delegate void OnTollChange(int newToll, int newGold);
+    public delegate Task OnTollChange(int currentToll, int newToll, int currentGold, int newGold, int jabberwocky);
     public event OnTollChange TollChangeEvent;
     public static GameManager Instance
     {
@@ -59,6 +71,7 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        Application.targetFrameRate = targetFR;
         if (Instance != this)
         {
             Destroy(this.gameObject);
@@ -70,7 +83,23 @@ public class GameManager : MonoBehaviour
         Application.quitting += () => applicationIsQuitting = true;
         SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
+        jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
     }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 1) {
+            foreach (GameObject pass in passengers)
+            {
+                if (pass != null)
+                {
+                    Debug.Log(happinessDecayRate / 100f / (float)targetFR);
+                    pass.GetComponent<Passenger>().OnTrainMove(happinessDecayRate / 100f / (float)targetFR, passengerCount);
+                }
+            }
+        }
+    }
+
     public void SetTrainPosition(Vector3 pos)
     {
         trainPosition = pos;
@@ -140,7 +169,7 @@ public class GameManager : MonoBehaviour
     }
 
     //checks the toll against the current gold, 
-    //returns true and removes toll cost from gold if gold > toll
+    //returns true if gold > toll
     //returns false otherwise
     public bool CheckToll()
     {
@@ -148,25 +177,86 @@ public class GameManager : MonoBehaviour
         if(gold >= tollPrice)
         {
             Debug.Log("Toll good");
-            gold -= tollPrice;
-            if (TollChangeEvent != null)
-                TollChangeEvent(tollPrice, gold);
+            
             return true;
         }
         Debug.Log("Toll bad");
         return false;
     }
 
-    //multiplies toll by the given value
-    public void IncreaseToll(float mod)
+    //pays the toll and increases its value
+    public async Task TollPass()
     {
-        tollPrice = (int)(tollPrice * mod);
+        int oldGold = gold;
+        gold -= tollPrice;
+        int oldToll = tollPrice;
+        tollPrice = (int)(tollPrice * tollMod);
+        jabberwockyPrice = (int)(tollPrice * jabberwockyMod);
         if (TollChangeEvent != null)
-            TollChangeEvent(tollPrice, gold);
+            await TollChangeEvent(oldToll, tollPrice, oldGold, gold, jabberwockyPrice);
+    }
+
+    //pays the toll, reducing gold by the amount given by the current toll
+    public void PayToll()
+    {
+        int oldGold = gold;
+        gold -= tollPrice;
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
+    }
+
+    //multiplies toll by the given value
+    public void IncreaseToll()
+    {
+        int oldToll = tollPrice;
+        tollPrice = (int)(tollPrice * tollMod);
+        jabberwockyPrice = (int)(tollPrice * jabberwockyMod);
+        if (TollChangeEvent != null)
+            TollChangeEvent(oldToll, tollPrice, gold, gold, jabberwockyPrice);
     }
 
     public int GetToll()
     {
         return tollPrice;
+    }
+
+    public int GetJabberwockyPrice()
+    {
+        return jabberwockyPrice;
+    }
+
+    public async Task PayJabberwocky()
+    {
+        int oldGold = gold;
+        gold -= jabberwockyPrice;
+        if (TollChangeEvent != null)
+            await TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
+    }
+
+    public void RemovePassenger()
+    {
+        passengerCount -= 1;
+    }
+
+    public void AddPassenger()
+    {
+        passengerCount += 1;
+    }
+
+    public int GetPassengerCount()
+    {
+        return passengerCount;
+    }
+
+    public async Task EatPassenger(int i, GameObject start, GameObject jw)
+    {
+        RemovePassenger();
+        Passenger pass = passengers[i].GetComponent<Passenger>();
+        Debug.Log(pass.firstName + " " + pass.lastName + " was eaten :(");
+        pass.gameObject.SetActive(true);
+        pass.Display(start.transform.position);
+        await pass.MoveTo(jw.transform.position, true);
+        Destroy(passengers[i]);
+        passengers[i] = null;
     }
 }

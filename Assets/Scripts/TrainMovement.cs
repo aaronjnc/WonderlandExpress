@@ -37,11 +37,16 @@ public class TrainMovement : MonoBehaviour
     private LayerMask choiceLayer;
     [Tooltip("List of following cars"), SerializeField] 
     private List<FollowTrain> trainCars = new List<FollowTrain>();
-    [Tooltip("Camera is zoomed out")]
+    [Tooltip("Camera is zoomed out"), HideInInspector]
     public bool zoomedOut = false;
     [Tooltip("Camera transition script"), SerializeField]
     private CameraTransition camTransition;
-
+    [Tooltip("Train audio manager"), SerializeField]
+    private TrainAudioManager trainAudioManager;
+    private Quaternion lookRotation;
+    [SerializeField]
+    private float rotationSpeed;
+    private float previousTime;
     private void Start()
     {
         _instance = this;
@@ -60,9 +65,13 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.Click.Enable();
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
+        lookRotation = transform.rotation;
+        trainAudioManager.SpeedUp();
     }
     private void Zoom(CallbackContext ctx)
     {
+        if (Time.timeScale == 0)
+            return;
         if (zoomedOut)
         {
             camTransition.ZoomIn();
@@ -79,11 +88,12 @@ public class TrainMovement : MonoBehaviour
         if (pauseMenu.activeInHierarchy)
         {
             pauseMenu.SetActive(false);
-            Time.timeScale = 1;
+            Time.timeScale = previousTime;
         }
         else
         {
             pauseMenu.SetActive(true);
+            previousTime = Time.timeScale;
             Time.timeScale = 0;
         }
     }
@@ -101,9 +111,14 @@ public class TrainMovement : MonoBehaviour
     {
         if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)
         {
+            if (transform.rotation != lookRotation)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            }
             if (Vector3.Distance(transform.position, nextPoint.transform.position) < stoppingDistance
                 && !nextPoint.continuous)
             {
+                trainAudioManager.SlowDown();
                 if (currentVel == Vector3.zero)
                 {
                     currentVel = -transform.up * velocity;
@@ -136,9 +151,13 @@ public class TrainMovement : MonoBehaviour
             {
                 previousChosen.StopAction();
             }
-            transform.up = -(nextPoint.transform.position - transform.position);
+            Vector3 diff = -(nextPoint.transform.position - transform.position);
+            diff.Normalize();
+            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            lookRotation = Quaternion.Euler(0, 0, rot - 90);
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
+            trainAudioManager.SpeedUp();
             if (!zoomedOut)
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
             stopped = false;
