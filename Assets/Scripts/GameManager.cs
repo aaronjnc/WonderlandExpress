@@ -253,6 +253,7 @@ public class GameManager : MonoBehaviour
         RemovePassenger();
         Passenger pass = passengers[i].GetComponent<Passenger>();
         Debug.Log(pass.firstName + " " + pass.lastName + " was eaten :(");
+        pass.gameObject.SetActive(true);
         pass.Display(start.transform.position);
         await pass.MoveTo(jw.transform.position, true);
         Destroy(passengers[i]);

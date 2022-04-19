@@ -96,14 +96,17 @@ public class DialogueManager : MonoBehaviour
     //public List<string> jwGameOverSpeakers = new List<string>();
 
     // Start is called before the first frame update
-    public void Awake()
+    public async void Awake()
     {
-        //DisplayDialog("test");
+        //await DisplayDialog("test");
         HideDisplay();
     }
 
     public void HideDisplay()
     {
+        //continueText.enabled = false;
+        //conductorNamePanel.SetActive(false);
+        //speakerNamePanel.SetActive(false);
         Time.timeScale = 1;
         dialogObject.SetActive(false);
     }
@@ -212,7 +215,7 @@ public class DialogueManager : MonoBehaviour
         
     }
 
-    public void inputReceived()
+    public async void inputReceived()
     {
         if (!canGetInput)
         {
@@ -227,9 +230,12 @@ public class DialogueManager : MonoBehaviour
         }
         else if(waitingForInput){
             waitingForInput = false;
+            continueText.enabled = true;
         }
         canGetInput = false;
-        Invoke("ResetInput", .1f);
+        await Task.Delay(100);
+        ResetInput();
+        //Invoke("ResetInput", .1f);
     }
 
     public void ResetInput()
