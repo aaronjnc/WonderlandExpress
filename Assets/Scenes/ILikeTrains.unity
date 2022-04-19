@@ -11308,7 +11308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &347231427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14174,7 +14174,7 @@ MonoBehaviour:
     uniqueInteraction: 
   - speaker: Jabberwocky
     message: Huh? That measly amount of gold is all you can offer? Well I can't be
-      expected to feed myself off of that, now can I? I guess I may just ahve to
+      expected to feed myself off of that, now can I? I guess I may just have to
       help myself to one of your passengers to make up for it.
     uniqueInteraction: FailJW
   - speaker: Jabberwocky
@@ -14189,7 +14189,7 @@ MonoBehaviour:
     message: Huh? That measly amount of gold is all you can offer? Well I can't be
       expected to feed myself off of that, now can I? And you're the only one there
       on that train, aren't you? I sure hope you're tasty.
-    uniqueInteraction: GameOverJW
+    uniqueInteraction: GameOver
   test:
   - speaker: Toll Troll
     message: This is a test
@@ -52306,7 +52306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1550273810
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52333,7 +52333,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550273809}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 

@@ -99,7 +99,7 @@ public class DialogueManager : MonoBehaviour
     public async void Awake()
     {
         //await DisplayDialog("test");
-        //HideDisplay();
+        HideDisplay();
     }
 
     public void HideDisplay()
@@ -230,6 +230,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if(waitingForInput){
             waitingForInput = false;
+            continueText.enabled = true;
         }
         canGetInput = false;
         await Task.Delay(100);
