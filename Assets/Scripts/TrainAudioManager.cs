@@ -33,9 +33,10 @@ public class TrainAudioManager : MonoBehaviour
     {
         if (trainAudioSource.clip != trainAccelerate)
         {
-            trainAudioSource.clip = trainAccelerate;
             trainAudioSource.loop = false;
+            trainAudioSource.clip = trainAccelerate;
             trainAudioSource.Play();
+            StartCoroutine("playEngineSound");
         }
     }
 
@@ -43,8 +44,8 @@ public class TrainAudioManager : MonoBehaviour
     {
         if (trainAudioSource.clip != trainDecelerate)
         {
-            trainAudioSource.clip = trainDecelerate;
             trainAudioSource.loop = false;
+            trainAudioSource.clip = trainDecelerate;
             trainAudioSource.Play();
         }
     }
@@ -52,9 +53,14 @@ public class TrainAudioManager : MonoBehaviour
     {
         if (trainAudioSource.clip != trainRegular)
         {
-            trainAudioSource.clip = trainRegular;
             trainAudioSource.loop = true;
+            trainAudioSource.clip = trainRegular;
             trainAudioSource.Play();
         }
+    }
+    IEnumerator playEngineSound()
+    {
+        yield return new WaitForSeconds(trainAudioSource.clip.length);
+        ConstantSpeed();
     }
 }

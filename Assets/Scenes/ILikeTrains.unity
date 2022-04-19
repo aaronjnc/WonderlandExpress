@@ -29648,7 +29648,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d2f54d3e6e8723c4483cae0a647c8e2a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -30017,7 +30017,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -44773,9 +44773,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trainAudioSource: {fileID: 869096684}
   trainWhistle: {fileID: 863755053}
-  trainAccelerate: {fileID: 0}
-  trainDecelerate: {fileID: 0}
-  trainRegular: {fileID: 0}
+  trainAccelerate: {fileID: 8300000, guid: 35be747b6e295f34e8974e482eb270a5, type: 3}
+  trainDecelerate: {fileID: 8300000, guid: cbd66ac737539804abd2fb476f550e94, type: 3}
+  trainRegular: {fileID: 8300000, guid: 7f5a3893f7dc67443805253645446b34, type: 3}
 --- !u!4 &1328246595
 Transform:
   m_ObjectHideFlags: 0
