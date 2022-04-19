@@ -3271,6 +3271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 84033916}
   - component: {fileID: 84033915}
+  - component: {fileID: 84033917}
   m_Layer: 0
   m_Name: Town 15
   m_TagString: Untagged
@@ -3311,6 +3312,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &84033917
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84033914}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &85946972
 GameObject:
   m_ObjectHideFlags: 0
@@ -5943,6 +5970,7 @@ GameObject:
   m_Component:
   - component: {fileID: 168109068}
   - component: {fileID: 168109067}
+  - component: {fileID: 168109069}
   m_Layer: 0
   m_Name: Town 24
   m_TagString: Untagged
@@ -5983,6 +6011,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &168109069
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168109066}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &169833309
 GameObject:
   m_ObjectHideFlags: 0
@@ -14075,6 +14129,8 @@ MonoBehaviour:
   tw: {fileID: 405986870}
   ct: {fileID: 1691787168}
   tmo: {fileID: 1759869158}
+  passTrain: {fileID: 177957722}
+  jwHead: {fileID: 1727568120}
   endGame: {fileID: 1392595841}
   charPerSec: 0.3
   conductorTalking: 0
@@ -14102,9 +14158,38 @@ MonoBehaviour:
       I'm sorry, but I'm afraid I'm gonna have to impound this here train for the
       time being. You're not gonna be conducting this again any time soon.
     uniqueInteraction: GameOver
-  jwSuccess: []
-  jwFailure: []
-  jwGameOver: []
+  jwSuccess:
+  - speaker: Jabberwocky
+    message: Hmmmmm. I am feeling oh so hungry right now. I think I could go for
+      a snack... unless you have some money to pay me, that is.
+    uniqueInteraction: 
+  - speaker: Jabberwocky
+    message: Ah. That will do nicely. I guess I can save you and your train for a
+      snack some other day.
+    uniqueInteraction: PayJW
+  jwFailure:
+  - speaker: Jabberwocky
+    message: Hmmmmm. I am feeling oh so hungry right now. I think I could go for
+      a snack... unless you have some money to pay me, that is.
+    uniqueInteraction: 
+  - speaker: Jabberwocky
+    message: Huh? That measly amount of gold is all you can offer? Well I can't be
+      expected to feed myself off of that, now can I? I guess I may just ahve to
+      help myself to one of your passengers to make up for it.
+    uniqueInteraction: FailJW
+  - speaker: Jabberwocky
+    message: Come bring me another snack sometime, won't you?
+    uniqueInteraction: 
+  jwGameOver:
+  - speaker: Jabberwocky
+    message: Hmmmmm. I am feeling oh so hungry right now. I think I could go for
+      a snack... unless you have some money to pay me, that is.
+    uniqueInteraction: 
+  - speaker: Jabberwocky
+    message: Huh? That measly amount of gold is all you can offer? Well I can't be
+      expected to feed myself off of that, now can I? And you're the only one there
+      on that train, aren't you? I sure hope you're tasty.
+    uniqueInteraction: GameOverJW
   test:
   - speaker: Toll Troll
     message: This is a test
@@ -14115,6 +14200,12 @@ MonoBehaviour:
   - speaker: Toll Troll
     message: Toll Troll's turn again. And why not end the game while we're at it?
     uniqueInteraction: GameOver
+  - speaker: 
+    message: 
+    uniqueInteraction: 
+  - speaker: 
+    message: 
+    uniqueInteraction: 
 --- !u!4 &405986872
 Transform:
   m_ObjectHideFlags: 0
@@ -17460,6 +17551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 508984060}
   - component: {fileID: 508984061}
+  - component: {fileID: 508984062}
   m_Layer: 0
   m_Name: Town 22
   m_TagString: Untagged
@@ -17500,6 +17592,32 @@ MonoBehaviour:
   continuous: 0
   trackChoice: 0
   text: {fileID: 647597920}
+--- !u!61 &508984062
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508984059}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &509590457
 GameObject:
   m_ObjectHideFlags: 0
@@ -18580,6 +18698,7 @@ MonoBehaviour:
   trackChoice: 0
   endGame: {fileID: 1392595841}
   sheet: {fileID: 1585852955}
+  dm: {fileID: 405986871}
 --- !u!1 &544841834
 GameObject:
   m_ObjectHideFlags: 0
@@ -19166,6 +19285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556003772}
   - component: {fileID: 556003771}
+  - component: {fileID: 556003773}
   m_Layer: 0
   m_Name: Town 16
   m_TagString: Untagged
@@ -19206,6 +19326,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &556003773
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556003770}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &563509860
 GameObject:
   m_ObjectHideFlags: 0
@@ -20063,6 +20209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 585992871}
   - component: {fileID: 585992872}
+  - component: {fileID: 585992873}
   m_Layer: 0
   m_Name: Town 17
   m_TagString: Untagged
@@ -20103,6 +20250,32 @@ MonoBehaviour:
   continuous: 1
   trackChoice: 0
   text: {fileID: 1883352821}
+--- !u!61 &585992873
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585992870}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &587504439
 GameObject:
   m_ObjectHideFlags: 0
@@ -21497,6 +21670,7 @@ GameObject:
   m_Component:
   - component: {fileID: 628047139}
   - component: {fileID: 628047138}
+  - component: {fileID: 628047140}
   m_Layer: 0
   m_Name: Town 21
   m_TagString: Untagged
@@ -21537,6 +21711,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &628047140
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628047137}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &630826701
 GameObject:
   m_ObjectHideFlags: 0
@@ -23848,6 +24048,7 @@ GameObject:
   m_Component:
   - component: {fileID: 702706904}
   - component: {fileID: 702706905}
+  - component: {fileID: 702706906}
   m_Layer: 0
   m_Name: Town 20
   m_TagString: Untagged
@@ -23888,6 +24089,32 @@ MonoBehaviour:
   continuous: 0
   trackChoice: 0
   text: {fileID: 2040933373}
+--- !u!61 &702706906
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702706903}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &702940047
 GameObject:
   m_ObjectHideFlags: 0
@@ -29599,6 +29826,7 @@ GameObject:
   m_Component:
   - component: {fileID: 868262938}
   - component: {fileID: 868262937}
+  - component: {fileID: 868262939}
   m_Layer: 0
   m_Name: Town 18
   m_TagString: Untagged
@@ -29639,6 +29867,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &868262939
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868262936}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &868890083
 GameObject:
   m_ObjectHideFlags: 0
@@ -33060,6 +33314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 952673371}
   - component: {fileID: 952673370}
+  - component: {fileID: 952673372}
   m_Layer: 0
   m_Name: Castle
   m_TagString: Untagged
@@ -33100,6 +33355,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &952673372
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952673369}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &953118853
 GameObject:
   m_ObjectHideFlags: 0
@@ -35814,6 +36095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1043277757}
   - component: {fileID: 1043277756}
+  - component: {fileID: 1043277758}
   m_Layer: 0
   m_Name: Town 19
   m_TagString: Untagged
@@ -35854,6 +36136,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1043277758
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043277755}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &1047712083
 GameObject:
   m_ObjectHideFlags: 0
@@ -44707,6 +45015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1345962516}
   - component: {fileID: 1345962515}
+  - component: {fileID: 1345962517}
   m_Layer: 0
   m_Name: Town 23
   m_TagString: Untagged
@@ -44747,6 +45056,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1345962517
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345962514}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &1349499794
 GameObject:
   m_ObjectHideFlags: 0
@@ -47998,6 +48333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1434489481}
   - component: {fileID: 1434489480}
+  - component: {fileID: 1434489482}
   m_Layer: 0
   m_Name: Town 13
   m_TagString: Untagged
@@ -48038,6 +48374,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1434489482
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434489479}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &1436700891
 GameObject:
   m_ObjectHideFlags: 0
@@ -56671,6 +57033,88 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1727568120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1727568122}
+  - component: {fileID: 1727568121}
+  m_Layer: 0
+  m_Name: JabberwockyHead
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &1727568121
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727568120}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 3625043607559282579, guid: 045b15ec09bba42448d89db77fa6f20a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 0.5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1727568122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727568120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -191.29, y: 20.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1730601336
 GameObject:
   m_ObjectHideFlags: 0
@@ -59428,6 +59872,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826191527}
   - component: {fileID: 1826191526}
+  - component: {fileID: 1826191528}
   m_Layer: 0
   m_Name: Town 14
   m_TagString: Untagged
@@ -59468,6 +59913,32 @@ Transform:
   m_Father: {fileID: 1917864983}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1826191528
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826191525}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3}
+  m_EdgeRadius: 0
 --- !u!1 &1827979642
 GameObject:
   m_ObjectHideFlags: 0

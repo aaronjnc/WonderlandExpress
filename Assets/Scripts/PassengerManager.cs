@@ -340,7 +340,7 @@ public class PassengerManager : MonoBehaviour
         float startWealth = GetTownWealth(town);
         float wealth = UnityEngine.Random.Range((.5f - wealthDev) * 10f, (.5f + wealthDev) * 10f) / 10f;
         Debug.Log(" min: " + (.5f - wealthDev) + " max: " + (.5f + wealthDev));
-        int gold = (int)(wealth * startWealth);
+        int gold = Mathf.Max((int)(wealth * startWealth), 1);
         float happiness = UnityEngine.Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
         //string name = firstNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)];
         //string pm = pms.ToArray()[UnityEngine.Random.Range(0, pms.ToArray().Length)];
@@ -457,9 +457,10 @@ public class PassengerManager : MonoBehaviour
         waitingPass.Remove(pass);
         await pass.GetComponent<Passenger>().MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.SetConductorImage(0);
+        Destroy(pass);
         await MoveWaitingPass();
         NewPassenger();
-        Destroy(pass);
+        
         
     }
 
