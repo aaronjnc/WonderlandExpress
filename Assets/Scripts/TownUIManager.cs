@@ -14,6 +14,9 @@ public class TownUIManager : MonoBehaviour
 {
     [Header("UI pieces")]
 
+    [Tooltip("The tip text display")]
+    public GameObject tipDisplay;
+
     [Tooltip("The Text space used for showing the passenger messages")]
     public TextMeshProUGUI passMessageText;
 
@@ -74,6 +77,9 @@ public class TownUIManager : MonoBehaviour
 
     [Tooltip("the rate that number tick up at per frame")]
     public int tickRate = 1;
+
+    [Tooltip("length of time in milliseconds the tip should be displayed for")]
+    public float tipTime = 1000f;
 
     //instance of TownUIManager
     private static TownUIManager Instance;
@@ -143,6 +149,11 @@ public class TownUIManager : MonoBehaviour
             currentNum++;
         }
 
+    }
+
+    public async Task DisplayTip(float tip)
+    {
+        await tipDisplay.GetComponent<TipMove>().floatMove(tipTime, tip);
     }
 
     public void DisplayTown(Town t)

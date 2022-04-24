@@ -66,7 +66,7 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("The maximum percentage deviation from the generated wealth value a passenger can have between 0 and .5. \neg. a passenger can be x% lower or x% higher than the general value for a town")]
     [Range(0f, .5f)]
-    public float wealthDev = 0.5f;
+    public float wealthDev = 0.3f;
 
     [Tooltip("The default happiness of a passenger from 0 to 1")]
     [Range(0f, 1f)]
@@ -88,6 +88,12 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("modifier for converting between town reputation and number of passengers \n rep * mod = num")]
     public float passRepMod = 0.05f;
+
+    [Tooltip("maximum tip percentage")]
+    public float maxTip = .25f;
+
+    [Tooltip("the happiness percentage required to earn a tip")]
+    public float tipThreshold = .6f;
 
     [Tooltip("Timing variables")]
     public float leaveDelay = 1f;
@@ -338,9 +344,10 @@ public class PassengerManager : MonoBehaviour
     GameObject GeneratePassenger(Town town)
     {
         float startWealth = GetTownWealth(town);
-        float wealth = UnityEngine.Random.Range((.5f - wealthDev) * 10f, (.5f + wealthDev) * 10f) / 10f;
+        float wealth = UnityEngine.Random.Range(0f, 1f);
         Debug.Log(" min: " + (.5f - wealthDev) + " max: " + (.5f + wealthDev));
-        int gold = Mathf.Max((int)(wealth * startWealth), 1);
+        float goldMod = wealth * 2 * wealthDev + (.5f - wealthDev);
+        int gold = Mathf.Max((int)(goldMod * startWealth), 1);
         float happiness = UnityEngine.Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
         //string name = firstNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)];
         //string pm = pms.ToArray()[UnityEngine.Random.Range(0, pms.ToArray().Length)];
@@ -530,7 +537,10 @@ public class PassengerManager : MonoBehaviour
         Passenger passScript = pass.GetComponent<Passenger>();
         Debug.Log("Passenger " + passScript.GetName() + " successfully dropped off");
         uiMan.CanInteract(false);
-        GetTown().AddWealth((float)passScript.GetGold() / wealthMod);
+        float gold = (float)passScript.GetGold();
+        float tip = CalculateTip(passScript.GetHappiness());
+        gold *= (1f + tip);
+        GetTown().AddWealth(gold / wealthMod);
         GetTown().AddRep(passScript.GetHappiness() / repHapMod);
         passScript.Display(OnTrainLoc.transform.position);
 
@@ -540,14 +550,27 @@ public class PassengerManager : MonoBehaviour
         await Task.Delay(100);
         passScript.DropOff(GetTown());
         uiMan.DisplayText(pass.GetComponent<Passenger>().GetDropOff());
-        var t = new Task[2];
+        var t = new Task[3];
         t[0] = passScript.MoveTo(OffPlatformLoc.transform.position, false);
         t[1] = uiMan.AdjustGold(currentGold, currentGold + newGold);
+        if (tip > 0f)
+        {
+            t[2] = uiMan.DisplayTip(tip);
+        }
+        else
+        {
+            t[2] = Task.Delay(100);
+        }
         await Task.WhenAll(t);
         uiMan.HideIncrement();
         GameManager.Instance.AddGold(newGold);
         uiMan.CanInteract(true);
         RemovePass(pass);
+    }
+
+    public float CalculateTip(float happiness)
+    {
+        return Mathf.Clamp((happiness - tipThreshold) / (1 - tipThreshold), 0f, maxTip);
     }
 
     //Get the number of passengers currently on the train
