@@ -11,6 +11,8 @@ public class TownDictionary : MonoBehaviour
     public List<Town> towns = new List<Town>();
     //the dictionary to be used.
     public Dictionary<string, Town> dict = new Dictionary<string, Town>();
+    //list of all destroyed towns
+    public List<Town> destroyed = new List<Town>();
 
     [Tooltip("the current town")]
     public Town currentTown;
@@ -103,6 +105,21 @@ public class TownDictionary : MonoBehaviour
         }
     }
 
+    //get the associated town
+    public Town FindTown(string townName)
+    {
+        Town town;
+        if (dict.TryGetValue(townName, out town))
+        {
+            return town;
+        }
+        else
+        {
+            Debug.LogError("Could not find town " + townName);
+            return null;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -112,21 +129,14 @@ public class TownDictionary : MonoBehaviour
     //Generates a random destination town from all towns available to the current town
     public Town GenerateDestination()
     {
-        List<Town> banList = currentTown.getBanList();
-        if(banList == null)
+        List<Town> allowedList = currentTown.GetAllowedList();
+        Town dest = allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
+        while (dest.IsDestroyed() && allowedList.Count > 1)
         {
-            banList = new List<Town>();
+            allowedList.Remove(dest);
+            dest = allowedList[UnityEngine.Random.Range(0, allowedList.Count)];
         }
-        banList.Add(currentTown);
-        List<Town> validTowns = new List<Town>();
-        foreach(Town town in dict.Values)
-        {
-            if (!banList.Contains(town))
-            {
-                validTowns.Add(town);
-            }
-        }
-        return validTowns[UnityEngine.Random.Range(0, validTowns.Count)];
+        return dest;
     }
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
@@ -135,5 +145,13 @@ public class TownDictionary : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    //Destroys the town and adds it to the destroyed list
+    public void DestroyTown(string town)
+    {
+        Town t = FindTown(town);
+        t.DestroyTown();
+        destroyed.Add(t);
     }
 }

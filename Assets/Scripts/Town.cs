@@ -10,11 +10,12 @@ public class Town : MonoBehaviour
     [Tooltip("Town wealth")]
     public float wealth;
     [Tooltip("Town reputation")]
+    [Range(0f,100f)]
     public float reputation = 30;
     [Tooltip("If the town is destroyed or not")]
     public bool destroyed = false;
     [Tooltip("Towns that cannot be set as destinations from this town. \nUsed to prevent really long journeys for now")]
-    public List<Town> townBanList;
+    public List<Town> townDestinations;
 
     // Start is called before the first frame update
     void Start()
@@ -38,12 +39,28 @@ public class Town : MonoBehaviour
     public void AddRep(float passengerRep)
     {
         reputation += (passengerRep);
+        if( reputation > 100f)
+        {
+            reputation = 100f;
+        }
+        if( reputation < 0f)
+        {
+            reputation = 0f;
+        }
     }
 
     //adjust town reputation by removing the reputation of a passenger
     public void RemoveRep(float passengerRep)
     {
         reputation -= (passengerRep);
+        if (reputation > 100f)
+        {
+            reputation = 100f;
+        }
+        if (reputation < 0f)
+        {
+            reputation = 0f;
+        }
     }
 
     //get town reputation
@@ -67,7 +84,7 @@ public class Town : MonoBehaviour
     //Set the town's stats to 0 when a town is destroyed
     public void DestroyTown()
     {
-        wealth = 0;
+        wealth = 1;
         reputation = 0;
         destroyed = true;
     }
@@ -79,8 +96,8 @@ public class Town : MonoBehaviour
     }
 
     //gets the town ban lsit
-    public List<Town> getBanList()
+    public List<Town> GetAllowedList()
     {
-        return townBanList;
+        return townDestinations;
     }
 }
