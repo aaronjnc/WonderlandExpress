@@ -1661,6 +1661,13 @@ MonoBehaviour:
   - Mitchell
   - Meghan
   - Jordyn
+  - Erik
+  - Roman
+  - Alex
+  - Nadia
+  - Suzie
+  - Linda
+  - Hannah
   rwLastNames:
   - Grace
   - King
@@ -1678,6 +1685,13 @@ MonoBehaviour:
   - Dunning
   - Tankersly
   - Fishkin
+  - Paul
+  - Peace
+  - Taylor
+  - Chapple
+  - Carter
+  - Parr
+  - Camden
   wlFirstNames:
   - Tweedle
   - Tweedle
@@ -1690,28 +1704,40 @@ MonoBehaviour:
   - Foreman
   ppms:
   - I know it's not much, but will this be enough?
+  - Please, I need to get out of this town
   pams:
   - Thank you so much, this means everything to me!
+  - I really am getting another chance, aren't I?
   pdms:
   - What will I do now?
+  - But I have no other way out...
   pdoms:
   - You'll never know how much this meant to me
+  - Finally, a fresh start at life
   mpms:
   - This should be enough, right?
+  - Good day, Conductor
   mams:
   - Alright, thank you.
+  - Thank you, Conductor
   mdms:
   - Ah, alright.
+  - Really? That's a shame
   mdoms:
   - Thanks for the lift
+  - Have a good one, Conductor
   rpms:
   - Hurry up and let me on already.
+  - I know this is enough, get out of the way.
   rams:
   - Took you long enough
+  - Ugh, this train is so small
   rdms:
   - 'This is preposterous! '
+  - I'm never taking this train again!
   rdoms:
   - Could've been faster
+  - The Passerby really has gone downhill.
   traits:
   - None
   - Shady
@@ -1719,6 +1745,10 @@ MonoBehaviour:
   - Antisocial
   - Social
   - Irritable
+  - Generous
+  - Stingy
+  - Charitable
+  - Stiff
   descriptions:
   - ' '
   - A shady character. Can you trust them?
@@ -1726,6 +1756,10 @@ MonoBehaviour:
   - Much happier by themself. Won't like a crowded train.
   - Much happier with others. Won't like an empty train.
   - A grumpy person. Will generally get unhappy.
+  - Loose with their money. Gives large tips.
+  - Keeps their purse tight. Gives small tips.
+  - Likes helping others. Almost always tips.
+  - Doesn't like giving away money. Almost never tips.
   tpms:
   - '**UNUSED**'
   - Oh I can't wait to get back. They're gonna pay...
@@ -1733,6 +1767,10 @@ MonoBehaviour:
   - I uh.. n-need a ride
   - Oh hello there! Would you be able to take me?
   - I need a ride.
+  - Oh, hello there. Could I get a ride?
+  - Ugh, I guess I can pay this much
+  - Good day. Will this be enough?
+  - You got more space on there? Looks cramped.
   tams:
   - '**UNUSED**'
   - Just wait till I see the looks on their faces...
@@ -1740,6 +1778,10 @@ MonoBehaviour:
   - '*nods*'
   - Oh, aren't you just the sweetest!
   - Yeah, sure. Thanks
+  - Wonderful!
+  - This better be worth it...
+  - I'm looking forward to the trip.
+  - Better be a comfortable ride.
   tdms:
   - '**UNUSED**'
   - What?? But I need to make them pay!
@@ -1747,6 +1789,10 @@ MonoBehaviour:
   - Oh, okay
   - Aw, I was looking forward to talking to you.
   - Are you kidding me? Ugh, just what I need today.
+  - Ah, what a shame.
+  - I was hoping to find a cheaper ride anyways
+  - Well, I guess I'll just have to wait a while.
+  - What horrible service. I'm telling all my friends
   tdoms:
   - '**UNUSED**'
   - The time has come...
@@ -1754,7 +1800,11 @@ MonoBehaviour:
   - thanks...
   - I hope we meet again!
   - Wish that trip had been shorter.
-  traitChance: 0.35
+  - Thanks for the trip. Hope this helps you some!
+  - Here, don't spend it all in one place.
+  - That was a lovely trip. Thank you for the service.
+  - Ugh, conductors just don't care about their work nowadays.
+  traitChance: 0.4
 --- !u!4 &994262447
 Transform:
   m_ObjectHideFlags: 0

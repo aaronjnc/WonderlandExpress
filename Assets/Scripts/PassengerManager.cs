@@ -538,7 +538,15 @@ public class PassengerManager : MonoBehaviour
         Debug.Log("Passenger " + passScript.GetName() + " successfully dropped off");
         uiMan.CanInteract(false);
         float gold = (float)passScript.GetGold();
-        float tip = CalculateTip(passScript.GetHappiness());
+        float tip = CalculateTip(passScript);
+        if(passScript.GetTrait() == "Generous")
+        {
+            tip *= 2f;
+        }
+        else if(passScript.GetTrait() == "Stiff")
+        {
+            tip *= .5f;
+        }
         gold *= (1f + tip);
         GetTown().AddWealth(gold / wealthMod);
         GetTown().AddRep(passScript.GetHappiness() / repHapMod);
@@ -568,9 +576,19 @@ public class PassengerManager : MonoBehaviour
         RemovePass(pass);
     }
 
-    public float CalculateTip(float happiness)
+    public float CalculateTip(Passenger pass)
     {
-        return Mathf.Clamp((happiness - tipThreshold) / (1 - tipThreshold), 0f, maxTip);
+        float happiness = pass.GetHappiness();
+        float tt = tipThreshold;
+        if(pass.GetTrait() == "Charitable")
+        {
+            tt *= .5f;
+        }
+        else if(pass.GetTrait() == "Stiff")
+        {
+            tt *= 1.5f;
+        }
+        return Mathf.Clamp((happiness - tt) / (1 - tt) * maxTip, 0f, maxTip);
     }
 
     //Get the number of passengers currently on the train
