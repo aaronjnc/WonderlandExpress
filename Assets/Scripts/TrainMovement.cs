@@ -105,7 +105,7 @@ public class TrainMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, choiceLayer);
         if (!hit)
             return;
-        hit.collider.gameObject.GetComponent<TrackChooser>().Clicked();
+        hit.collider.gameObject.GetComponent<TrackChooser>()?.Clicked();
     }
     void FixedUpdate()
     {

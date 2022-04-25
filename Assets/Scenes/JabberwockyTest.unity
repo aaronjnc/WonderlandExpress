@@ -29368,48 +29368,48 @@ PrefabInstance:
       objectReference: {fileID: 841969340}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[0]
       value: 
-      objectReference: {fileID: 841969350}
+      objectReference: {fileID: 841969349}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[1]
       value: 
-      objectReference: {fileID: 841969349}
+      objectReference: {fileID: 841969348}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[2]
       value: 
-      objectReference: {fileID: 841969348}
+      objectReference: {fileID: 841969347}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[3]
       value: 
-      objectReference: {fileID: 841969347}
+      objectReference: {fileID: 841969346}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[4]
       value: 
-      objectReference: {fileID: 841969346}
+      objectReference: {fileID: 841969345}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[5]
       value: 
-      objectReference: {fileID: 841969345}
+      objectReference: {fileID: 841969344}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[6]
       value: 
-      objectReference: {fileID: 841969344}
+      objectReference: {fileID: 841969343}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[7]
       value: 
-      objectReference: {fileID: 841969343}
+      objectReference: {fileID: 841969342}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[8]
       value: 
-      objectReference: {fileID: 841969342}
+      objectReference: {fileID: 841969341}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[9]
       value: 
-      objectReference: {fileID: 841969341}
+      objectReference: {fileID: 841969340}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[10]
       value: 
@@ -67363,7 +67363,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1125309892}
   chosenNext: {fileID: 0}
-  continuous: 1
+  continuous: 0
   trackChoice: 0
   text: {fileID: 1713986915}
 --- !u!4 &1984846329
