@@ -1841,7 +1841,17 @@ MonoBehaviour:
     am: I sure hope I get to ride for a while.
     dm: Aw, I really wanted to ride for a while.
     dom: That sure was a nice trip, but I wish I could've stayed longer.
+  - name: Regular
+    description: Regular patron of the Passerby. Happier on each trip
+    pm: Ah, it's good to see you!
+    am: I always do love riding the Passerby
+    dm: Oh... Well I guess I'll see you next time then
+    dom: See you soon!
   traitChance: 0.5
+  regularSpawned: 0
+  regularOnTrain: 0
+  regularStartHappiness: 0.5
+  regularStartWealth: 0.5
 --- !u!4 &994262447
 Transform:
   m_ObjectHideFlags: 0

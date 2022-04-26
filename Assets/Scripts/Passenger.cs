@@ -47,6 +47,8 @@ public class Passenger : MonoBehaviour
     public string trait = "None";
     [Tooltip("Description of the passenger's trait")]
     public string traitDescription = "";
+    [Tooltip("modifier used to scale gold/happiness based on how far the passenger is traveling. \nUsed to balance and make it so long trips aren't always suboptimal")]
+    public float distanceMod = 1f;
     [Tooltip("The amount that money is multiplied by if the passenger is shady")]
     public int shadyGoldMod = 3;
     //reference to the town UI manager
@@ -110,6 +112,11 @@ public class Passenger : MonoBehaviour
         dropOffMessage = dom;
     }
 
+    public void SetDistMod(float mod)
+    {
+        distanceMod = mod;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -149,7 +156,7 @@ public class Passenger : MonoBehaviour
     public void DecreaseHappiness(float diff)
     {
 
-            happiness -= diff;
+        happiness -= diff;
         if(happiness <= 0f)
         {
             happiness = 0f;
@@ -176,17 +183,28 @@ public class Passenger : MonoBehaviour
 
     public int GetGold()
     {
+        int displayGold = (int)((float)gold * distanceMod);
         if (trait == "Shady")
         {
-            return gold * shadyGoldMod;
+            displayGold *= shadyGoldMod;
         }
-        return gold;
+        return displayGold;
 
+    }
+
+    public void SetGold(int newGold)
+    {
+        gold = newGold;  
     }
 
     public float GetWealth()
     {
         return wealth;
+    }
+
+    public void SetWealth(float newWealth)
+    {
+        wealth = newWealth;
     }
 
     public float GetHappiness()
@@ -217,6 +235,11 @@ public class Passenger : MonoBehaviour
     public string GetDestination()
     {
         return destination;
+    }
+
+    public void SetDestination(string dest)
+    {
+        destination = dest;
     }
 
     //public string GetDestinationName()
@@ -250,11 +273,16 @@ public class Passenger : MonoBehaviour
         {
             t.DestroyTown();
         }
+        else if(trait == "Regular")
+        {
+            GameManager.Instance.DropOffUPI(this);
+        }
     }
 
     //reduces happiness as train moves. decrease = amount happiness typically drops by, numPassengers = number of passengers
     public void OnTrainMove(float decrease, int numPassengers)
     {
+        decrease /= distanceMod;
         switch (trait)
         {
             case "Carefree":

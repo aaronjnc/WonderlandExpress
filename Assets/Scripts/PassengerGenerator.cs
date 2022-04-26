@@ -114,10 +114,25 @@ public class PassengerGenerator : MonoBehaviour
     //whether or not the player is in wonderland
     bool wonderland;
 
+    [Header("Unique passenger values")]
+
+    [Tooltip("whether the regular has spawned already or not")]
+    public bool regularSpawned = false;
+
+    [Tooltip("whether the regular is currently on the train or not")]
+    public bool regularOnTrain = false;
+
+    [Tooltip("Starting happiness for the regular passenger")]
+    public float regularStartHappiness = .5f;
+
+    [Tooltip("Starting wealth for the regular passenger")]
+    public float regularStartWealth = .5f;
+
     //takes in an array of the current passengers and removes their names and traits from the list of possible options.
     public void Initialize(GameObject[] passengers)
     {
         IsWonderland();
+        //check the names of each existing passenger to ensure no repeat names/traits
         foreach(GameObject obj in passengers)
         {
             if (obj != null)
@@ -141,6 +156,11 @@ public class PassengerGenerator : MonoBehaviour
                         Debug.LogError("DID NOT FIND TRAIT IN LIST TO REMOVE");
                     }
                     traitList.RemoveAt(traitNum);
+                    if(pass.GetTrait() == "Regular")
+                    {
+                        regularSpawned = true;
+                        regularOnTrain = true;
+                    }
                     //descriptions.RemoveAt(traitNum);
                     //tpms.RemoveAt(traitNum);
                    // tams.RemoveAt(traitNum);
@@ -149,6 +169,15 @@ public class PassengerGenerator : MonoBehaviour
 
                 }
             }
+        }
+        //check to see if the regular has spawned, to prevent repeat names/traits
+        if (!regularOnTrain && GameManager.Instance.IsRegular())
+        {
+            regularSpawned = true;
+            UniquePassengerInfo.UniquePass regular = GameManager.Instance.GetRegular();
+            rwFirstNames.Remove(regular.firstName);
+            rwLastNames.Remove(regular.lastName);
+            //traitList.RemoveAt(GetIndex("Regular"));
         }
     }
 
@@ -168,9 +197,16 @@ public class PassengerGenerator : MonoBehaviour
     //takes a given passenger and assigns them a name and lines 
     public void SetupPassenger(Passenger pass)
     {
-        GenerateName(pass);
         GenerateTrait(pass);
+        GenerateName(pass);
         
+        if(pass.GetTrait() == "Regular" && !regularSpawned)
+        {
+            regularSpawned = true;
+            pass.SetWealth(regularStartWealth);
+            pass.SetHappiness(regularStartHappiness);
+            GameManager.Instance.InitializeUPI(pass);
+        }
     }
 
     //generates a random name for the passenger and removes the name from the lists
@@ -178,7 +214,15 @@ public class PassengerGenerator : MonoBehaviour
     {
         string first;
         string last;
-        if (wonderland)
+        if(pass.GetTrait() == "Regular" && regularSpawned)
+        {
+            UniquePassengerInfo.UniquePass regular = GameManager.Instance.GetRegular();
+            first = regular.firstName;
+            last = regular.lastName;
+            pass.SetWealth(regular.wealth);
+            pass.SetHappiness(regular.happiness);
+        }
+        else if (wonderland)
         {
             first = wlFirstNames.ToArray()[UnityEngine.Random.Range(0, wlFirstNames.ToArray().Length)];
             wlFirstNames.Remove(first);
@@ -246,13 +290,27 @@ public class PassengerGenerator : MonoBehaviour
             }
         }
         pass.SetLines(pm, am, dm, dom);
+
+        //if(pass.GetTrait() == "Regular")
+        //{
+            //if (regularSpawned)
+            //{
+                
+            //}
+        //}
     }
 
     //generates trait for the passenger
     public void GenerateTrait(Passenger pass)
     {
         int traitNum = 0;
-        if(UnityEngine.Random.Range(0f, 1f) <= traitChance)
+        if(regularSpawned && !regularOnTrain && GameManager.Instance.CheckRegularTown())
+        {
+            traitNum = GetIndex("Regular");
+            //GameManager.Instance.InitializeUPI(pass);
+            //regularOnTrain = true;
+        }
+        else if(UnityEngine.Random.Range(0f, 1f) <= traitChance)
         {
             traitNum = UnityEngine.Random.Range(1, traitList.Count);
             
@@ -269,6 +327,10 @@ public class PassengerGenerator : MonoBehaviour
         {
             pass.SetHappiness(1f - pass.GetHappiness());
         }
+        //if (!regularOnTrain && pass.GetTrait() == "Regular")
+        //{
+        //    GameManager.Instance.UpdateUPI(pass);
+        //}
 
         GenerateLines(pass, traitNum);
     }
