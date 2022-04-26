@@ -194,6 +194,11 @@ public class Passenger : MonoBehaviour
         return happiness;
     }
 
+    public void SetHappiness(float happy)
+    {
+        happiness = happy;
+    }
+
     public string GetName()
     {
         return passName;
@@ -266,6 +271,10 @@ public class Passenger : MonoBehaviour
 
             case "Irritable":
                 decrease *= 2;
+                break;
+
+            case "Traveler":
+                decrease *= -1;
                 break;
 
             default:

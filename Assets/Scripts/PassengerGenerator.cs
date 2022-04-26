@@ -265,6 +265,11 @@ public class PassengerGenerator : MonoBehaviour
         //}
         pass.SetTrait(traitList[traitNum].name, traitList[traitNum].description);
 
+        if(pass.GetTrait() == "Traveler")
+        {
+            pass.SetHappiness(1f - pass.GetHappiness());
+        }
+
         GenerateLines(pass, traitNum);
     }
 

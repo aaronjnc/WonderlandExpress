@@ -1705,39 +1705,63 @@ MonoBehaviour:
   ppms:
   - I know it's not much, but will this be enough?
   - Please, I need to get out of this town
+  - There's nothing left for me here, will you take me?
+  - C'mon man, you gotta let me on this train
   pams:
   - Thank you so much, this means everything to me!
   - I really am getting another chance, aren't I?
+  - You're my savior!
+  - Oh, thank goodness.
   pdms:
   - What will I do now?
   - But I have no other way out...
+  - I guess there really is nothing left for me
+  - Why does nobody ever let me on?
   pdoms:
   - You'll never know how much this meant to me
   - Finally, a fresh start at life
+  - I owe my life to you now
+  - Haha, sucker. I had a lot more money to give than that.
   mpms:
   - This should be enough, right?
   - Good day, Conductor
+  - I'd like one ticket, please
+  - Can I get a ride?
   mams:
   - Alright, thank you.
   - Thank you, Conductor
+  - I appreciate it
+  - Man, I can't wait.
   mdms:
   - Ah, alright.
   - Really? That's a shame
+  - This is ridiculous
+  - Well, that's tough
   mdoms:
   - Thanks for the lift
   - Have a good one, Conductor
+  - I appreciate the ride
+  - Well, that wasn't too bad
   rpms:
   - Hurry up and let me on already.
   - I know this is enough, get out of the way.
+  - Can I get on the train now?
+  - Hey there, sonny. Can I get a ride?
   rams:
   - Took you long enough
   - Ugh, this train is so small
+  - Yeah, yeah. Out of the way.
+  - Thank you, sonny.
   rdms:
   - 'This is preposterous! '
   - I'm never taking this train again!
+  - You're really gonna make me wait for the next train? Unbelievable.
+  - Are you kidding me? I could own this train if I wanted.
   rdoms:
   - Could've been faster
   - The Passerby really has gone downhill.
+  - Here's your money.
+  - Have a nice day, sonny.
   traitList:
   - name: None
     description: 
@@ -1811,7 +1835,13 @@ MonoBehaviour:
     am: Hopefully someone notices me in the next town...
     dm: '*sigh*'
     dom: A brand new start. Time to make my name matter.
-  traitChance: 0.4
+  - name: Traveler
+    description: An avid traveler. Happier on longer rides
+    pm: I really just need a long ride to clear my head.
+    am: I sure hope I get to ride for a while.
+    dm: Aw, I really wanted to ride for a while.
+    dom: That sure was a nice trip, but I wish I could've stayed longer.
+  traitChance: 0.5
 --- !u!4 &994262447
 Transform:
   m_ObjectHideFlags: 0
