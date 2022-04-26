@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
     {
         trainCarPos.Add(follow.transform.position);
         trainCarRots.Add(follow.transform.eulerAngles);
-        trainCarStops.Add(follow.nextPoint.name);
+        trainCarStops.Add(follow.GetNextPoint());
     }
 
     public void LoadFollowTrain(List<FollowTrain> followers)
