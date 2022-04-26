@@ -511,7 +511,16 @@ public class PassengerManager : MonoBehaviour
         uiMan.CanInteract(false);
         passScript.Display(OnTrainLoc.transform.position);
         await passScript.MoveTo(RemovedLoc.transform.position, true);
-        GetTown().RemoveRep((1 - passScript.GetHappiness() ) / repHapMod);
+        float happinessChange = (1 - passScript.GetHappiness()) / repHapMod;
+        if(passScript.GetTrait() == "Famous")
+        {
+            happinessChange *= 2f;
+        }
+        else if(passScript.GetTrait() == "Unobtrusive")
+        {
+            happinessChange *= .5f;
+        }
+        GetTown().RemoveRep(happinessChange);
         await Task.Delay(100);
         await passScript.MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.CanInteract(true);
@@ -549,7 +558,16 @@ public class PassengerManager : MonoBehaviour
         }
         gold *= (1f + tip);
         GetTown().AddWealth(gold / wealthMod);
-        GetTown().AddRep(passScript.GetHappiness() / repHapMod);
+        float happinessChange = passScript.GetHappiness() / repHapMod;
+        if(passScript.GetTrait() == "Famous")
+        {
+            happinessChange *= 2f;
+        }
+        else if (passScript.GetTrait() == "Unobtrusive")
+        {
+            happinessChange *= .5f;
+        }
+        GetTown().AddRep(happinessChange);
         passScript.Display(OnTrainLoc.transform.position);
 
         await passScript.MoveTo(waitingLoc.transform.position, false);

@@ -1738,72 +1738,79 @@ MonoBehaviour:
   rdoms:
   - Could've been faster
   - The Passerby really has gone downhill.
-  traits:
-  - None
-  - Shady
-  - Carefree
-  - Antisocial
-  - Social
-  - Irritable
-  - Generous
-  - Stingy
-  - Charitable
-  - Stiff
-  descriptions:
-  - ' '
-  - A shady character. Can you trust them?
-  - A laidback fellow. Won't get unhappy no matter what.
-  - Much happier by themself. Won't like a crowded train.
-  - Much happier with others. Won't like an empty train.
-  - A grumpy person. Will generally get unhappy.
-  - Loose with their money. Gives large tips.
-  - Keeps their purse tight. Gives small tips.
-  - Likes helping others. Almost always tips.
-  - Doesn't like giving away money. Almost never tips.
-  tpms:
-  - '**UNUSED**'
-  - Oh I can't wait to get back. They're gonna pay...
-  - Oh I just love riding the train!
-  - I uh.. n-need a ride
-  - Oh hello there! Would you be able to take me?
-  - I need a ride.
-  - Oh, hello there. Could I get a ride?
-  - Ugh, I guess I can pay this much
-  - Good day. Will this be enough?
-  - You got more space on there? Looks cramped.
-  tams:
-  - '**UNUSED**'
-  - Just wait till I see the looks on their faces...
-  - Thank you!
-  - '*nods*'
-  - Oh, aren't you just the sweetest!
-  - Yeah, sure. Thanks
-  - Wonderful!
-  - This better be worth it...
-  - I'm looking forward to the trip.
-  - Better be a comfortable ride.
-  tdms:
-  - '**UNUSED**'
-  - What?? But I need to make them pay!
-  - Oh, that's alright. I'll just catch the next one.
-  - Oh, okay
-  - Aw, I was looking forward to talking to you.
-  - Are you kidding me? Ugh, just what I need today.
-  - Ah, what a shame.
-  - I was hoping to find a cheaper ride anyways
-  - Well, I guess I'll just have to wait a while.
-  - What horrible service. I'm telling all my friends
-  tdoms:
-  - '**UNUSED**'
-  - The time has come...
-  - Thank you for taking me!
-  - thanks...
-  - I hope we meet again!
-  - Wish that trip had been shorter.
-  - Thanks for the trip. Hope this helps you some!
-  - Here, don't spend it all in one place.
-  - That was a lovely trip. Thank you for the service.
-  - Ugh, conductors just don't care about their work nowadays.
+  traitList:
+  - name: None
+    description: 
+    pm: 
+    am: 
+    dm: 
+    dom: 
+  - name: Shady
+    description: A shady character. Can you trust them?
+    pm: Oh I can't wait to get back. They're gonna pay...
+    am: Just wait till I see the looks on their faces...
+    dm: What?? But I need to make them pay!
+    dom: The time has come...
+  - name: Carefree
+    description: A laidback fellow. Won't get unhappy no matter what.
+    pm: Oh I just love riding the train!
+    am: Thank you!
+    dm: Oh, that's alright. I'll just catch the next one.
+    dom: Thank you for taking me!
+  - name: Antisocial
+    description: Much happier by themself. Won't like a crowded train.
+    pm: I uh.. n-need a ride
+    am: '*nods*'
+    dm: Oh, okay
+    dom: thanks...
+  - name: Social
+    description: Much happier with others. Won't like an empty train.
+    pm: Oh hello there! Would you be able to take me?
+    am: Oh, aren't you just the sweetest!
+    dm: Aw, I was looking forward to talking to you.
+    dom: I hope we meet again!
+  - name: Irritable
+    description: A grumpy person. Will generally get unhappy.
+    pm: I need a ride.
+    am: Yeah, sure. Thanks, I guess.
+    dm: Are you kidding me? Ugh, just what I need today.
+    dom: Wish that trip had been shorter.
+  - name: Generous
+    description: Loose with their money. Gives large tips.
+    pm: Oh, hello there. Could I get a ride?
+    am: Wonderful!
+    dm: Ah, what a shame.
+    dom: Thanks for the trip. Hope this helps you some!
+  - name: Stingy
+    description: Keeps their purse tight. Gives small tips.
+    pm: Ugh, I guess I can pay this much
+    am: This better be worth it...
+    dm: I was hoping to find a cheaper ride anyways
+    dom: Here, don't spend it all in one place.
+  - name: Charitable
+    description: Likes helping others. Almost always tips.
+    pm: Good day. Will this be enough?
+    am: I'm looking forward to the trip.
+    dm: Well, I guess I'll just have to wait a while.
+    dom: That was a lovely trip. Thank you for the service.
+  - name: Stiff
+    description: Doesn't like giving away money. Almost never tips.
+    pm: You got more space on there? Looks cramped.
+    am: Better be a comfortable ride.
+    dm: What horrible service. I'm telling all my friends
+    dom: Ugh, conductors just don't care about their work nowadays.
+  - name: Famous
+    description: Widely Loved. Can drastically affect reputation.
+    pm: Ooh, a train! How quaint!
+    am: I can't wait to see how this train is.
+    dm: Are you kidding me? Do you know who I am??
+    dom: Wow, I'm telling everyone about this train.
+  - name: Unobstrusive
+    description: Not well known. Can't affect reputation much.
+    pm: Hello? Can I get a ride?
+    am: Hopefully someone notices me in the next town...
+    dm: '*sigh*'
+    dom: A brand new start. Time to make my name matter.
   traitChance: 0.4
 --- !u!4 &994262447
 Transform:

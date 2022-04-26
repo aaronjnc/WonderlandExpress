@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class PassengerGenerator : MonoBehaviour
 {
+    [System.Serializable]
+    public struct Trait
+    {
+        [Tooltip("the name of the trait")]
+        public string name;
+        [Tooltip("The trait's description")]
+        public string description;
+        [Tooltip("the passenger message for the trait")]
+        public string pm;
+        [Tooltip("the accept message for the trait")]
+        public string am;
+        [Tooltip("the deny message for the trait")]
+        public string dm;
+        [Tooltip("the drop-off message for the trait")]
+        public string dom;
+    }
     [Header("Real World Passenger Names")]
 
     [Tooltip("Possible real world passenger first names")]
@@ -64,23 +80,25 @@ public class PassengerGenerator : MonoBehaviour
 
     [Header("Traits")]
 
-    [Tooltip("Trait names. First should be 'Normal', followed by all other traits")]
-    public List<string> traits = new List<string>();
+    //[Tooltip("Traits")]
+    //public Trait[] traitList;
 
-    [Tooltip("Trait descriptions. Must follow same order as traits")]
-    public List<string> descriptions = new List<string>();
+    [Tooltip("List of all possible traits. Should start with normal")]
+    public List<Trait> traitList;
 
-    [Tooltip("Passenger messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
-    public List<string> tpms = new List<string>();
-
-    [Tooltip("Accept messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
-    public List<string> tams = new List<string>();
-
-    [Tooltip("Deny messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
-    public List<string> tdms = new List<string>();
-
-    [Tooltip("Drop off messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
-    public List<string> tdoms = new List<string>();
+    //DEPRECATED METHOD OF TRAIT CREATION
+    //[Tooltip("Trait names. First should be 'Normal', followed by all other traits")]
+    //public List<string> traits = new List<string>();
+    //[Tooltip("Trait descriptions. Must follow same order as traits")]
+    //public List<string> descriptions = new List<string>();
+    //[Tooltip("Passenger messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    //public List<string> tpms = new List<string>();
+    //[Tooltip("Accept messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    //public List<string> tams = new List<string>();
+    //[Tooltip("Deny messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    //public List<string> tdms = new List<string>();
+    //[Tooltip("Drop off messages to go with the traits. Must follow same order as traits. \n leave first result blank, it will be ignored")]
+    //public List<string> tdoms = new List<string>();
 
     [Tooltip("Chance of a passenger getting a trait other than 'Normal'")]
     public float traitChance = 0.35f;
@@ -115,22 +133,37 @@ public class PassengerGenerator : MonoBehaviour
                     rwFirstNames.Remove(pass.GetFirst());
                     rwLastNames.Remove(pass.GetLast());
                 }
-                if(pass.GetTrait() != traits[0])
+                if(pass.GetTrait() != traitList[0].name)
                 {
-                    int traitNum = traits.IndexOf(pass.GetTrait());
-                    traits.RemoveAt(traitNum);
-                    descriptions.RemoveAt(traitNum);
-                    tpms.RemoveAt(traitNum);
-                    tams.RemoveAt(traitNum);
-                    tdms.RemoveAt(traitNum);
-                    tdoms.RemoveAt(traitNum);
+                    int traitNum = GetIndex(pass.GetTrait());
+                    if(traitNum < 0)
+                    {
+                        Debug.LogError("DID NOT FIND TRAIT IN LIST TO REMOVE");
+                    }
+                    traitList.RemoveAt(traitNum);
+                    //descriptions.RemoveAt(traitNum);
+                    //tpms.RemoveAt(traitNum);
+                   // tams.RemoveAt(traitNum);
+                    //tdms.RemoveAt(traitNum);
+                    //tdoms.RemoveAt(traitNum);
 
                 }
             }
         }
     }
 
-    //takes in an array of the current pas
+    //gets the index of the trait with the given name
+    public int GetIndex(string traitName)
+    {
+        for(int i = 0; i < traitList.Count; i++)
+        {
+            if(traitName == traitList[i].name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     //takes a given passenger and assigns them a name and lines 
     public void SetupPassenger(Passenger pass)
@@ -172,14 +205,20 @@ public class PassengerGenerator : MonoBehaviour
         string dom;
         if (traitNum != 0)
         {
-            pm = tpms[traitNum];
-            tpms.RemoveAt(traitNum);
-            am = tams[traitNum];
-            tams.RemoveAt(traitNum);
-            dm = tdms[traitNum];
-            tdms.RemoveAt(traitNum);
-            dom = tdoms[traitNum];
-            tdoms.RemoveAt(traitNum);
+            Trait t = traitList[traitNum];
+            traitList.RemoveAt(traitNum);
+            pm = t.pm;
+            am = t.am;
+            dm = t.dm;
+            dom = t.dom;
+            //pm = tpms[traitNum];
+            //tpms.RemoveAt(traitNum);
+            //am = tams[traitNum];
+            //tams.RemoveAt(traitNum);
+            //dm = tdms[traitNum];
+           // tdms.RemoveAt(traitNum);
+            //dom = tdoms[traitNum];
+            //tdoms.RemoveAt(traitNum);
 
         }
         else
@@ -215,15 +254,16 @@ public class PassengerGenerator : MonoBehaviour
         int traitNum = 0;
         if(UnityEngine.Random.Range(0f, 1f) <= traitChance)
         {
-            traitNum = UnityEngine.Random.Range(1, traits.Count);
-            pass.SetTrait(traits[traitNum], descriptions[traitNum]);
-            traits.RemoveAt(traitNum);
-            descriptions.RemoveAt(traitNum);
+            traitNum = UnityEngine.Random.Range(1, traitList.Count);
+            
+            //traits.RemoveAt(traitNum);
+            //descriptions.RemoveAt(traitNum);
         }
-        else
-        {
-            pass.SetTrait(traits[0], descriptions[0]);
-        }
+        //else
+        //{
+            //pass.SetTrait(traitList[0].name, traitList[0].description);
+        //}
+        pass.SetTrait(traitList[traitNum].name, traitList[traitNum].description);
 
         GenerateLines(pass, traitNum);
     }
