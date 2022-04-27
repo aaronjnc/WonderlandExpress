@@ -11,6 +11,7 @@ public class JabberwockyPoint : TrackPoint
     public DialogueManager dm;
     public override bool StopAction()
     {
+        Time.timeScale = 0;
         if (GameManager.Instance.gold > GameManager.Instance.GetJabberwockyPrice())
         {
             dm.DisplayDialog("jwSuccess");

@@ -19,6 +19,7 @@ public class TollPoint : TrackPoint
         if (GameManager.Instance.trainSceneTesting)
             return false;
         Debug.Log("TollPoint activation");
+        Time.timeScale = 0;
         if (GameManager.Instance.CheckToll())
         {
             dm.DisplayDialog(successString);

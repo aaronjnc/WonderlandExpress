@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
     public bool trainSceneTesting = false;
     public delegate Task OnTollChange(int currentToll, int newToll, int currentGold, int newGold, int jabberwocky);
     public event OnTollChange TollChangeEvent;
+    [HideInInspector]
+    public int carCount = 1;
+    [HideInInspector]
+    public int carLevel = 0;
     public static GameManager Instance
     {
         get
@@ -311,5 +315,17 @@ public class GameManager : MonoBehaviour
     public void IgnoreUPI(Passenger pass)
     {
         upi.IgnoreUPI(pass, GetCurrentStop());
+    }
+
+    public void UpgradeCars(int cost)
+    {
+        carLevel++;
+        happinessDecayRate *= .9f;
+        gold -= cost;
+    }
+    public void BuyCar(int cost)
+    {
+        carCount++;
+        gold -= cost;
     }
 }
