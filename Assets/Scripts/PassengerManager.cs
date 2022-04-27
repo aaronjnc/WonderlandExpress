@@ -50,8 +50,14 @@ public class PassengerManager : MonoBehaviour
     [Tooltip("Passengers currently on the train")]
     public GameObject[] currentPass;
 
-    [Tooltip("maximum number of passengers on the train")]
+    [Tooltip("maximum number of passengers on each car")]
     public int trainCap = 5;
+
+    [Tooltip("Total number of passenger cars")]
+    public int numCars = 1;
+
+    [Tooltip("The current passenger car being displayed")]
+    public int currentCar = 0;
 
     [Tooltip("the current number of passengers on the train")]
     public int currentPassNum;
@@ -129,6 +135,9 @@ public class PassengerManager : MonoBehaviour
         {
             townDict = TownDictionary.Instance;
         }
+        
+        numCars = GameManager.Instance.GetNumCar();
+        uiMan.DisplayTrains(numCars > 1);
         townDict.FindCurrentTown(GameManager.Instance.GetCurrentStop());
         FindCurrentPassNum();
         waitingPass = new List<GameObject>();
@@ -291,15 +300,30 @@ public class PassengerManager : MonoBehaviour
         //    pass.GetComponent<Passenger>().Hide();
         //}
         Vector3 displayPos = passLoc.transform.position;
-        foreach(GameObject pass in currentPass)
+        for(int i = 0; i < numCars * trainCap; i++) //GameObject pass in currentPass)
         {
-            if (pass != null)
+            GameObject pass = currentPass[i];
+            if (i >= currentCar * trainCap && i < (currentCar + 1) * trainCap)
             {
-                pass.GetComponent<Passenger>().Display(displayPos);
+                if (pass != null)
+                {
+                    pass.GetComponent<Passenger>().Display(displayPos);
+                    Debug.Log("Displaying pass at index " + i);
+                }
+                displayPos += passOffset;
             }
-            displayPos += passOffset;
+            else
+            {
+                if(pass != null)
+                {
+                    pass.GetComponent<Passenger>().Hide();
+                    Debug.Log("Hiding pass at index " + i);
+                }
+            }
         }
-        uiMan.SetupButtons(currentPass);
+        uiMan.SetupButtons(currentPass, currentCar);
+        uiMan.DisplayRight(currentCar > 0);
+        uiMan.DisplayLeft(currentCar < numCars - 1);
     }
 
     //displays all currently waiting passengers
@@ -442,7 +466,7 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("No passengers to accept");
             return;
         }
-        if (currentPassNum >= trainCap)
+        if (currentPassNum >= trainCap * numCars)
         {
             audioMan.SelectAudio();
             uiMan.DisplayError("Tried to add past train max capacity. Should not add");
@@ -648,5 +672,12 @@ public class PassengerManager : MonoBehaviour
             }
         }
         currentPassNum = numPass;
+    }
+
+    //shift to a different car. 1: shift to the left car, -1 shift to the right car
+    public void ShiftCar(int dir)
+    {
+        currentCar = Mathf.Clamp(currentCar + dir, 0, numCars - 1);
+        DisplayPass();
     }
 }
