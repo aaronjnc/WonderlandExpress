@@ -831,6 +831,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.35
       objectReference: {fileID: 0}
@@ -1769,6 +1773,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5553453709390293995, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eb9a955137699c749a491aa439e1649b, type: 3}
+    - target: {fileID: 5553453709390293995, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
       propertyPath: m_Color.b
       value: 0.18867922
       objectReference: {fileID: 0}
@@ -1794,7 +1802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627921346222523927, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.39
+      value: -4.46
       objectReference: {fileID: 0}
     - target: {fileID: 7627921346222523927, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2303,6 +2311,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.2
       objectReference: {fileID: 0}
@@ -2373,6 +2385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2886bf3f94621974abefb517764acd00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passFilepath: Character Sprites/Passengers/pass_
   rwFirstNames:
   - Jack
   - Aaron
@@ -2576,6 +2589,18 @@ MonoBehaviour:
     am: I always do love riding the Passerby
     dm: Oh... Well I guess I'll see you next time then
     dom: See you soon!
+  - name: Magnanimous
+    description: Incredibly giving. Always gives huge tips.
+    pm: Would there happen to be any space left?
+    am: Ah, thank you. I am very grateful
+    dm: Well, I hope I have another chance to use this train someday.
+    dom: Here you go, I hope this can help you some.
+  - name: Miserly
+    description: Very reluctant to spend money. The worst tipper
+    pm: Oh, I hate spending this much
+    am: Was this really worth it?
+    dm: I probably shouldn't spend that much anyways
+    dom: Why does everybody always want more money from me?
   traitChance: 0.5
   regularSpawned: 0
   regularOnTrain: 0
@@ -3150,6 +3175,10 @@ PrefabInstance:
     - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4425,6 +4454,7 @@ MonoBehaviour:
   interact: 1
   tickRate: 1
   tipTime: 1000
+  trainFull: 0
 --- !u!4 &1304240892
 Transform:
   m_ObjectHideFlags: 0
@@ -4741,6 +4771,10 @@ PrefabInstance:
     - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7561,6 +7595,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540731531349049936, guid: b966bd68601ff5d48b02e5dca9f3636e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.85
       objectReference: {fileID: 0}
@@ -7686,6 +7724,10 @@ PrefabInstance:
       propertyPath: speed
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2248500507373894787, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
+      propertyPath: mainFilePath
+      value: Character Sprites/Passengers/pass_
+      objectReference: {fileID: 0}
     - target: {fileID: 4803336674730416826, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
       propertyPath: m_Name
       value: Passenger
@@ -7701,6 +7743,14 @@ PrefabInstance:
     - target: {fileID: 7627921346222523927, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627921346222523927, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627921346222523927, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7627921346222523927, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
       propertyPath: m_LocalPosition.x

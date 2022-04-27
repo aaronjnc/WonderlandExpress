@@ -20,6 +20,10 @@ public class PassengerGenerator : MonoBehaviour
         [Tooltip("the drop-off message for the trait")]
         public string dom;
     }
+
+    [Tooltip("The filepath for passenger sprites")]
+    public string passFilepath;
+
     [Header("Real World Passenger Names")]
 
     [Tooltip("Possible real world passenger first names")]
@@ -211,6 +215,12 @@ public class PassengerGenerator : MonoBehaviour
             pass.SetHappiness(regularStartHappiness);
             GameManager.Instance.InitializeUPI(pass);
         }
+        else if(pass.GetTrait() == "Magnanimous" || pass.GetTrait() == "Miserly")
+        {
+            pass.SetWealth(pass.GetWealth() * .5f + .5f);
+        }
+
+        pass.SetFilepath(passFilepath);
     }
 
     //generates a random name for the passenger and removes the name from the lists
