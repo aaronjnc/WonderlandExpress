@@ -33,6 +33,8 @@ public class Passenger : MonoBehaviour
     public string dropOffMessage;
     [Tooltip("sprite renderer")]
     public SpriteRenderer sr;
+    [Tooltip("BoxCollider2D")]
+    public BoxCollider2D bc;
     [Header("Movement Stats")]
     [Tooltip("speed at which the passenger moves")]
     public double speed = .05;
@@ -51,14 +53,30 @@ public class Passenger : MonoBehaviour
     public float distanceMod = 1f;
     [Tooltip("The amount that money is multiplied by if the passenger is shady")]
     public int shadyGoldMod = 3;
+
+    [Header("Resource settings")]
+    [Tooltip("The main part of the filepath")]
+    public string mainFilePath = "Character Sprites/Passengers/pass_";
+    [Tooltip("The individual part of the filepath to designate the current sprite part")]
+    public string filePathEnd;
     //reference to the town UI manager
     //private TownUIManager uiMan;
     // Start is called before the first frame update
     void Awake()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
+        // = gameObject.GetComponent<BoxCollider2D>();
+        //if (bc != null)
+        //{
+            //bc.enabled = true;
+        //}
         sr.enabled = false;
         //uiMan = TownUIManager.GetManager();
+    }
+
+    public void SetFilepath(string fp)
+    {
+        mainFilePath = fp;
     }
 
     public void Setup(string fName, string lName, int pGold, float pWealth, float pHappiness, string pDestination, string pm, string am, string dm, string dom)
@@ -144,12 +162,21 @@ public class Passenger : MonoBehaviour
     {
         transform.position = pos;
         sr.enabled = true;
+        //if (bc != null)
+        //{
+            //bc.enabled = false;
+        //}
     }
 
     //hides the spriteRenderer
     public void Hide()
     {
         sr.enabled = false;
+        //if (bc != null)
+        //{
+        //bc.enabled = false;
+        //}
+        transform.position = transform.position + new Vector3(0, 0, 11);
     }
 
     //decreases happiness by the given amount
@@ -265,6 +292,30 @@ public class Passenger : MonoBehaviour
     public string GetDropOff()
     {
         return dropOffMessage;
+    }
+
+    public void ChangeSprite(string dir)
+    {
+        if(dir != filePathEnd)
+        {
+            filePathEnd = dir;
+            sr.sprite = Resources.Load<Sprite>(mainFilePath + filePathEnd);
+        }
+    }
+
+    public void FaceBack()
+    {
+        ChangeSprite("back");
+    }
+
+    public void FaceFront()
+    {
+        ChangeSprite("front");
+    }
+
+    public void SitDown()
+    {
+        ChangeSprite("sit");
     }
 
     public void DropOff(Town t)

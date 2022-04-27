@@ -47,6 +47,12 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("The leave button")]
     public Button leaveButton;
 
+    [Tooltip("The left car change button")]
+    public Button leftButton;
+
+    [Tooltip("The right car change button")]
+    public Button rightButton;
+
     [Tooltip("The default remove button prefab to be used. Not yet used.")]
     public GameObject removeButton;
 
@@ -55,6 +61,9 @@ public class TownUIManager : MonoBehaviour
 
     [Tooltip("The Conductor")]
     public SpriteRenderer conductor;
+
+    [Tooltip("The second passenger car")]
+    public GameObject secondTrain;
 
     [Header("UI Sprites")]
 
@@ -80,6 +89,9 @@ public class TownUIManager : MonoBehaviour
 
     [Tooltip("length of time in milliseconds the tip should be displayed for")]
     public float tipTime = 1000f;
+
+    [Tooltip("If the train is full or not")]
+    public bool trainFull = false;
 
     //instance of TownUIManager
     private static TownUIManager Instance;
@@ -140,15 +152,55 @@ public class TownUIManager : MonoBehaviour
         }
     }
 
-    public void SetupButtons(GameObject[] arr)
+    public void SetupButtons(GameObject[] arr, int currentCar)
     {
         int currentNum = 0;
         foreach(GameObject button in removeButtons)
         {
-            button.SetActive(arr[currentNum] != null);
+            //GameObject button = arr[i];
+            button.SetActive(arr[currentCar * 5 + currentNum] != null);
             currentNum++;
         }
 
+    }
+
+    public void TrainFull(bool isFull)
+    {
+        
+        Text t = acceptButton.transform.GetChild(0).gameObject.GetComponent<Text>();
+        if (isFull)
+        {
+            t.text = "Train Full";
+        }
+        else
+        {
+            t.text = "Accept";
+        }
+        acceptButton.interactable = !isFull;
+        trainFull = isFull;
+    }
+
+    public void NoMorePass()
+    {
+        acceptButton.interactable = false;
+        denyButton.interactable = false;
+        Text t = acceptButton.transform.GetChild(0).gameObject.GetComponent<Text>();
+        t.text = "Accept";
+    }
+
+    public void DisplayTrains(bool display)
+    {
+        secondTrain.SetActive(display);
+    }
+
+    public void DisplayLeft(bool display)
+    {
+        leftButton.gameObject.SetActive(display);
+    }
+
+    public void DisplayRight(bool display)
+    {
+        rightButton.gameObject.SetActive(display);
     }
 
     public async Task DisplayTip(float tip)
@@ -268,7 +320,7 @@ public class TownUIManager : MonoBehaviour
     //sets whether or not the buttons are interactable
     public void CanInteract(bool ci)
     {
-        acceptButton.interactable = ci;
+        acceptButton.interactable = ci && !trainFull;
         denyButton.interactable = ci;
         leaveButton.interactable = ci;
         foreach(GameObject b in removeButtons)
