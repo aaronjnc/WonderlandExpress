@@ -369,6 +369,10 @@ public class PassengerManager : MonoBehaviour
         int gold = Mathf.Max((int)(goldMod * startWealth), 1);
         passScript.SetGold(gold);
         passScript.SetDestination(destination.GetName());
+        float dist = (float)townDict.GetTownDist(GetTown().GetName(), destination.GetName());
+        dist *= .1f;
+        passScript.SetDistMod(.9f + dist);
+
         //newPass.GetComponent<Passenger>().Setup(gold, wealth, happiness, destination.GetName());
         
         return newPass;

@@ -17,6 +17,9 @@ public class TownDictionary : MonoBehaviour
     [Tooltip("the current town")]
     public Town currentTown;
 
+    [Tooltip("The total track length. Found by subtracting the distance of the last town from that of the first town and adding 1")]
+    public int maxLength = 13;
+
     [Tooltip("Current Town Dictionary")]
     private static TownDictionary _instance;
 
@@ -153,5 +156,11 @@ public class TownDictionary : MonoBehaviour
         Town t = FindTown(town);
         t.DestroyTown();
         destroyed.Add(t);
+    }
+
+    //Returns the distance between the two provided towns
+    public int GetTownDist(string town1, string town2)
+    {
+        return Mathf.Abs((FindTown(town1).GetLoc() % maxLength) - (FindTown(town2).GetLoc() % maxLength));
     }
 }

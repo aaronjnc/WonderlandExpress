@@ -356,7 +356,7 @@ public class Passenger : MonoBehaviour
             //Debug.Log((pos - travelPos).magnitude);
             if((pos - travelPos).magnitude <= moveSpeed)
             {
-                Debug.Log("almost done");
+                //Debug.Log("almost done");
                 travelPos = pos;
                 transform.position = pos;
                 transform.eulerAngles = Vector3.zero;
@@ -367,7 +367,7 @@ public class Passenger : MonoBehaviour
                 int frameDiff = endFrame - startFrame;
                 Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
                 Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y / 4);// sprite.bounds.center;
-                Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
+                //Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
                 Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, 1f);
 
             }

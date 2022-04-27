@@ -178,6 +178,10 @@ public class PassengerGenerator : MonoBehaviour
             rwFirstNames.Remove(regular.firstName);
             rwLastNames.Remove(regular.lastName);
             //traitList.RemoveAt(GetIndex("Regular"));
+            if (!GameManager.Instance.CheckRegularTown())
+            {
+                traitList.RemoveAt(GetIndex("Regular"));
+            }
         }
     }
 
