@@ -209,6 +209,13 @@ public class PassengerManager : MonoBehaviour
     //What to do when leaving the town
     public void LeaveTown()
     {
+        foreach(GameObject pass in waitingPass)
+        {
+            if(pass.GetComponent<Passenger>().GetTrait() == "Regular")
+            {
+                GameManager.Instance.IgnoreUPI(pass.GetComponent<Passenger>());
+            }
+        }
         audioMan.SelectAudio();
         Invoke("PassInactive",leaveDelay);
         uiMan.Invoke("SwitchScene",leaveDelay);
@@ -346,8 +353,7 @@ public class PassengerManager : MonoBehaviour
         float startWealth = GetTownWealth(town);
         float wealth = UnityEngine.Random.Range(0f, 1f);
         Debug.Log(" min: " + (.5f - wealthDev) + " max: " + (.5f + wealthDev));
-        float goldMod = wealth * 2 * wealthDev + (.5f - wealthDev);
-        int gold = Mathf.Max((int)(goldMod * startWealth), 1);
+        
         float happiness = UnityEngine.Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
         //string name = firstNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)];
         //string pm = pms.ToArray()[UnityEngine.Random.Range(0, pms.ToArray().Length)];
@@ -355,8 +361,20 @@ public class PassengerManager : MonoBehaviour
         //string dm = dms.ToArray()[UnityEngine.Random.Range(0, dms.ToArray().Length)];
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
-        newPass.GetComponent<Passenger>().Setup(gold, wealth, happiness, destination.GetName());
+        Passenger passScript = newPass.GetComponent<Passenger>();
+        passScript.SetWealth(wealth);
+        passScript.SetHappiness(happiness);
         passGen.SetupPassenger(newPass.GetComponent<Passenger>());
+        float goldMod = passScript.GetWealth() * 2 * wealthDev + (.5f - wealthDev);
+        int gold = Mathf.Max((int)(goldMod * startWealth), 1);
+        passScript.SetGold(gold);
+        passScript.SetDestination(destination.GetName());
+        float dist = (float)townDict.GetTownDist(GetTown().GetName(), destination.GetName());
+        dist *= .1f;
+        passScript.SetDistMod(.9f + dist);
+
+        //newPass.GetComponent<Passenger>().Setup(gold, wealth, happiness, destination.GetName());
+        
         return newPass;
 
     }
@@ -457,12 +475,17 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("No passengers to deny");
             return;
         }
+        Passenger passScript = pass.GetComponent<Passenger>();
+        if (passScript.GetTrait() == "Regular")
+        {
+            GameManager.Instance.IgnoreUPI(passScript);
+        }
         audioMan.DenyAudio();
         uiMan.SetConductorImage(2);
         uiMan.CanInteract(false);
-        uiMan.DisplayText(pass.GetComponent<Passenger>().GetDeny());
+        uiMan.DisplayText(passScript.GetDeny());
         waitingPass.Remove(pass);
-        await pass.GetComponent<Passenger>().MoveTo(OffPlatformLoc.transform.position, false);
+        await passScript.MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.SetConductorImage(0);
         Destroy(pass);
         await MoveWaitingPass();
@@ -511,7 +534,20 @@ public class PassengerManager : MonoBehaviour
         uiMan.CanInteract(false);
         passScript.Display(OnTrainLoc.transform.position);
         await passScript.MoveTo(RemovedLoc.transform.position, true);
-        GetTown().RemoveRep((1 - passScript.GetHappiness() ) / repHapMod);
+        float happinessChange = (1 - passScript.GetHappiness()) / repHapMod;
+        if(passScript.GetTrait() == "Famous")
+        {
+            happinessChange *= 2f;
+        }
+        else if(passScript.GetTrait() == "Unobtrusive")
+        {
+            happinessChange *= .5f;
+        }
+        else if(passScript.GetTrait() == "Regular")
+        {
+            GameManager.Instance.KickOffUPI(passScript);
+        }
+        GetTown().RemoveRep(happinessChange);
         await Task.Delay(100);
         await passScript.MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.CanInteract(true);
@@ -549,7 +585,16 @@ public class PassengerManager : MonoBehaviour
         }
         gold *= (1f + tip);
         GetTown().AddWealth(gold / wealthMod);
-        GetTown().AddRep(passScript.GetHappiness() / repHapMod);
+        float happinessChange = passScript.GetHappiness() / repHapMod;
+        if(passScript.GetTrait() == "Famous")
+        {
+            happinessChange *= 2f;
+        }
+        else if (passScript.GetTrait() == "Unobtrusive")
+        {
+            happinessChange *= .5f;
+        }
+        GetTown().AddRep(happinessChange);
         passScript.Display(OnTrainLoc.transform.position);
 
         await passScript.MoveTo(waitingLoc.transform.position, false);

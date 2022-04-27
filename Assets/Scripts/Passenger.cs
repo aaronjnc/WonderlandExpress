@@ -47,6 +47,8 @@ public class Passenger : MonoBehaviour
     public string trait = "None";
     [Tooltip("Description of the passenger's trait")]
     public string traitDescription = "";
+    [Tooltip("modifier used to scale gold/happiness based on how far the passenger is traveling. \nUsed to balance and make it so long trips aren't always suboptimal")]
+    public float distanceMod = 1f;
     [Tooltip("The amount that money is multiplied by if the passenger is shady")]
     public int shadyGoldMod = 3;
     //reference to the town UI manager
@@ -110,6 +112,11 @@ public class Passenger : MonoBehaviour
         dropOffMessage = dom;
     }
 
+    public void SetDistMod(float mod)
+    {
+        distanceMod = mod;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -149,7 +156,7 @@ public class Passenger : MonoBehaviour
     public void DecreaseHappiness(float diff)
     {
 
-            happiness -= diff;
+        happiness -= diff;
         if(happiness <= 0f)
         {
             happiness = 0f;
@@ -176,12 +183,18 @@ public class Passenger : MonoBehaviour
 
     public int GetGold()
     {
+        int displayGold = (int)((float)gold * distanceMod);
         if (trait == "Shady")
         {
-            return gold * shadyGoldMod;
+            displayGold *= shadyGoldMod;
         }
-        return gold;
+        return displayGold;
 
+    }
+
+    public void SetGold(int newGold)
+    {
+        gold = newGold;  
     }
 
     public float GetWealth()
@@ -189,9 +202,19 @@ public class Passenger : MonoBehaviour
         return wealth;
     }
 
+    public void SetWealth(float newWealth)
+    {
+        wealth = newWealth;
+    }
+
     public float GetHappiness()
     {
         return happiness;
+    }
+
+    public void SetHappiness(float happy)
+    {
+        happiness = happy;
     }
 
     public string GetName()
@@ -212,6 +235,11 @@ public class Passenger : MonoBehaviour
     public string GetDestination()
     {
         return destination;
+    }
+
+    public void SetDestination(string dest)
+    {
+        destination = dest;
     }
 
     //public string GetDestinationName()
@@ -245,11 +273,16 @@ public class Passenger : MonoBehaviour
         {
             t.DestroyTown();
         }
+        else if(trait == "Regular")
+        {
+            GameManager.Instance.DropOffUPI(this);
+        }
     }
 
     //reduces happiness as train moves. decrease = amount happiness typically drops by, numPassengers = number of passengers
     public void OnTrainMove(float decrease, int numPassengers)
     {
+        decrease /= distanceMod;
         switch (trait)
         {
             case "Carefree":
@@ -266,6 +299,10 @@ public class Passenger : MonoBehaviour
 
             case "Irritable":
                 decrease *= 2;
+                break;
+
+            case "Traveler":
+                decrease *= -1;
                 break;
 
             default:
@@ -319,7 +356,7 @@ public class Passenger : MonoBehaviour
             //Debug.Log((pos - travelPos).magnitude);
             if((pos - travelPos).magnitude <= moveSpeed)
             {
-                Debug.Log("almost done");
+                //Debug.Log("almost done");
                 travelPos = pos;
                 transform.position = pos;
                 transform.eulerAngles = Vector3.zero;
@@ -330,7 +367,7 @@ public class Passenger : MonoBehaviour
                 int frameDiff = endFrame - startFrame;
                 Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
                 Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y / 4);// sprite.bounds.center;
-                Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
+                //Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
                 Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, 1f);
 
             }

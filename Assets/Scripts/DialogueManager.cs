@@ -127,6 +127,11 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("display dialog of " + path);
         
         Dialog[] currentDialog = (Dialog[])this.GetType().GetField(path).GetValue(this);
+        if(currentDialog == null)
+        {
+            Debug.LogError("DIALOG " + path + " NOT FOUND");
+            return;
+        }
         DisplaySpeaker(currentDialog[0].speaker);
         dialogObject.SetActive(true);
         await HandleDialog(currentDialog);
