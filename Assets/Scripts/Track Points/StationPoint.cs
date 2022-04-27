@@ -19,7 +19,7 @@ public class StationPoint : TrackPoint
         return text.text;
     }
 
-    public override void StopAction()
+    public override bool StopAction()
     {
         GameManager.Instance.SetTrainPosition(TrainMovement.Instance.gameObject.transform.position);
         GameManager.Instance.SetCurrentStop(gameObject.name);
@@ -28,5 +28,6 @@ public class StationPoint : TrackPoint
         TrainMovement.Instance.SaveFollowTrains();
         if (!GameManager.Instance.trainSceneTesting)
             SceneManager.LoadScene(2);
+        return false;
     }
 }
