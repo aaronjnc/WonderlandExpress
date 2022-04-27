@@ -14,19 +14,20 @@ public class TollPoint : TrackPoint
     public string successString;
     [Tooltip("name of Dialogue String for failure")]
     public string failureString;
-    public async override void StopAction()
+    public override bool StopAction()
     {
         if (GameManager.Instance.trainSceneTesting)
-            return;
+            return false;
         Debug.Log("TollPoint activation");
         if (GameManager.Instance.CheckToll())
         {
-            await dm.DisplayDialog(successString);
+            dm.DisplayDialog(successString);
             
         }
         else
         {
-            await dm.DisplayDialog(failureString);
+            dm.DisplayDialog(failureString);
         }
+        return true;
     }
 }

@@ -65216,6 +65216,7 @@ MonoBehaviour:
   train: {fileID: 1408978670}
   maxRegularZoom: 45
   maxFantasyZoom: 60
+  transitioning: 0
 --- !u!224 &1691787169
 RectTransform:
   m_ObjectHideFlags: 0

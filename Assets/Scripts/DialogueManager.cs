@@ -97,7 +97,6 @@ public class DialogueManager : MonoBehaviour
 
     [Tooltip("if you want to run the test dialogue")]
     public bool runTest;
-
     // Start is called before the first frame update
     public async void Awake()
     {

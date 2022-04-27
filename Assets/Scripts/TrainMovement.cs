@@ -47,6 +47,8 @@ public class TrainMovement : MonoBehaviour
     [SerializeField]
     private float rotationSpeed;
     private float previousTime;
+    private bool paused = false;
+    private TrackPoint previousChosen;
     private void Start()
     {
         _instance = this;
@@ -70,7 +72,7 @@ public class TrainMovement : MonoBehaviour
     }
     private void Zoom(CallbackContext ctx)
     {
-        if (Time.timeScale == 0)
+        if (Time.timeScale == 0 || camTransition.transitioning)
             return;
         if (zoomedOut)
         {
@@ -109,7 +111,24 @@ public class TrainMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)
+        if (paused)
+        {
+            if (!previousChosen.continuous)
+            {
+                trainAudioManager.SpeedUp();
+            }
+            Vector3 diff = -(nextPoint.transform.position - transform.position);
+            diff.Normalize();
+            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            lookRotation = Quaternion.Euler(0, 0, rot - 90);
+            velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+            transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
+            if (!zoomedOut)
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+            stopped = false;
+            paused = false;
+        }
+        else if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)
         {
             if (transform.rotation != lookRotation)
             {
@@ -147,22 +166,26 @@ public class TrainMovement : MonoBehaviour
                 velocity = 0;
                 currentVel = Vector3.zero;
             }
-            TrackPoint previousChosen = nextPoint;
+            previousChosen = nextPoint;
             nextPoint = nextPoint.chosenNext;
             if (!previousChosen.continuous)
             {
-                previousChosen.StopAction();
-                trainAudioManager.SpeedUp();
+                paused = previousChosen.StopAction();
+                if (!paused)
+                    trainAudioManager.SpeedUp();
             }
-            Vector3 diff = -(nextPoint.transform.position - transform.position);
-            diff.Normalize();
-            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            lookRotation = Quaternion.Euler(0, 0, rot - 90);
-            velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
-            transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
-            if (!zoomedOut)
-                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
-            stopped = false;
+            if (!paused)
+            {
+                Vector3 diff = -(nextPoint.transform.position - transform.position);
+                diff.Normalize();
+                float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+                lookRotation = Quaternion.Euler(0, 0, rot - 90);
+                velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+                transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
+                if (!zoomedOut)
+                    Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+                stopped = false;
+            }
         }
         else
         {

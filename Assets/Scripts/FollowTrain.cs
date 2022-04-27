@@ -60,5 +60,6 @@ public class FollowTrain : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         transform.position = train.position + (transform.up * distanceBehind);
+        Camera.main.gameObject.GetComponent<CameraTransition>().Transition(transform.position.x > 0);
     }
 }
