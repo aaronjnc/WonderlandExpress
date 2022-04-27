@@ -95,10 +95,16 @@ public class DialogueManager : MonoBehaviour
     //[Tooltip("associated speakers for Jabberwocky game over")]
     //public List<string> jwGameOverSpeakers = new List<string>();
 
+    [Tooltip("if you want to run the test dialogue")]
+    public bool runTest;
+
     // Start is called before the first frame update
     public async void Awake()
     {
-        //await DisplayDialog("test");
+        if (runTest)
+        {
+            await DisplayDialog("test");
+        }
         HideDisplay();
     }
 
@@ -119,8 +125,15 @@ public class DialogueManager : MonoBehaviour
         tmo.SetInteract(false);
         ct.SetInteracting(false);
         Debug.Log("display dialog of " + path);
-        dialogObject.SetActive(true);
+        
         Dialog[] currentDialog = (Dialog[])this.GetType().GetField(path).GetValue(this);
+        if(currentDialog == null)
+        {
+            Debug.LogError("DIALOG " + path + " NOT FOUND");
+            return;
+        }
+        DisplaySpeaker(currentDialog[0].speaker);
+        dialogObject.SetActive(true);
         await HandleDialog(currentDialog);
         HideDisplay();
         tmo.SetInteract(true);
@@ -129,6 +142,7 @@ public class DialogueManager : MonoBehaviour
 
     public async Task HandleDialog(Dialog[] dialogs)
     {
+        
         canGetInput = true;
         continueText.enabled = false;
         Debug.Log("dialogs to run: " + dialogs.Length);

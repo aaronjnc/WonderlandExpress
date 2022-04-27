@@ -891,7 +891,7 @@ MonoBehaviour:
   targetFR: 30
   passengers: []
   maxCap: 5
-  gold: 0
+  gold: 12
   happinessDecayRate: 1
   tollPrice: 30
   tollMod: 1.2
@@ -17631,6 +17631,7 @@ MonoBehaviour:
   trainAccelerate: {fileID: 0}
   trainDecelerate: {fileID: 0}
   trainRegular: {fileID: 0}
+  state: 0
 --- !u!4 &508132509
 Transform:
   m_ObjectHideFlags: 0
@@ -22426,7 +22427,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3625043607559282579, guid: 045b15ec09bba42448d89db77fa6f20a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c4233f23dd4b21644ad1d72df1b11be8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -29367,48 +29368,48 @@ PrefabInstance:
       objectReference: {fileID: 841969340}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[0]
       value: 
-      objectReference: {fileID: 841969350}
+      objectReference: {fileID: 841969349}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[1]
       value: 
-      objectReference: {fileID: 841969349}
+      objectReference: {fileID: 841969348}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[2]
       value: 
-      objectReference: {fileID: 841969348}
+      objectReference: {fileID: 841969347}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[3]
       value: 
-      objectReference: {fileID: 841969347}
+      objectReference: {fileID: 841969346}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[4]
       value: 
-      objectReference: {fileID: 841969346}
+      objectReference: {fileID: 841969345}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[5]
       value: 
-      objectReference: {fileID: 841969345}
+      objectReference: {fileID: 841969344}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[6]
       value: 
-      objectReference: {fileID: 841969344}
+      objectReference: {fileID: 841969343}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[7]
       value: 
-      objectReference: {fileID: 841969343}
+      objectReference: {fileID: 841969342}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[8]
       value: 
-      objectReference: {fileID: 841969342}
+      objectReference: {fileID: 841969341}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[9]
       value: 
-      objectReference: {fileID: 841969341}
+      objectReference: {fileID: 841969340}
     - target: {fileID: 6824920582519118066, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[10]
       value: 
@@ -67362,7 +67363,7 @@ MonoBehaviour:
   nextPoints:
   - {fileID: 1125309892}
   chosenNext: {fileID: 0}
-  continuous: 1
+  continuous: 0
   trackChoice: 0
   text: {fileID: 1713986915}
 --- !u!4 &1984846329

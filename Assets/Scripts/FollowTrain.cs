@@ -36,16 +36,26 @@ public class FollowTrain : MonoBehaviour
 
     public void SetNextPoint(string name)
     {
+        Debug.Log(name);
         nextPoint = GameObject.Find(name).GetComponent<TrackPoint>();
-        if (train.up == transform.up)
+        if (train.up == transform.up && (train.position.x == transform.position.x || train.position.y == transform.position.y))
         {
-            Debug.Log(train.up + " " + transform.up);
             transform.position = train.position + (transform.up * distanceBehind);
         }
         Vector3 diff = -(nextPoint.transform.position - transform.position);
         diff.Normalize();
         float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         lookRotation = Quaternion.Euler(0, 0, rot - 90);
+    }
+
+    public string GetNextPoint()
+    {
+        if (nextPoint.trackChoice)
+        {
+            transform.position = nextPoint.transform.position;
+            nextPoint = nextPoint.chosenNext;
+        }
+        return nextPoint.name;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

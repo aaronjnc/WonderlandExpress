@@ -105,7 +105,7 @@ public class TrainMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, choiceLayer);
         if (!hit)
             return;
-        hit.collider.gameObject.GetComponent<TrackChooser>().Clicked();
+        hit.collider.gameObject.GetComponent<TrackChooser>()?.Clicked();
     }
     void FixedUpdate()
     {
@@ -132,6 +132,8 @@ public class TrainMovement : MonoBehaviour
             }
             else
             {
+                if (trainAudioManager.state != 0 && trainAudioManager.state != 1)
+                    trainAudioManager.ConstantSpeed();
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
             }
@@ -150,6 +152,7 @@ public class TrainMovement : MonoBehaviour
             if (!previousChosen.continuous)
             {
                 previousChosen.StopAction();
+                trainAudioManager.SpeedUp();
             }
             Vector3 diff = -(nextPoint.transform.position - transform.position);
             diff.Normalize();
@@ -157,7 +160,6 @@ public class TrainMovement : MonoBehaviour
             lookRotation = Quaternion.Euler(0, 0, rot - 90);
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
-            trainAudioManager.SpeedUp();
             if (!zoomedOut)
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
             stopped = false;

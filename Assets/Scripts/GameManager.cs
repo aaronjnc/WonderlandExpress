@@ -21,8 +21,10 @@ public class GameManager : MonoBehaviour
     private string currentStop;
     [Tooltip("List of current Passengers")]
     public GameObject[] passengers;
-    [Tooltip("Max number of passengers")]
+    [Tooltip("Max number of passengers per car")]
     public int maxCap = 5;
+    [Tooltip("Number of passenger cars")]
+    public int numCar = 1;
     [Tooltip("Current number of passengers")]
     private int passengerCount = 0;
     [Tooltip("Current amount of gold")]
@@ -37,6 +39,8 @@ public class GameManager : MonoBehaviour
     private float jabberwockyMod = 1.5f;
     [Tooltip("Jabberwocky price")]
     private int jabberwockyPrice;
+    [Tooltip("The unique passenger info component")]
+    private UniquePassengerInfo upi;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
     [Tooltip("List of positions for follow cars")]
@@ -84,6 +88,11 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
         jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
+        upi = gameObject.GetComponent<UniquePassengerInfo>();
+        if(upi == null)
+        {
+            Debug.LogError("UPI NOT FOUND");
+        }
     }
 
     private void Update()
@@ -128,6 +137,14 @@ public class GameManager : MonoBehaviour
     {
         return gold;
     }
+    public int GetNumCar()
+    {
+        return numCar;
+    }
+    public void SetNumCar(int num)
+    {
+        numCar = num;
+    }
     public void AddGold(int amt)
     {
         gold += amt;
@@ -155,7 +172,7 @@ public class GameManager : MonoBehaviour
     {
         trainCarPos.Add(follow.transform.position);
         trainCarRots.Add(follow.transform.eulerAngles);
-        trainCarStops.Add(follow.nextPoint.name);
+        trainCarStops.Add(follow.GetNextPoint());
     }
 
     public void LoadFollowTrain(List<FollowTrain> followers)
@@ -258,5 +275,41 @@ public class GameManager : MonoBehaviour
         await pass.MoveTo(jw.transform.position, true);
         Destroy(passengers[i]);
         passengers[i] = null;
+    }
+
+    //methods to do with unique passengers
+    public bool IsRegular()
+    {
+        return upi.RegularSpawned();
+    }
+
+    public bool CheckRegularTown()
+    {
+        return currentStop == upi.GetRegularTown();
+    }
+
+    public UniquePassengerInfo.UniquePass GetRegular()
+    {
+        return upi.GetRegular();
+    }
+
+    public void InitializeUPI(Passenger pass)
+    {
+        upi.InitializeUPI(pass, GetCurrentStop());
+    }
+
+    public void DropOffUPI(Passenger pass)
+    {
+        upi.DropOffUPI(pass, GetCurrentStop());
+    }
+
+    public void KickOffUPI(Passenger pass)
+    {
+        upi.KickOffUPI(pass, GetCurrentStop());
+    }
+
+    public void IgnoreUPI(Passenger pass)
+    {
+        upi.IgnoreUPI(pass, GetCurrentStop());
     }
 }
