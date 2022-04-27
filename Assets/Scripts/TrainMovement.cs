@@ -49,13 +49,13 @@ public class TrainMovement : MonoBehaviour
     private float previousTime;
     private bool paused = false;
     private TrackPoint previousChosen;
-    private void Start()
+    private void OnEnable()
     {
         _instance = this;
         if (GameManager.Instance.load)
         {
             TrackPoint loadPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>();
-            nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
+            nextPoint = loadPoint.chosenNext;
             transform.position = GameManager.Instance.GetTrainPosition();
             transform.eulerAngles = GameManager.Instance.GetTrainRotation();
             LoadFollowTrains();
@@ -68,6 +68,7 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
         lookRotation = transform.rotation;
+        GameManager.Instance.AddFollowPoint(nextPoint.transform.position);
         trainAudioManager.SpeedUp();
     }
     private void Zoom(CallbackContext ctx)
@@ -168,6 +169,7 @@ public class TrainMovement : MonoBehaviour
             }
             previousChosen = nextPoint;
             nextPoint = nextPoint.chosenNext;
+            GameManager.Instance.AddFollowPoint(nextPoint.transform.position);
             if (!previousChosen.continuous)
             {
                 paused = previousChosen.StopAction();

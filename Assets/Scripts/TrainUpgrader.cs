@@ -6,6 +6,10 @@ using TMPro;
 
 public class TrainUpgrader : MonoBehaviour
 {
+    [Tooltip("Follow car prefab"), SerializeField]
+    private SpriteRenderer[] followTrains;
+    [Tooltip("Train game object")]
+    private GameObject trainObj;
     [Tooltip("Train car gameobjects"), SerializeField]
     private GameObject[] trainCars;
     [Tooltip("Cars text"), SerializeField]
@@ -54,6 +58,7 @@ public class TrainUpgrader : MonoBehaviour
     {
         GameManager.Instance.BuyCar(carCost);
         trainCars[cars].SetActive(true);
+        followTrains[cars].enabled = true;
         cars++;
         CheckBuyButton();
         CheckUpgradeButton();
@@ -88,6 +93,7 @@ public class TrainUpgrader : MonoBehaviour
     }
     public void Exit()
     {
+        Time.timeScale = 1;
         this.gameObject.SetActive(false);
     }
 }

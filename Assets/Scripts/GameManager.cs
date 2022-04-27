@@ -47,8 +47,8 @@ public class GameManager : MonoBehaviour
     private List<Vector3> trainCarPos = new List<Vector3>();
     [Tooltip("List of rotations for follow cars")]
     private List<Vector3> trainCarRots = new List<Vector3>();
-    [Tooltip("List of next points for follow cars")]
-    private List<string> trainCarStops = new List<string>();
+    [Tooltip("List of follow points for follow cars")]
+    private List<FollowPoint> trainCarStops = new List<FollowPoint>();
     [Tooltip("Disable passenger scene loading")]
     public bool trainSceneTesting = false;
     public delegate Task OnTollChange(int currentToll, int newToll, int currentGold, int newGold, int jabberwocky);
@@ -57,6 +57,10 @@ public class GameManager : MonoBehaviour
     public int carCount = 1;
     [HideInInspector]
     public int carLevel = 0;
+    [Tooltip("Linked list of train points head")]
+    private FollowPoint head;
+    [Tooltip("Linked list of train poitns tail")]
+    private FollowPoint tail;
     public static GameManager Instance
     {
         get
@@ -327,5 +331,26 @@ public class GameManager : MonoBehaviour
     {
         carCount++;
         gold -= cost;
+    }
+    public void AddFollowPoint(Vector3 pos)
+    {
+        if (tail == null)
+        {
+            head = new FollowPoint(pos, null);
+            tail = head;
+            return;
+        }
+        FollowPoint newTail = new FollowPoint(pos, null);
+        tail.SetNext(newTail);
+        tail = newTail;
+    }
+    public FollowPoint RemoveHead()
+    {
+        head = head.GetNext();
+        return head;
+    }
+    public FollowPoint GetHeadPoint()
+    {
+        return head;
     }
 }
