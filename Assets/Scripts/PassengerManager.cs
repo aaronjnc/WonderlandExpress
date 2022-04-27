@@ -308,6 +308,7 @@ public class PassengerManager : MonoBehaviour
                 if (pass != null)
                 {
                     pass.GetComponent<Passenger>().Display(displayPos);
+                    pass.GetComponent<Passenger>().SitDown();
                     Debug.Log("Displaying pass at index " + i);
                 }
                 displayPos += passOffset;
@@ -560,6 +561,7 @@ public class PassengerManager : MonoBehaviour
         audioMan.RemoveAudio();
         uiMan.CanInteract(false);
         passScript.Display(OnTrainLoc.transform.position);
+        passScript.FaceBack();
         await passScript.MoveTo(RemovedLoc.transform.position, true);
         float happinessChange = (1 - passScript.GetHappiness()) / repHapMod;
         if(passScript.GetTrait() == "Famous")
@@ -624,6 +626,7 @@ public class PassengerManager : MonoBehaviour
         }
         GetTown().AddRep(happinessChange);
         passScript.Display(OnTrainLoc.transform.position);
+        passScript.FaceBack();
 
         await passScript.MoveTo(waitingLoc.transform.position, false);
         int currentGold = GameManager.Instance.GetGold();
