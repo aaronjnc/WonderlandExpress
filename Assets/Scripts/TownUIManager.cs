@@ -47,6 +47,12 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("The leave button")]
     public Button leaveButton;
 
+    [Tooltip("The left car change button")]
+    public Button leftButton;
+
+    [Tooltip("The right car change button")]
+    public Button rightButton;
+
     [Tooltip("The default remove button prefab to be used. Not yet used.")]
     public GameObject removeButton;
 
@@ -140,15 +146,26 @@ public class TownUIManager : MonoBehaviour
         }
     }
 
-    public void SetupButtons(GameObject[] arr)
+    public void SetupButtons(GameObject[] arr, int currentCar)
     {
         int currentNum = 0;
         foreach(GameObject button in removeButtons)
         {
-            button.SetActive(arr[currentNum] != null);
+            //GameObject button = arr[i];
+            button.SetActive(arr[currentCar * 5 + currentNum] != null);
             currentNum++;
         }
 
+    }
+
+    public void DisplayLeft(bool display)
+    {
+        leftButton.gameObject.SetActive(display);
+    }
+
+    public void DisplayRight(bool display)
+    {
+        rightButton.gameObject.SetActive(display);
     }
 
     public async Task DisplayTip(float tip)

@@ -78068,6 +78068,7 @@ MonoBehaviour:
   targetFR: 30
   passengers: []
   maxCap: 5
+  numCar: 1
   gold: 0
   happinessDecayRate: 1
   tollPrice: 30

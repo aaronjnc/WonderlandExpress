@@ -33,6 +33,8 @@ public class Passenger : MonoBehaviour
     public string dropOffMessage;
     [Tooltip("sprite renderer")]
     public SpriteRenderer sr;
+    [Tooltip("BoxCollider2D")]
+    public BoxCollider2D bc;
     [Header("Movement Stats")]
     [Tooltip("speed at which the passenger moves")]
     public double speed = .05;
@@ -57,6 +59,11 @@ public class Passenger : MonoBehaviour
     void Awake()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
+        // = gameObject.GetComponent<BoxCollider2D>();
+        //if (bc != null)
+        //{
+            //bc.enabled = true;
+        //}
         sr.enabled = false;
         //uiMan = TownUIManager.GetManager();
     }
@@ -144,12 +151,21 @@ public class Passenger : MonoBehaviour
     {
         transform.position = pos;
         sr.enabled = true;
+        //if (bc != null)
+        //{
+            //bc.enabled = false;
+        //}
     }
 
     //hides the spriteRenderer
     public void Hide()
     {
         sr.enabled = false;
+        //if (bc != null)
+        //{
+        //bc.enabled = false;
+        //}
+        transform.position = transform.position + new Vector3(0, 0, 11);
     }
 
     //decreases happiness by the given amount
