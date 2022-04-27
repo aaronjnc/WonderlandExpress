@@ -62,6 +62,9 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("The Conductor")]
     public SpriteRenderer conductor;
 
+    [Tooltip("The second passenger car")]
+    public GameObject secondTrain;
+
     [Header("UI Sprites")]
 
     [Tooltip("Conductor sprites. 0=default, 1=yes, 2=no")]
@@ -156,6 +159,11 @@ public class TownUIManager : MonoBehaviour
             currentNum++;
         }
 
+    }
+
+    public void DisplayTrains(bool display)
+    {
+        secondTrain.SetActive(display);
     }
 
     public void DisplayLeft(bool display)

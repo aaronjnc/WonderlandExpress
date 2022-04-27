@@ -135,7 +135,9 @@ public class PassengerManager : MonoBehaviour
         {
             townDict = TownDictionary.Instance;
         }
+        
         numCars = GameManager.Instance.GetNumCar();
+        uiMan.DisplayTrains(numCars > 1);
         townDict.FindCurrentTown(GameManager.Instance.GetCurrentStop());
         FindCurrentPassNum();
         waitingPass = new List<GameObject>();
