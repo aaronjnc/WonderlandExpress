@@ -211,6 +211,10 @@ public class PassengerGenerator : MonoBehaviour
             pass.SetHappiness(regularStartHappiness);
             GameManager.Instance.InitializeUPI(pass);
         }
+        else if(pass.GetTrait() == "Magnanimous" || pass.GetTrait() == "Miserly")
+        {
+            pass.SetWealth(pass.GetWealth() * .5f + .5f);
+        }
     }
 
     //generates a random name for the passenger and removes the name from the lists

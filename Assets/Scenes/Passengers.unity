@@ -2576,6 +2576,18 @@ MonoBehaviour:
     am: I always do love riding the Passerby
     dm: Oh... Well I guess I'll see you next time then
     dom: See you soon!
+  - name: Magnanimous
+    description: Incredibly giving. Always gives huge tips.
+    pm: Would there happen to be any space left?
+    am: Ah, thank you. I am very grateful
+    dm: Well, I hope I have another chance to use this train someday.
+    dom: Here you go, I hope this can help you some.
+  - name: Miserly
+    description: Very reluctant to spend money. The worst tipper
+    pm: Oh, I hate spending this much
+    am: Was this really worth it?
+    dm: I probably shouldn't spend that much anyways
+    dom: Why does everybody always want more money from me?
   traitChance: 0.5
   regularSpawned: 0
   regularOnTrain: 0

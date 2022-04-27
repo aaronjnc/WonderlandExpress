@@ -90,6 +90,9 @@ public class TownUIManager : MonoBehaviour
     [Tooltip("length of time in milliseconds the tip should be displayed for")]
     public float tipTime = 1000f;
 
+    [Tooltip("If the train is full or not")]
+    public bool trainFull = false;
+
     //instance of TownUIManager
     private static TownUIManager Instance;
 
@@ -159,6 +162,30 @@ public class TownUIManager : MonoBehaviour
             currentNum++;
         }
 
+    }
+
+    public void TrainFull(bool isFull)
+    {
+        
+        Text t = acceptButton.transform.GetChild(0).gameObject.GetComponent<Text>();
+        if (isFull)
+        {
+            t.text = "Train Full";
+        }
+        else
+        {
+            t.text = "Accept";
+        }
+        acceptButton.interactable = !isFull;
+        trainFull = isFull;
+    }
+
+    public void NoMorePass()
+    {
+        acceptButton.interactable = false;
+        denyButton.interactable = false;
+        Text t = acceptButton.transform.GetChild(0).gameObject.GetComponent<Text>();
+        t.text = "Accept";
     }
 
     public void DisplayTrains(bool display)
@@ -293,7 +320,7 @@ public class TownUIManager : MonoBehaviour
     //sets whether or not the buttons are interactable
     public void CanInteract(bool ci)
     {
-        acceptButton.interactable = ci;
+        acceptButton.interactable = ci && !trainFull;
         denyButton.interactable = ci;
         leaveButton.interactable = ci;
         foreach(GameObject b in removeButtons)
