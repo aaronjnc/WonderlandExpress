@@ -21,8 +21,10 @@ public class GameManager : MonoBehaviour
     private string currentStop;
     [Tooltip("List of current Passengers")]
     public GameObject[] passengers;
-    [Tooltip("Max number of passengers")]
+    [Tooltip("Max number of passengers per car")]
     public int maxCap = 5;
+    [Tooltip("Number of passenger cars")]
+    public int numCar = 1;
     [Tooltip("Current number of passengers")]
     private int passengerCount = 0;
     [Tooltip("Current amount of gold")]
@@ -134,6 +136,14 @@ public class GameManager : MonoBehaviour
     public int GetGold()
     {
         return gold;
+    }
+    public int GetNumCar()
+    {
+        return numCar;
+    }
+    public void SetNumCar(int num)
+    {
+        numCar = num;
     }
     public void AddGold(int amt)
     {
