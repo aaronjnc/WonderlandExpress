@@ -561,7 +561,7 @@ public class PassengerManager : MonoBehaviour
         audioMan.RemoveAudio();
         uiMan.CanInteract(false);
         passScript.Display(OnTrainLoc.transform.position);
-        passScript.FaceBack();
+        passScript.FaceFront();
         await passScript.MoveTo(RemovedLoc.transform.position, true);
         float happinessChange = (1 - passScript.GetHappiness()) / repHapMod;
         if(passScript.GetTrait() == "Famous")
@@ -626,7 +626,7 @@ public class PassengerManager : MonoBehaviour
         }
         GetTown().AddRep(happinessChange);
         passScript.Display(OnTrainLoc.transform.position);
-        passScript.FaceBack();
+        passScript.FaceFront();
 
         await passScript.MoveTo(waitingLoc.transform.position, false);
         int currentGold = GameManager.Instance.GetGold();
