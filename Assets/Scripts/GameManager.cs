@@ -147,11 +147,11 @@ public class GameManager : MonoBehaviour
     }
     public int GetNumCar()
     {
-        return numCar;
+        return carCount;
     }
     public void SetNumCar(int num)
     {
-        numCar = num;
+        carCount = num;
     }
     public void AddGold(int amt)
     {
