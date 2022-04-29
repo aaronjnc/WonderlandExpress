@@ -50,8 +50,14 @@ public class PassengerManager : MonoBehaviour
     [Tooltip("Passengers currently on the train")]
     public GameObject[] currentPass;
 
-    [Tooltip("maximum number of passengers on the train")]
+    [Tooltip("maximum number of passengers on each car")]
     public int trainCap = 5;
+
+    [Tooltip("Total number of passenger cars")]
+    public int numCars = 1;
+
+    [Tooltip("The current passenger car being displayed")]
+    public int currentCar = 0;
 
     [Tooltip("the current number of passengers on the train")]
     public int currentPassNum;
@@ -66,7 +72,7 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("The maximum percentage deviation from the generated wealth value a passenger can have between 0 and .5. \neg. a passenger can be x% lower or x% higher than the general value for a town")]
     [Range(0f, .5f)]
-    public float wealthDev = 0.5f;
+    public float wealthDev = 0.3f;
 
     [Tooltip("The default happiness of a passenger from 0 to 1")]
     [Range(0f, 1f)]
@@ -88,6 +94,12 @@ public class PassengerManager : MonoBehaviour
 
     [Tooltip("modifier for converting between town reputation and number of passengers \n rep * mod = num")]
     public float passRepMod = 0.05f;
+
+    [Tooltip("maximum tip percentage")]
+    public float maxTip = .25f;
+
+    [Tooltip("the happiness percentage required to earn a tip")]
+    public float tipThreshold = .6f;
 
     [Tooltip("Timing variables")]
     public float leaveDelay = 1f;
@@ -123,6 +135,9 @@ public class PassengerManager : MonoBehaviour
         {
             townDict = TownDictionary.Instance;
         }
+        
+        numCars = GameManager.Instance.GetNumCar();
+        uiMan.DisplayTrains(numCars > 1);
         townDict.FindCurrentTown(GameManager.Instance.GetCurrentStop());
         FindCurrentPassNum();
         waitingPass = new List<GameObject>();
@@ -168,6 +183,7 @@ public class PassengerManager : MonoBehaviour
         passGen.Initialize(currentPass);
         PassActive();
         GeneratePassengers();
+        StartBGAudio();
         DisplayAllPass();
         await CheckPassengerDestination();
         //Debug.Log("list length: " + waitingPass.Count);
@@ -185,9 +201,30 @@ public class PassengerManager : MonoBehaviour
         uiMan.DisplayToll(GameManager.Instance.GetToll());
     }
 
+    //starts playing bg audio
+    void StartBGAudio()
+    {
+        if (GetTown().IsDestroyed())
+        {
+            audioMan.PlayBGAudio("destroyed");
+        }
+        else
+        {
+            audioMan.PlayBGAudio(waitingPass.Count - 1);
+        }
+       
+    }
+
     //What to do when leaving the town
     public void LeaveTown()
     {
+        foreach(GameObject pass in waitingPass)
+        {
+            if(pass.GetComponent<Passenger>().GetTrait() == "Regular")
+            {
+                GameManager.Instance.IgnoreUPI(pass.GetComponent<Passenger>());
+            }
+        }
         audioMan.SelectAudio();
         Invoke("PassInactive",leaveDelay);
         uiMan.Invoke("SwitchScene",leaveDelay);
@@ -263,15 +300,32 @@ public class PassengerManager : MonoBehaviour
         //    pass.GetComponent<Passenger>().Hide();
         //}
         Vector3 displayPos = passLoc.transform.position;
-        foreach(GameObject pass in currentPass)
+        for(int i = 0; i < numCars * trainCap; i++) //GameObject pass in currentPass)
         {
-            if (pass != null)
+            GameObject pass = currentPass[i];
+            if (i >= currentCar * trainCap && i < (currentCar + 1) * trainCap)
             {
-                pass.GetComponent<Passenger>().Display(displayPos);
+                if (pass != null)
+                {
+                    pass.GetComponent<Passenger>().Display(displayPos);
+                    pass.GetComponent<Passenger>().SitDown();
+                    Debug.Log("Displaying pass at index " + i);
+                }
+                displayPos += passOffset;
             }
-            displayPos += passOffset;
+            else
+            {
+                if(pass != null)
+                {
+                    pass.GetComponent<Passenger>().Hide();
+                    Debug.Log("Hiding pass at index " + i);
+                }
+            }
         }
-        uiMan.SetupButtons(currentPass);
+        uiMan.SetupButtons(currentPass, currentCar);
+        uiMan.DisplayRight(currentCar > 0);
+        uiMan.DisplayLeft(currentCar < numCars - 1);
+        
     }
 
     //displays all currently waiting passengers
@@ -323,9 +377,9 @@ public class PassengerManager : MonoBehaviour
     GameObject GeneratePassenger(Town town)
     {
         float startWealth = GetTownWealth(town);
-        float wealth = UnityEngine.Random.Range((.5f - wealthDev) * 10f, (.5f + wealthDev) * 10f) / 10f;
+        float wealth = UnityEngine.Random.Range(0f, 1f);
         Debug.Log(" min: " + (.5f - wealthDev) + " max: " + (.5f + wealthDev));
-        int gold = (int)(wealth * startWealth);
+        
         float happiness = UnityEngine.Random.Range(startHappiness - happinessDev, startHappiness + happinessDev);
         //string name = firstNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)] + " " + lastNames.ToArray()[UnityEngine.Random.Range(0, firstNames.ToArray().Length)];
         //string pm = pms.ToArray()[UnityEngine.Random.Range(0, pms.ToArray().Length)];
@@ -333,8 +387,20 @@ public class PassengerManager : MonoBehaviour
         //string dm = dms.ToArray()[UnityEngine.Random.Range(0, dms.ToArray().Length)];
         Town destination = GetDestination();
         GameObject newPass = Instantiate(passPrefab);
-        newPass.GetComponent<Passenger>().Setup(gold, wealth, happiness, destination.GetName());
+        Passenger passScript = newPass.GetComponent<Passenger>();
+        passScript.SetWealth(wealth);
+        passScript.SetHappiness(happiness);
         passGen.SetupPassenger(newPass.GetComponent<Passenger>());
+        float goldMod = passScript.GetWealth() * 2 * wealthDev + (.5f - wealthDev);
+        int gold = Mathf.Max((int)(goldMod * startWealth), 1);
+        passScript.SetGold(gold);
+        passScript.SetDestination(destination.GetName());
+        float dist = (float)townDict.GetTownDist(GetTown().GetName(), destination.GetName());
+        dist *= .1f;
+        passScript.SetDistMod(.9f + dist);
+
+        //newPass.GetComponent<Passenger>().Setup(gold, wealth, happiness, destination.GetName());
+        
         return newPass;
 
     }
@@ -379,12 +445,14 @@ public class PassengerManager : MonoBehaviour
         
         if(GetCurrentWaitingPass() == null)
         {
+            uiMan.NoMorePass();
             Debug.Log("NewPassenger Null");
             uiMan.DisplayError("No more passengers waiting");
             uiMan.DisplayText("");
             //Debug.Log("GameManager list size: " + currentPassNum);
             return;
         }
+        uiMan.TrainFull(currentPassNum >= currentPass.Length);
         Passenger pass = GetCurrentWaitingPass().GetComponent<Passenger>();
         uiMan.DisplayPassText(pass);
     }
@@ -402,7 +470,7 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("No passengers to accept");
             return;
         }
-        if (currentPassNum >= trainCap)
+        if (currentPassNum >= trainCap * numCars)
         {
             audioMan.SelectAudio();
             uiMan.DisplayError("Tried to add past train max capacity. Should not add");
@@ -412,14 +480,14 @@ public class PassengerManager : MonoBehaviour
         uiMan.SetConductorImage(1);
         uiMan.CanInteract(false);
         //Debug.Log("accept: list length: " + waitingPass.Count);
-        uiMan.DisplayText(pass.GetComponent<Passenger>().GetAccept());
+        uiMan.DisplayText("\n\n\n" + pass.GetComponent<Passenger>().GetAccept());
         waitingPass.Remove(pass);
         await pass.GetComponent<Passenger>().MoveTo(OnTrainLoc.transform.position, false);
         AddPass(pass);
         DisplayPass();
         GameManager.Instance.AddPassenger();
         uiMan.SetConductorImage(0);
-        MoveWaitingPass();
+        await MoveWaitingPass();
         NewPassenger();
         
     }
@@ -435,21 +503,27 @@ public class PassengerManager : MonoBehaviour
             uiMan.DisplayError("No passengers to deny");
             return;
         }
+        Passenger passScript = pass.GetComponent<Passenger>();
+        if (passScript.GetTrait() == "Regular")
+        {
+            GameManager.Instance.IgnoreUPI(passScript);
+        }
         audioMan.DenyAudio();
         uiMan.SetConductorImage(2);
         uiMan.CanInteract(false);
-        uiMan.DisplayText(pass.GetComponent<Passenger>().GetDeny());
+        uiMan.DisplayText("\n\n\n" + passScript.GetDeny());
         waitingPass.Remove(pass);
-        await pass.GetComponent<Passenger>().MoveTo(OffPlatformLoc.transform.position, false);
+        await passScript.MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.SetConductorImage(0);
-        MoveWaitingPass();
-        NewPassenger();
         Destroy(pass);
+        await MoveWaitingPass();
+        NewPassenger();
+        
         
     }
 
     //adds the passenger at the given index from the current passenger list. Used for button interaction
-    public async void AddPass(GameObject pass)
+    public void AddPass(GameObject pass)
     {
         DontDestroyOnLoad(pass);
         Debug.Log("trying to add passenger");
@@ -487,12 +561,27 @@ public class PassengerManager : MonoBehaviour
         audioMan.RemoveAudio();
         uiMan.CanInteract(false);
         passScript.Display(OnTrainLoc.transform.position);
+        passScript.FaceFront();
         await passScript.MoveTo(RemovedLoc.transform.position, true);
-        GetTown().RemoveRep((1 - passScript.GetHappiness() ) / repHapMod);
+        float happinessChange = (1 - passScript.GetHappiness()) / repHapMod;
+        if(passScript.GetTrait() == "Famous")
+        {
+            happinessChange *= 2f;
+        }
+        else if(passScript.GetTrait() == "Unobtrusive")
+        {
+            happinessChange *= .5f;
+        }
+        else if(passScript.GetTrait() == "Regular")
+        {
+            GameManager.Instance.KickOffUPI(passScript);
+        }
+        GetTown().RemoveRep(happinessChange);
         await Task.Delay(100);
         await passScript.MoveTo(OffPlatformLoc.transform.position, false);
         uiMan.CanInteract(true);
         RemovePass(pos);
+        uiMan.TrainFull(false);
     }
 
     //Removes the passenger at the given index from the current passenger list. 
@@ -514,24 +603,68 @@ public class PassengerManager : MonoBehaviour
         Passenger passScript = pass.GetComponent<Passenger>();
         Debug.Log("Passenger " + passScript.GetName() + " successfully dropped off");
         uiMan.CanInteract(false);
-        GetTown().AddWealth((float)passScript.GetGold() / wealthMod);
-        GetTown().AddRep(passScript.GetHappiness() / repHapMod);
+        float gold = (float)passScript.GetGold();
+        float tip = CalculateTip(passScript);
+        if(passScript.GetTrait() == "Generous" || passScript.GetTrait() == "Magnanimous")
+        {
+            tip *= 2f;
+        }
+        else if(passScript.GetTrait() == "Stiff" || passScript.GetTrait() == "Miserly")
+        {
+            tip *= .5f;
+        }
+        gold *= (1f + tip);
+        GetTown().AddWealth(gold / wealthMod);
+        float happinessChange = passScript.GetHappiness() / repHapMod;
+        if(passScript.GetTrait() == "Famous")
+        {
+            happinessChange *= 2f;
+        }
+        else if (passScript.GetTrait() == "Unobtrusive")
+        {
+            happinessChange *= .5f;
+        }
+        GetTown().AddRep(happinessChange);
         passScript.Display(OnTrainLoc.transform.position);
+        passScript.FaceFront();
 
         await passScript.MoveTo(waitingLoc.transform.position, false);
         int currentGold = GameManager.Instance.GetGold();
         int newGold = passScript.GetGold();
         await Task.Delay(100);
         passScript.DropOff(GetTown());
-        uiMan.DisplayText(pass.GetComponent<Passenger>().GetDropOff());
-        var t = new Task[2];
+        uiMan.DisplayText("\n\n\n" + pass.GetComponent<Passenger>().GetDropOff());
+        var t = new Task[3];
         t[0] = passScript.MoveTo(OffPlatformLoc.transform.position, false);
         t[1] = uiMan.AdjustGold(currentGold, currentGold + newGold);
+        if (tip > 0f)
+        {
+            t[2] = uiMan.DisplayTip(tip);
+        }
+        else
+        {
+            t[2] = Task.Delay(100);
+        }
         await Task.WhenAll(t);
         uiMan.HideIncrement();
         GameManager.Instance.AddGold(newGold);
         uiMan.CanInteract(true);
         RemovePass(pass);
+    }
+
+    public float CalculateTip(Passenger pass)
+    {
+        float happiness = pass.GetHappiness();
+        float tt = tipThreshold;
+        if(pass.GetTrait() == "Charitable" || pass.GetTrait() == "Magnanimous")
+        {
+            tt *= .5f;
+        }
+        else if(pass.GetTrait() == "Stiff" || pass.GetTrait() == "Miserly")
+        {
+            tt *= 1.5f;
+        }
+        return Mathf.Clamp((happiness - tt) / (1 - tt) * maxTip, 0f, maxTip);
     }
 
     //Get the number of passengers currently on the train
@@ -546,5 +679,12 @@ public class PassengerManager : MonoBehaviour
             }
         }
         currentPassNum = numPass;
+    }
+
+    //shift to a different car. 1: shift to the left car, -1 shift to the right car
+    public void ShiftCar(int dir)
+    {
+        currentCar = Mathf.Clamp(currentCar + dir, 0, numCars - 1);
+        DisplayPass();
     }
 }

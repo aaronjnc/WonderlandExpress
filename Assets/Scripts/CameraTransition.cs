@@ -32,6 +32,11 @@ public class CameraTransition : MonoBehaviour
     private Vector3 dest = Vector3.zero;
     [Tooltip("Maximum zoom given current destination")]
     private float maxZoom = 0;
+    [Tooltip("If the Camera can currently read input")]
+    private bool interacting = true;
+    [Tooltip("Camera is transitioning between frames"), HideInInspector]
+    public bool transitioning = false;
+    private int directionMod = 1;
     private void Awake()
     {
         cam = GetComponent<Camera>();
@@ -39,6 +44,10 @@ public class CameraTransition : MonoBehaviour
     }
     public void ZoomOut()
     {
+        if (!interacting)
+        {
+            return;
+        }
         if (transform.position.x < 0)
         {
             dest = leftZoomedOut;
@@ -58,15 +67,15 @@ public class CameraTransition : MonoBehaviour
     }
     public void ZoomIn()
     {
+        if (!interacting)
+        {
+            return;
+        }
         zoomingOut = false;
         zoomingIn = true;
         Vector3 pos = train.position;
         pos.z = transform.position.z;
         float dist = Vector3.Distance(pos, transform.position);
-        /*if (transform.position.x < 0)
-            dist = Vector3.Distance(pos, leftZoomedOut);
-        else
-            dist = Vector3.Distance(pos, rightZoomedOut);*/
         float time = Mathf.Abs(dist) / cameraSpeed;
         cameraScaleSpeed = (maxZoom - minZoom) / time;
     }
@@ -103,5 +112,54 @@ public class CameraTransition : MonoBehaviour
             if (cam.orthographicSize == minZoom)
                 stillZooming = false;
         }
+        else if (transitioning)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, dest, cameraSpeed * Time.deltaTime);
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize + directionMod * cameraScaleSpeed * Time.deltaTime, minZoom, maxZoom);
+            if (Vector3.Distance(transform.position, dest) < .001)
+            {
+                transform.position = dest;
+                if (directionMod == 1)
+                {
+                    cam.orthographicSize = maxZoom;
+                }
+                else
+                {
+                    cam.orthographicSize = minZoom;
+                }
+                transitioning = false;
+            }
+        }
+    }
+
+    public void SetInteracting(bool canInteract)
+    {
+        interacting = canInteract;
+    }
+    public void Transition(bool rightToLeft)
+    {
+        if (cam.orthographicSize != maxFantasyZoom && cam.orthographicSize != maxRegularZoom)
+            return;
+        if (rightToLeft)
+        {
+            dest = leftZoomedOut;
+            maxZoom = maxFantasyZoom;
+            minZoom = cam.orthographicSize;
+            float dist = Vector3.Distance(dest, transform.position);
+            float time = Mathf.Abs(dist) / cameraSpeed;
+            cameraScaleSpeed = (maxZoom - minZoom) / time;
+            directionMod = 1;
+        }
+        else
+        {
+            dest = rightZoomedOut;
+            maxZoom = cam.orthographicSize;
+            minZoom = maxRegularZoom;
+            float dist = Vector3.Distance(dest, transform.position);
+            float time = Mathf.Abs(dist) / cameraSpeed;
+            cameraScaleSpeed = (maxZoom - minZoom) / time;
+            directionMod = -1;
+        }
+        transitioning = true;
     }
 }

@@ -43,13 +43,19 @@ public class TrainMovement : MonoBehaviour
     private CameraTransition camTransition;
     [Tooltip("Train audio manager"), SerializeField]
     private TrainAudioManager trainAudioManager;
-    private void Start()
+    private Quaternion lookRotation;
+    [SerializeField]
+    private float rotationSpeed;
+    private float previousTime;
+    private bool paused = false;
+    private TrackPoint previousChosen;
+    private void OnEnable()
     {
         _instance = this;
         if (GameManager.Instance.load)
         {
             TrackPoint loadPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>();
-            nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>().chosenNext;
+            nextPoint = loadPoint.chosenNext;
             transform.position = GameManager.Instance.GetTrainPosition();
             transform.eulerAngles = GameManager.Instance.GetTrainRotation();
             LoadFollowTrains();
@@ -61,9 +67,14 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.Click.Enable();
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
+        lookRotation = transform.rotation;
+        GameManager.Instance.AddFollowPoint(nextPoint.transform.position);
+        trainAudioManager.SpeedUp();
     }
     private void Zoom(CallbackContext ctx)
     {
+        if (Time.timeScale == 0 || camTransition.transitioning)
+            return;
         if (zoomedOut)
         {
             camTransition.ZoomIn();
@@ -80,11 +91,12 @@ public class TrainMovement : MonoBehaviour
         if (pauseMenu.activeInHierarchy)
         {
             pauseMenu.SetActive(false);
-            Time.timeScale = 1;
+            Time.timeScale = previousTime;
         }
         else
         {
             pauseMenu.SetActive(true);
+            previousTime = Time.timeScale;
             Time.timeScale = 0;
         }
     }
@@ -96,12 +108,33 @@ public class TrainMovement : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(mousePos.x, mousePos.y), Vector2.zero, choiceLayer);
         if (!hit)
             return;
-        hit.collider.gameObject.GetComponent<TrackChooser>().Clicked();
+        hit.collider.gameObject.GetComponent<TrackChooser>()?.Clicked();
     }
     void FixedUpdate()
     {
-        if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)
+        if (paused)
         {
+            if (!previousChosen.continuous)
+            {
+                trainAudioManager.SpeedUp();
+            }
+            Vector3 diff = -(nextPoint.transform.position - transform.position);
+            diff.Normalize();
+            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            lookRotation = Quaternion.Euler(0, 0, rot - 90);
+            velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+            transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
+            if (!zoomedOut)
+                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+            stopped = false;
+            paused = false;
+        }
+        else if (!stopped && Vector3.Distance(transform.position, nextPoint.transform.position) > 0)
+        {
+            if (transform.rotation != lookRotation)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            }
             if (Vector3.Distance(transform.position, nextPoint.transform.position) < stoppingDistance
                 && !nextPoint.continuous)
             {
@@ -119,16 +152,10 @@ public class TrainMovement : MonoBehaviour
             }
             else
             {
+                if (trainAudioManager.state != 0 && trainAudioManager.state != 1)
+                    trainAudioManager.ConstantSpeed();
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
-                if (velocity == maxVelocity)
-                {
-                    trainAudioManager.ConstantSpeed();
-                }
-                else
-                {
-                    trainAudioManager.SpeedUp();
-                }
             }
             if (!zoomedOut)
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
@@ -140,18 +167,27 @@ public class TrainMovement : MonoBehaviour
                 velocity = 0;
                 currentVel = Vector3.zero;
             }
-            TrackPoint previousChosen = nextPoint;
+            previousChosen = nextPoint;
             nextPoint = nextPoint.chosenNext;
+            GameManager.Instance.AddFollowPoint(nextPoint.transform.position);
             if (!previousChosen.continuous)
             {
-                previousChosen.StopAction();
+                paused = previousChosen.StopAction();
+                if (!paused)
+                    trainAudioManager.SpeedUp();
             }
-            transform.up = -(nextPoint.transform.position - transform.position);
-            velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
-            transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
-            if (!zoomedOut)
-                Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
-            stopped = false;
+            if (!paused)
+            {
+                Vector3 diff = -(nextPoint.transform.position - transform.position);
+                diff.Normalize();
+                float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+                lookRotation = Quaternion.Euler(0, 0, rot - 90);
+                velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+                transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
+                if (!zoomedOut)
+                    Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
+                stopped = false;
+            }
         }
         else
         {

@@ -16,6 +16,8 @@ public class Town : MonoBehaviour
     public bool destroyed = false;
     [Tooltip("Towns that cannot be set as destinations from this town. \nUsed to prevent really long journeys for now")]
     public List<Town> townDestinations;
+    [Tooltip("Integer representing this town's location along the track. \nUsed to determine distance between towns")]
+    public int location;
 
     // Start is called before the first frame update
     void Start()
@@ -99,5 +101,11 @@ public class Town : MonoBehaviour
     public List<Town> GetAllowedList()
     {
         return townDestinations;
+    }
+
+    //returns the location
+    public int GetLoc()
+    {
+        return location;
     }
 }

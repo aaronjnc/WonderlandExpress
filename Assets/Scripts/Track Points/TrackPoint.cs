@@ -24,15 +24,11 @@ public abstract class TrackPoint : MonoBehaviour
             SetChosenTrack(0);
         }
     }
-    private void TollReached()
-    {
-
-    }
     public virtual void SetChosenTrack(int i)
     {
         chosenNext = nextPoints[i];
     }
-    public abstract void StopAction();
+    public abstract bool StopAction();
 
     private void OnDrawGizmos()
     {

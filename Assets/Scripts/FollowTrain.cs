@@ -4,32 +4,77 @@ using UnityEngine;
 
 public class FollowTrain : MonoBehaviour
 {
-    public TrackPoint nextPoint;
+    private FollowPoint nextPoint;
     [SerializeField] private Transform train;
     [SerializeField] private float distanceBehind;
-    private void FixedUpdate()
+    private Quaternion lookRotation;
+    [SerializeField]
+    private float rotationSpeed;
+    private Vector3 nextPos;
+    [SerializeField]
+    private int carNum;
+    [SerializeField]
+    private bool caboose;
+    private void Start()
     {
-        if (Vector3.Distance(transform.position, nextPoint.transform.position) < .06)
+        if (!GameManager.Instance.load)
         {
-            transform.position = nextPoint.transform.position;
-            nextPoint = nextPoint.chosenNext;
-            transform.right = nextPoint.transform.position - transform.position;
+            nextPoint = GameManager.Instance.GetHeadPoint();
+            nextPos = nextPoint.GetPos();
+            lookRotation = transform.rotation;
+        }
+    }
+    private void FixedUpdate()
+    {    
+        if (Vector3.Distance(transform.position, nextPos) < .06)
+        {
+            transform.position = nextPos;
+            if (caboose)
+            {
+                nextPoint = GameManager.Instance.RemoveHead();
+            }
+            else
+            {
+                nextPoint = nextPoint.GetNext();
+            }
+            nextPos = nextPoint.GetPos();
+            Vector3 diff = -(nextPos - transform.position);
+            diff.Normalize();
+            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            lookRotation = Quaternion.Euler(0, 0, rot - 90);
+        }
+        if (transform.rotation != lookRotation)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
         float vel = TrainMovement.Instance.velocity;
         if (vel != 0)
-            transform.position += transform.right * TrainMovement.Instance.velocity * Time.deltaTime;   
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, vel * Time.deltaTime);
     }
 
-    public void SetNextPoint(string name)
+    public void SetNextPoint(FollowPoint nextPoint)
     {
-        nextPoint = GameObject.Find(name).GetComponent<TrackPoint>();
-        if (-train.up == transform.right)
+        if (carNum < GameManager.Instance.carCount)
+            GetComponent<SpriteRenderer>().enabled = true;
+        this.nextPoint = nextPoint;
+        nextPos = nextPoint.GetPos();
+        if (train.up == transform.up && (train.position.x == transform.position.x || train.position.y == transform.position.y))
         {
-            transform.position = train.position - (transform.right * distanceBehind);
+            transform.position = train.position + (transform.up * distanceBehind * (carNum + 1));
         }
+        Vector3 diff = -(nextPos - transform.position);
+        diff.Normalize();
+        float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        lookRotation = Quaternion.Euler(0, 0, rot - 90);
+    }
+
+    public FollowPoint GetNextPoint()
+    {
+        return nextPoint;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.position = train.position - (transform.right * distanceBehind);
+        transform.position = train.position + (transform.up * distanceBehind * (carNum + 1));
+        Camera.main.gameObject.GetComponent<CameraTransition>().Transition(transform.position.x > 0);
     }
 }

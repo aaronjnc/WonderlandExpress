@@ -71,15 +71,21 @@ public class TownAudioManager : MonoBehaviour
 
     public void PlayBGAudio(string name)
     {
-        var uiAudio = Resources.Load<AudioClip>("Audio/" + name + "_click");
+        var uiAudio = Resources.Load<AudioClip>("Audio/town_background_" + name);
         if (uiAudio != null)
         {
-            uiSource.clip = uiAudio;
-            uiSource.Play();
+            backgroundSource.clip = uiAudio;
+            backgroundSource.Play();
+            backgroundSource.loop = true;
         }
         else
         {
             Debug.LogWarning("Audio can't be found");
         }
+    }
+
+    public void PlayBGAudio(int i)
+    {
+        PlayBGAudio(i.ToString());
     }
 }
