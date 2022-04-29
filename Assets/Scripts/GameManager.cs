@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             {
                 if (pass != null)
                 {
-                    Debug.Log(happinessDecayRate / 100f / (float)targetFR);
+                    //Debug.Log(happinessDecayRate / 100f / (float)targetFR);
                     pass.GetComponent<Passenger>().OnTrainMove(happinessDecayRate / 100f / (float)targetFR, passengerCount);
                 }
             }
