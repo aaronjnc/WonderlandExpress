@@ -83,6 +83,11 @@ public class Town : MonoBehaviour
         return townName;
     }
 
+    public void SetName(string name)
+    {
+        townName = name;
+    }
+
     //Set the town's stats to 0 when a town is destroyed
     public void DestroyTown()
     {

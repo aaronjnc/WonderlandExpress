@@ -75,6 +75,7 @@ public class TownDictionary : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoad;
         for (int i = 0; i < townNames.Count && i < towns.Count; i++)
         {
+            towns[i].SetName(townNames[i]);
             dict.Add(townNames[i], towns[i]);
             //DontDestroyOnLoad(towns[i]);
 
