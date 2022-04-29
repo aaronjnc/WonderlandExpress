@@ -202,7 +202,7 @@ public class PassengerGenerator : MonoBehaviour
                 return i;
             }
         }
-        Debug.LogError("Couldn't find trait " + traitName);
+        Debug.LogWarning("Couldn't find trait " + traitName);
         return -1;
     }
 
@@ -342,6 +342,7 @@ public class PassengerGenerator : MonoBehaviour
         if(traitNum < 0)
         {
             traitNum = 0;
+            Debug.LogError("pass " + pass + "couldn't find trait");
         }
         pass.SetTrait(traitList[traitNum].name, traitList[traitNum].description);
 

@@ -163,4 +163,10 @@ public class TownDictionary : MonoBehaviour
     {
         return Mathf.Abs((FindTown(town1).GetLoc() % maxLength) - (FindTown(town2).GetLoc() % maxLength));
     }
+
+    //returns the string name corresponding to the given index
+    public string GetTownNameByIndex(int index)
+    {
+        return townNames[index];
+    }
 }
