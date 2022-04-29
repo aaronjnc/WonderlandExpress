@@ -14557,6 +14557,8 @@ MonoBehaviour:
   waitingSpeakerColor: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
   waitingForInput: 0
   canGetInput: 1
+  displayingDialogue: 0
+  gameEnded: 0
   tollSuccess:
   - speaker: Toll Troll
     message: Hey I'm the Toll Troll, and I run this here Toll Troll Toll. I hope
@@ -14633,6 +14635,7 @@ MonoBehaviour:
   - speaker: 
     message: 
     uniqueInteraction: 
+  audioMan: {fileID: 1328246594}
   runTest: 0
 --- !u!4 &405986872
 Transform:
@@ -42016,6 +42019,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1328246594}
+          m_TargetAssemblyTypeName: TrainAudioManager, Assembly-CSharp
+          m_MethodName: UIClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &936159292
 GameObject:
   m_ObjectHideFlags: 0
@@ -54344,6 +54359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trainAudioSource: {fileID: 869096684}
   trainWhistle: {fileID: 863755053}
+  uiAudio: {fileID: 1591165117}
   trainAccelerate: {fileID: 8300000, guid: 35be747b6e295f34e8974e482eb270a5, type: 3}
   trainDecelerate: {fileID: 8300000, guid: cbd66ac737539804abd2fb476f550e94, type: 3}
   trainRegular: {fileID: 8300000, guid: 7f5a3893f7dc67443805253645446b34, type: 3}
@@ -54361,6 +54377,7 @@ Transform:
   m_Children:
   - {fileID: 863755052}
   - {fileID: 869096683}
+  - {fileID: 1591165116}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63272,6 +63289,133 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1591165115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1591165116}
+  - component: {fileID: 1591165117}
+  m_Layer: 0
+  m_Name: UI Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1591165116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591165115}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1328246595}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1591165117
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591165115}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 737e418f283492044b730f176765b8ff, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1591201961
 GameObject:
   m_ObjectHideFlags: 0
@@ -71734,6 +71878,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047049514804065631, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 11
       objectReference: {fileID: 0}
@@ -71778,8 +71926,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1858374869}
     - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: reputation
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1303251360632144559, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
@@ -71826,8 +71982,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1870373986}
     - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: reputation
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2527782756224779089, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
@@ -72122,6 +72286,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 64734965}
     - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115042298084225711, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 12
       objectReference: {fileID: 0}
@@ -72166,6 +72334,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1678241260}
     - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674922925370571753, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 10
       objectReference: {fileID: 0}
@@ -72206,8 +72378,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 138620970}
     - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: reputation
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4227424309813086106, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
@@ -72246,8 +72426,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1870373986}
     - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: reputation
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5777210661975089388, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
@@ -72290,8 +72478,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1870373978}
     - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: reputation
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6731790653233450282, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
@@ -72330,8 +72526,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1870373986}
     - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: wealth
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: location
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
+      propertyPath: reputation
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6824920582155264190, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
