@@ -341,7 +341,7 @@ public class PassengerGenerator : MonoBehaviour
         //}
         if(traitNum < 0)
         {
-            traitNum = 0;
+            traitNum = UnityEngine.Random.Range(1, traitList.Count);
             Debug.LogError("pass " + pass + "couldn't find trait");
         }
         pass.SetTrait(traitList[traitNum].name, traitList[traitNum].description);
