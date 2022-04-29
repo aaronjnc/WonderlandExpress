@@ -70,6 +70,8 @@ public class DialogueManager : MonoBehaviour
     [Header("dialog Lines. probably moved later")]
     [Tooltip("Lines of dialog for toll success")]
     public Dialog[] tollSuccess;
+    [Tooltip("Lines of dialog for secondary toll success")]
+    public Dialog[] tollSuccess2;
     //[Tooltip("associated speakers for toll success")]
     //public List<string> tollSuccessSpeakers = new List<string>();
     //[Space]

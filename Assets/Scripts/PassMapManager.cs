@@ -31,6 +31,8 @@ public class PassMapManager : MonoBehaviour
     public GameObject WLNames;
     [Tooltip("the container for real world  town names")]
     public GameObject RWNames;
+    [Tooltip("The audio manager")]
+    public TownAudioManager audioMan;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +74,7 @@ public class PassMapManager : MonoBehaviour
         mapInWonderland = trainInWonderland;
         isMapDisplayed = false;
         buttonImage.sprite = mapButtonSprite;
+        audioMan.SelectAudio();
     }
 
     //enables the map
@@ -99,6 +102,7 @@ public class PassMapManager : MonoBehaviour
         WLNames.SetActive(true);
         map.GetComponent<Image>().sprite = mapWL;
         mapInWonderland = true;
+        audioMan.SelectAudio();
     }
 
     //swaps the map to real world
@@ -110,5 +114,6 @@ public class PassMapManager : MonoBehaviour
         WLNames.SetActive(false);
         map.GetComponent<Image>().sprite = mapRW;
         mapInWonderland = false;
+        audioMan.SelectAudio();
     }
 }
