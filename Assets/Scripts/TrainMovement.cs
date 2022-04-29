@@ -123,6 +123,7 @@ public class TrainMovement : MonoBehaviour
             float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
             lookRotation = Quaternion.Euler(0, 0, rot - 90);
             velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+            currentVel = -transform.up * velocity;
             transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
             if (!zoomedOut)
                 Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
@@ -155,6 +156,7 @@ public class TrainMovement : MonoBehaviour
                 if (trainAudioManager.state != 0 && trainAudioManager.state != 1)
                     trainAudioManager.ConstantSpeed();
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+                currentVel = -transform.up * velocity;
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
             }
             if (!zoomedOut)
@@ -183,6 +185,7 @@ public class TrainMovement : MonoBehaviour
                 float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
                 lookRotation = Quaternion.Euler(0, 0, rot - 90);
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
+                currentVel = -transform.up * velocity;
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity * Time.deltaTime);
                 if (!zoomedOut)
                     Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);

@@ -32,9 +32,10 @@ public class PassengerSheet : MonoBehaviour
         if (GameManager.Instance.GetPassengerCount() == 0)
         {
             passengers = new Passenger[0][];
+            Activate();
             return;
         }
-        passengers = new Passenger[(GameManager.Instance.GetPassengerCount() / 5) + 1][];
+        passengers = new Passenger[((GameManager.Instance.GetPassengerCount() - 1) / 5) + 1][];
         int i = 0;
         foreach (GameObject p in GameManager.Instance.GetPassengers())
         {

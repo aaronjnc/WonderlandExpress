@@ -395,7 +395,7 @@ public class Passenger : MonoBehaviour
         //Debug.Log("bounce height: " + bounceHeight);
         float startTime = Time.time;
         int startFrame = Time.frameCount;
-        Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
+        //Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
         int counter = 0;
 
         
@@ -416,7 +416,7 @@ public class Passenger : MonoBehaviour
                 int endFrame = Time.frameCount;
                 float timeDiff = endTime - startTime;
                 int frameDiff = endFrame - startFrame;
-                Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
+                //Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
                 Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y / 4);// sprite.bounds.center;
                 //Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
                 Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, 1f);

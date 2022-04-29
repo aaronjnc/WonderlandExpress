@@ -309,7 +309,7 @@ public class PassengerManager : MonoBehaviour
                 {
                     pass.GetComponent<Passenger>().Display(displayPos);
                     pass.GetComponent<Passenger>().SitDown();
-                    Debug.Log("Displaying pass at index " + i);
+                    //Debug.Log("Displaying pass at index " + i);
                 }
                 displayPos += passOffset;
             }
@@ -318,7 +318,7 @@ public class PassengerManager : MonoBehaviour
                 if(pass != null)
                 {
                     pass.GetComponent<Passenger>().Hide();
-                    Debug.Log("Hiding pass at index " + i);
+                    //Debug.Log("Hiding pass at index " + i);
                 }
             }
         }
@@ -446,7 +446,7 @@ public class PassengerManager : MonoBehaviour
         if(GetCurrentWaitingPass() == null)
         {
             uiMan.NoMorePass();
-            Debug.Log("NewPassenger Null");
+            //Debug.Log("NewPassenger Null");
             uiMan.DisplayError("No more passengers waiting");
             uiMan.DisplayText("");
             //Debug.Log("GameManager list size: " + currentPassNum);
@@ -461,7 +461,7 @@ public class PassengerManager : MonoBehaviour
     public async void AcceptPass()
     {
         
-        Debug.Log("accept: list length: " + waitingPass.Count);
+        //Debug.Log("accept: list length: " + waitingPass.Count);
         //Debug.Log("accept: list length: " + waitingPass.Count);
         GameObject pass = GetCurrentWaitingPass();
         if (pass == null)
@@ -526,7 +526,7 @@ public class PassengerManager : MonoBehaviour
     public void AddPass(GameObject pass)
     {
         DontDestroyOnLoad(pass);
-        Debug.Log("trying to add passenger");
+        //Debug.Log("trying to add passenger");
         for(int i = 0; i < currentPass.Length; i++)
         {
             if(currentPass[i] == null)
@@ -587,7 +587,7 @@ public class PassengerManager : MonoBehaviour
     //Removes the passenger at the given index from the current passenger list. 
     public void RemovePass(int pos)
     {
-        Debug.Log("trying to remove passenger " + pos);
+        //Debug.Log("trying to remove passenger " + pos);
         Destroy(currentPass[pos]);
         currentPass[pos] = null;
         currentPassNum--;
@@ -601,7 +601,7 @@ public class PassengerManager : MonoBehaviour
     public async Task DropOffSuccess(GameObject pass)
     {
         Passenger passScript = pass.GetComponent<Passenger>();
-        Debug.Log("Passenger " + passScript.GetName() + " successfully dropped off");
+        //Debug.Log("Passenger " + passScript.GetName() + " successfully dropped off");
         uiMan.CanInteract(false);
         float gold = (float)passScript.GetGold();
         float tip = CalculateTip(passScript);
