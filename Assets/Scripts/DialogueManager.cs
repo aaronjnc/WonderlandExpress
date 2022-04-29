@@ -66,6 +66,10 @@ public class DialogueManager : MonoBehaviour
     public bool waitingForInput = false;
     [Tooltip("Whether or not it can take input currently. Used to prevent one button press from hitting multiple times")]
     public bool canGetInput = true;
+    [Tooltip("Whether or not dialogue is actively playing")]
+    public bool displayingDialogue = false;
+    [Tooltip("Whether the game has ended")]
+    public bool gameEnded = false;
 
     [Header("dialog Lines. probably moved later")]
     [Tooltip("Lines of dialog for toll success")]
@@ -96,6 +100,8 @@ public class DialogueManager : MonoBehaviour
     public Dialog[] test;
     //[Tooltip("associated speakers for Jabberwocky game over")]
     //public List<string> jwGameOverSpeakers = new List<string>();
+    [Header("audio"), SerializeField]
+    private TrainAudioManager audioMan;
 
     [Tooltip("if you want to run the test dialogue")]
     public bool runTest;
@@ -114,13 +120,18 @@ public class DialogueManager : MonoBehaviour
         //continueText.enabled = false;
         //conductorNamePanel.SetActive(false);
         //speakerNamePanel.SetActive(false);
-        Time.timeScale = 1;
+        if (!gameEnded)
+        {
+            Time.timeScale = 1;
+        }
+        displayingDialogue = false;
         dialogObject.SetActive(false);
     }
 
     //shows dialog corresponding to the given string
     public async Task DisplayDialog(string path)
     {
+        displayingDialogue = true;
         conductorTalking = true;
         tmo.SetInteract(false);
         ct.SetInteracting(false);
@@ -161,6 +172,7 @@ public class DialogueManager : MonoBehaviour
             {
                 Time.timeScale = 0;
                 endGame.SetActive(true);
+                gameEnded = true;
             }
             else if(d.uniqueInteraction == "PayJW")
             {
@@ -231,12 +243,13 @@ public class DialogueManager : MonoBehaviour
 
     public async void inputReceived()
     {
-        if (!canGetInput)
+        if (!canGetInput || !displayingDialogue)
         {
             //Debug.Log("Input Ignored");
             return;
         }
         //Debug.Log("Input received");
+        audioMan.UIClick();
         if (tw.IsTyping())
         {
             tw.StopText();
