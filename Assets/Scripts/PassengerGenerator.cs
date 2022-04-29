@@ -335,6 +335,10 @@ public class PassengerGenerator : MonoBehaviour
         //{
             //pass.SetTrait(traitList[0].name, traitList[0].description);
         //}
+        if(traitNum < 0)
+        {
+            traitNum = 0;
+        }
         pass.SetTrait(traitList[traitNum].name, traitList[traitNum].description);
 
         if(pass.GetTrait() == "Traveler")

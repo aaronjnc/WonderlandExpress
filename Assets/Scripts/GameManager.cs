@@ -330,6 +330,12 @@ public class GameManager : MonoBehaviour
     public void BuyCar(int cost)
     {
         carCount++;
+        GameObject[] newPass = new GameObject[carCount * 5];
+        for(int i = 0;i < passengers.Length; i++)
+        {
+            newPass[i] = passengers[i];
+        }
+        passengers = newPass;
         gold -= cost;
     }
     public void AddFollowPoint(Vector3 pos)
