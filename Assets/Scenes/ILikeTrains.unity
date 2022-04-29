@@ -8318,11 +8318,11 @@ MonoBehaviour:
   buyCar: {fileID: 2091869772}
   upgradeCar: {fileID: 2089633257}
   carCostText: {fileID: 1849797695}
-  upgradeCostText: {fileID: 1849797695}
+  upgradeCostText: {fileID: 1777996885}
   maxCars: 3
   maxUpgradeLevel: 5
   baseUpgradeCost: 15
-  baseCarCost: 1
+  baseCarCost: 30
 --- !u!1 &247122403
 GameObject:
   m_ObjectHideFlags: 0
@@ -10285,7 +10285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &303084055
 RectTransform:
   m_ObjectHideFlags: 0
@@ -63004,7 +63004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 0.79607844}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -63070,7 +63070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1587219363
 RectTransform:
   m_ObjectHideFlags: 0
@@ -73274,28 +73274,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[0]
       value: 
-      objectReference: {fileID: 735889005}
+      objectReference: {fileID: 64734965}
     - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[1]
       value: 
-      objectReference: {fileID: 64734965}
+      objectReference: {fileID: 716594791}
     - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[2]
       value: 
-      objectReference: {fileID: 716594791}
+      objectReference: {fileID: 1688262130}
     - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[3]
       value: 
-      objectReference: {fileID: 1688262130}
+      objectReference: {fileID: 1609303591}
     - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[4]
       value: 
-      objectReference: {fileID: 1609303591}
+      objectReference: {fileID: 785973957}
     - target: {fileID: 6824920583679442907, guid: f771f0edd746f784a8a25960575cf54c, type: 3}
       propertyPath: townDestinations.Array.data[5]
       value: 
