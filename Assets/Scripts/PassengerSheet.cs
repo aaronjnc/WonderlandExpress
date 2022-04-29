@@ -53,7 +53,7 @@ public class PassengerSheet : MonoBehaviour
     {
         for (int i = 0; i < passengerTexts.Length; i++)
         {
-            if (i < passengers.Length)
+            if (currentPage < passengers.Length && i < passengers[currentPage].Length)
                 passengerTexts[i].SetPassenger(passengers[currentPage][i]);
             else
                 passengerTexts[i].ClearPassenger();
@@ -87,8 +87,17 @@ public class PassengerSheet : MonoBehaviour
     }
     public void ChangePage(int i)
     {
+        if (currentPage + i < 0 || currentPage + i >= passengers.Length)
+            return;
         currentPage += i;
-        previous.SetActive(currentPage >= 1);
+        if (currentPage > 0)
+        {
+            previous.SetActive(true);
+        }
+        else
+        {
+            previous.SetActive(false);
+        }
         next.SetActive(currentPage < passengers.Length - 1);
         Activate();
     }

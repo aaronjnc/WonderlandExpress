@@ -19,7 +19,10 @@ public class PassengerOnSheet : MonoBehaviour
     public void SetPassenger(Passenger p)
     {
         if (p == null)
+        {
+            ClearPassenger();
             return;
+        }
         passenger = p;
         SetTexts();
         passengerName.enabled = true;
