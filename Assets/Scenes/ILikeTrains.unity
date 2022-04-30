@@ -47679,7 +47679,7 @@ MonoBehaviour:
   chosenNext: {fileID: 0}
   continuous: 0
   trackChoice: 0
-  upgradeScreen: {fileID: 0}
+  upgradeScreen: {fileID: 1190887403}
 --- !u!1 &1107317553
 GameObject:
   m_ObjectHideFlags: 0
@@ -56650,7 +56650,7 @@ MonoBehaviour:
   chosenNext: {fileID: 0}
   continuous: 0
   trackChoice: 0
-  upgradeScreen: {fileID: 0}
+  upgradeScreen: {fileID: 1190887403}
 --- !u!1 &1411650651
 GameObject:
   m_ObjectHideFlags: 0
