@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField]
+    private TrainAudioManager train;
     //Resume game
     public void Resume()
     {
         Time.timeScale = 1;
+        train?.ResumeSound();
         gameObject.SetActive(false);
     }
     //Return to main menu

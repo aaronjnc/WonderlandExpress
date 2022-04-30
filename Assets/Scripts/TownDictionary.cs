@@ -145,9 +145,9 @@ public class TownDictionary : MonoBehaviour
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 0)
+        if (scene.buildIndex == 0 && this != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 

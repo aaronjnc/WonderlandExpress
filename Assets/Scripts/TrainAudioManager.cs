@@ -74,4 +74,22 @@ public class TrainAudioManager : MonoBehaviour
     {
         uiAudio.Play();
     }
+
+    public void StopSound()
+    {
+        trainAudioSource.Pause();
+        if (trainWhistle.isPlaying)
+        {
+            trainWhistle.Pause();
+        }
+    }
+    public void ResumeSound()
+    {
+        trainAudioSource.Play();
+    }
+    private void OnDestroy()
+    {
+        if (controls != null)
+            controls.Dispose();
+    }
 }
