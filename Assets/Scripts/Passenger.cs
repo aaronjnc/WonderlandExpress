@@ -33,6 +33,8 @@ public class Passenger : MonoBehaviour
     public string dropOffMessage;
     [Tooltip("sprite renderer")]
     public SpriteRenderer sr;
+    [Tooltip("BoxCollider2D")]
+    public BoxCollider2D bc;
     [Header("Movement Stats")]
     [Tooltip("speed at which the passenger moves")]
     public double speed = .05;
@@ -47,16 +49,34 @@ public class Passenger : MonoBehaviour
     public string trait = "None";
     [Tooltip("Description of the passenger's trait")]
     public string traitDescription = "";
+    [Tooltip("modifier used to scale gold/happiness based on how far the passenger is traveling. \nUsed to balance and make it so long trips aren't always suboptimal")]
+    public float distanceMod = 1f;
     [Tooltip("The amount that money is multiplied by if the passenger is shady")]
     public int shadyGoldMod = 3;
+
+    [Header("Resource settings")]
+    [Tooltip("The main part of the filepath")]
+    public string mainFilePath = "Character Sprites/Passengers/pass_";
+    [Tooltip("The individual part of the filepath to designate the current sprite part")]
+    public string filePathEnd;
     //reference to the town UI manager
     //private TownUIManager uiMan;
     // Start is called before the first frame update
     void Awake()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
+        // = gameObject.GetComponent<BoxCollider2D>();
+        //if (bc != null)
+        //{
+            //bc.enabled = true;
+        //}
         sr.enabled = false;
         //uiMan = TownUIManager.GetManager();
+    }
+
+    public void SetFilepath(string fp)
+    {
+        mainFilePath = fp;
     }
 
     public void Setup(string fName, string lName, int pGold, float pWealth, float pHappiness, string pDestination, string pm, string am, string dm, string dom)
@@ -110,6 +130,11 @@ public class Passenger : MonoBehaviour
         dropOffMessage = dom;
     }
 
+    public void SetDistMod(float mod)
+    {
+        distanceMod = mod;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -137,19 +162,28 @@ public class Passenger : MonoBehaviour
     {
         transform.position = pos;
         sr.enabled = true;
+        //if (bc != null)
+        //{
+            //bc.enabled = false;
+        //}
     }
 
     //hides the spriteRenderer
     public void Hide()
     {
         sr.enabled = false;
+        //if (bc != null)
+        //{
+        //bc.enabled = false;
+        //}
+        transform.position = transform.position + new Vector3(0, 0, 11);
     }
 
     //decreases happiness by the given amount
     public void DecreaseHappiness(float diff)
     {
 
-            happiness -= diff;
+        happiness -= diff;
         if(happiness <= 0f)
         {
             happiness = 0f;
@@ -176,12 +210,18 @@ public class Passenger : MonoBehaviour
 
     public int GetGold()
     {
+        int displayGold = (int)((float)gold * distanceMod);
         if (trait == "Shady")
         {
-            return gold * shadyGoldMod;
+            displayGold *= shadyGoldMod;
         }
-        return gold;
+        return displayGold;
 
+    }
+
+    public void SetGold(int newGold)
+    {
+        gold = newGold;  
     }
 
     public float GetWealth()
@@ -189,9 +229,19 @@ public class Passenger : MonoBehaviour
         return wealth;
     }
 
+    public void SetWealth(float newWealth)
+    {
+        wealth = newWealth;
+    }
+
     public float GetHappiness()
     {
         return happiness;
+    }
+
+    public void SetHappiness(float happy)
+    {
+        happiness = happy;
     }
 
     public string GetName()
@@ -212,6 +262,11 @@ public class Passenger : MonoBehaviour
     public string GetDestination()
     {
         return destination;
+    }
+
+    public void SetDestination(string dest)
+    {
+        destination = dest;
     }
 
     //public string GetDestinationName()
@@ -239,17 +294,46 @@ public class Passenger : MonoBehaviour
         return dropOffMessage;
     }
 
+    public void ChangeSprite(string dir)
+    {
+        if(dir != filePathEnd)
+        {
+            filePathEnd = dir;
+            sr.sprite = Resources.Load<Sprite>(mainFilePath + filePathEnd);
+        }
+    }
+
+    public void FaceBack()
+    {
+        ChangeSprite("back");
+    }
+
+    public void FaceFront()
+    {
+        ChangeSprite("front");
+    }
+
+    public void SitDown()
+    {
+        ChangeSprite("sit");
+    }
+
     public void DropOff(Town t)
     {
         if (trait == "Shady")
         {
             t.DestroyTown();
         }
+        else if(trait == "Regular")
+        {
+            GameManager.Instance.DropOffUPI(this);
+        }
     }
 
     //reduces happiness as train moves. decrease = amount happiness typically drops by, numPassengers = number of passengers
     public void OnTrainMove(float decrease, int numPassengers)
     {
+        decrease /= distanceMod;
         switch (trait)
         {
             case "Carefree":
@@ -266,6 +350,10 @@ public class Passenger : MonoBehaviour
 
             case "Irritable":
                 decrease *= 2;
+                break;
+
+            case "Traveler":
+                decrease *= -1;
                 break;
 
             default:
@@ -307,7 +395,7 @@ public class Passenger : MonoBehaviour
         //Debug.Log("bounce height: " + bounceHeight);
         float startTime = Time.time;
         int startFrame = Time.frameCount;
-        Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
+        //Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
         int counter = 0;
 
         
@@ -319,7 +407,7 @@ public class Passenger : MonoBehaviour
             //Debug.Log((pos - travelPos).magnitude);
             if((pos - travelPos).magnitude <= moveSpeed)
             {
-                Debug.Log("almost done");
+                //Debug.Log("almost done");
                 travelPos = pos;
                 transform.position = pos;
                 transform.eulerAngles = Vector3.zero;
@@ -328,9 +416,9 @@ public class Passenger : MonoBehaviour
                 int endFrame = Time.frameCount;
                 float timeDiff = endTime - startTime;
                 int frameDiff = endFrame - startFrame;
-                Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
+                //Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
                 Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y / 4);// sprite.bounds.center;
-                Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
+                //Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
                 Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, 1f);
 
             }

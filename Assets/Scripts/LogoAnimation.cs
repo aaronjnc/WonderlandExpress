@@ -19,6 +19,7 @@ public class LogoAnimation : MonoBehaviour
     private GameObject menu;
     private void Start()
     {
+        Time.timeScale = 1;
         img = GetComponent<Image>();
         fadeIn = true;
     }

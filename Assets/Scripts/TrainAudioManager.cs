@@ -9,6 +9,8 @@ public class TrainAudioManager : MonoBehaviour
     private AudioSource trainAudioSource;
     [Tooltip("Audio source for train whistle"), SerializeField]
     private AudioSource trainWhistle;
+    [Tooltip("UI audio source"), SerializeField]
+    private AudioSource uiAudio;
     [Tooltip("Speed up audio clip"), SerializeField]
     private AudioClip trainAccelerate;
     [Tooltip("Slow down audio clip"), SerializeField]
@@ -67,5 +69,27 @@ public class TrainAudioManager : MonoBehaviour
     {
         yield return new WaitForSeconds(trainAudioSource.clip.length);
         ConstantSpeed();
+    }
+    public void UIClick()
+    {
+        uiAudio.Play();
+    }
+
+    public void StopSound()
+    {
+        trainAudioSource.Pause();
+        if (trainWhistle.isPlaying)
+        {
+            trainWhistle.Pause();
+        }
+    }
+    public void ResumeSound()
+    {
+        trainAudioSource.Play();
+    }
+    private void OnDestroy()
+    {
+        if (controls != null)
+            controls.Dispose();
     }
 }
