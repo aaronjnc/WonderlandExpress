@@ -21,8 +21,10 @@ public class GameManager : MonoBehaviour
     private string currentStop;
     [Tooltip("List of current Passengers")]
     public GameObject[] passengers;
-    [Tooltip("Max number of passengers")]
+    [Tooltip("Max number of passengers per car")]
     public int maxCap = 5;
+    [Tooltip("Number of passenger cars")]
+    public int numCar = 1;
     [Tooltip("Current number of passengers")]
     private int passengerCount = 0;
     [Tooltip("Current amount of gold")]
@@ -37,18 +39,28 @@ public class GameManager : MonoBehaviour
     private float jabberwockyMod = 1.5f;
     [Tooltip("Jabberwocky price")]
     private int jabberwockyPrice;
+    [Tooltip("The unique passenger info component")]
+    private UniquePassengerInfo upi;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
     [Tooltip("List of positions for follow cars")]
     private List<Vector3> trainCarPos = new List<Vector3>();
     [Tooltip("List of rotations for follow cars")]
     private List<Vector3> trainCarRots = new List<Vector3>();
-    [Tooltip("List of next points for follow cars")]
-    private List<string> trainCarStops = new List<string>();
+    [Tooltip("List of follow points for follow cars")]
+    private List<FollowPoint> trainCarStops = new List<FollowPoint>();
     [Tooltip("Disable passenger scene loading")]
     public bool trainSceneTesting = false;
     public delegate Task OnTollChange(int currentToll, int newToll, int currentGold, int newGold, int jabberwocky);
     public event OnTollChange TollChangeEvent;
+    [HideInInspector]
+    public int carCount = 1;
+    [HideInInspector]
+    public int carLevel = 0;
+    [Tooltip("Linked list of train points head")]
+    private FollowPoint head;
+    [Tooltip("Linked list of train poitns tail")]
+    private FollowPoint tail;
     public static GameManager Instance
     {
         get
@@ -84,6 +96,11 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
         jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
+        upi = gameObject.GetComponent<UniquePassengerInfo>();
+        if(upi == null)
+        {
+            Debug.LogError("UPI NOT FOUND");
+        }
     }
 
     private void Update()
@@ -93,7 +110,7 @@ public class GameManager : MonoBehaviour
             {
                 if (pass != null)
                 {
-                    Debug.Log(happinessDecayRate / 100f / (float)targetFR);
+                    //Debug.Log(happinessDecayRate / 100f / (float)targetFR);
                     pass.GetComponent<Passenger>().OnTrainMove(happinessDecayRate / 100f / (float)targetFR, passengerCount);
                 }
             }
@@ -127,6 +144,14 @@ public class GameManager : MonoBehaviour
     public int GetGold()
     {
         return gold;
+    }
+    public int GetNumCar()
+    {
+        return carCount;
+    }
+    public void SetNumCar(int num)
+    {
+        carCount = num;
     }
     public void AddGold(int amt)
     {
@@ -258,5 +283,80 @@ public class GameManager : MonoBehaviour
         await pass.MoveTo(jw.transform.position, true);
         Destroy(passengers[i]);
         passengers[i] = null;
+    }
+
+    //methods to do with unique passengers
+    public bool IsRegular()
+    {
+        return upi.RegularSpawned();
+    }
+
+    public bool CheckRegularTown()
+    {
+        return currentStop == upi.GetRegularTown();
+    }
+
+    public UniquePassengerInfo.UniquePass GetRegular()
+    {
+        return upi.GetRegular();
+    }
+
+    public void InitializeUPI(Passenger pass)
+    {
+        upi.InitializeUPI(pass, GetCurrentStop());
+    }
+
+    public void DropOffUPI(Passenger pass)
+    {
+        upi.DropOffUPI(pass, GetCurrentStop());
+    }
+
+    public void KickOffUPI(Passenger pass)
+    {
+        upi.KickOffUPI(pass, GetCurrentStop());
+    }
+
+    public void IgnoreUPI(Passenger pass)
+    {
+        upi.IgnoreUPI(pass, GetCurrentStop());
+    }
+
+    public void UpgradeCars(int cost)
+    {
+        carLevel++;
+        happinessDecayRate *= .9f;
+        gold -= cost;
+    }
+    public void BuyCar(int cost)
+    {
+        carCount++;
+        GameObject[] newPass = new GameObject[carCount * 5];
+        for(int i = 0;i < passengers.Length; i++)
+        {
+            newPass[i] = passengers[i];
+        }
+        passengers = newPass;
+        gold -= cost;
+    }
+    public void AddFollowPoint(Vector3 pos)
+    {
+        if (tail == null)
+        {
+            head = new FollowPoint(pos, null);
+            tail = head;
+            return;
+        }
+        FollowPoint newTail = new FollowPoint(pos, null);
+        tail.SetNext(newTail);
+        tail = newTail;
+    }
+    public FollowPoint RemoveHead()
+    {
+        head = head.GetNext();
+        return head;
+    }
+    public FollowPoint GetHeadPoint()
+    {
+        return head;
     }
 }

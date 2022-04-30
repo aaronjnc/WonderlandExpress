@@ -9,9 +9,9 @@ public class ContinuePoint : TrackPoint
         base.Awake();
         gameObject.name = transform.position.ToString();
     }
-    public override void StopAction()
+    public override bool StopAction()
     {
-        return;
+        return false;
     }
     public override void SetChosenTrack(int i)
     {

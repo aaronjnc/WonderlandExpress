@@ -15,21 +15,37 @@ public class PassengerSheet : MonoBehaviour
     private float moveSpeed;
     private Vector2 endPosition;
     private RectTransform t;
-    private Passenger[] passengers;
+    private Passenger[][] passengers;
+    private int currentPage = 0;
+    [Tooltip("Previous page"), SerializeField]
+    private GameObject previous;
+    [Tooltip("Next page"), SerializeField]
+    private GameObject next;
     private void Awake()
     {
         t = GetComponent<RectTransform>();
         UpdatePassengers();
+        ChangePage(0);
     }
     public void UpdatePassengers()
     {
-        passengers = new Passenger[GameManager.Instance.GetPassengerCount()];
+        if (GameManager.Instance.GetPassengerCount() == 0)
+        {
+            passengers = new Passenger[0][];
+            Activate();
+            return;
+        }
+        passengers = new Passenger[((GameManager.Instance.GetPassengerCount() - 1) / 5) + 1][];
         int i = 0;
         foreach (GameObject p in GameManager.Instance.GetPassengers())
         {
             if (p == null)
                 continue;
-            passengers[i] = p.GetComponent<Passenger>();
+            if (passengers[i / 5] == null)
+            {
+                passengers[i / 5] = new Passenger[5];
+            }
+            passengers[i / 5][i % 5] = p.GetComponent<Passenger>();
             i++;
         }
         Activate();
@@ -38,8 +54,8 @@ public class PassengerSheet : MonoBehaviour
     {
         for (int i = 0; i < passengerTexts.Length; i++)
         {
-            if (i < passengers.Length)
-                passengerTexts[i].SetPassenger(passengers[i]);
+            if (currentPage < passengers.Length && i < passengers[currentPage].Length)
+                passengerTexts[i].SetPassenger(passengers[currentPage][i]);
             else
                 passengerTexts[i].ClearPassenger();
         }
@@ -69,5 +85,21 @@ public class PassengerSheet : MonoBehaviour
                 t.anchoredPosition = endPosition;
             }
         }
+    }
+    public void ChangePage(int i)
+    {
+        if (currentPage + i < 0 || currentPage + i >= passengers.Length)
+            return;
+        currentPage += i;
+        if (currentPage > 0)
+        {
+            previous.SetActive(true);
+        }
+        else
+        {
+            previous.SetActive(false);
+        }
+        next.SetActive(currentPage < passengers.Length - 1);
+        Activate();
     }
 }

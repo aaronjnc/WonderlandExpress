@@ -9,20 +9,22 @@ public class JabberwockyPoint : TrackPoint
     [SerializeField]
     private PassengerSheet sheet;
     public DialogueManager dm;
-    public async override void StopAction()
+    public override bool StopAction()
     {
+        Time.timeScale = 0;
         if (GameManager.Instance.gold > GameManager.Instance.GetJabberwockyPrice())
         {
-            await dm.DisplayDialog("jwSuccess");
+            dm.DisplayDialog("jwSuccess");
         }
         else if (GameManager.Instance.GetPassengerCount() > 0) 
         {
-            await dm.DisplayDialog("jwFailure");
+            dm.DisplayDialog("jwFailure");
             sheet.UpdatePassengers();
         }
         else
         {
-            await dm.DisplayDialog("jwGameOver");
+            dm.DisplayDialog("jwGameOver");
         }
+        return true;
     }
 }
