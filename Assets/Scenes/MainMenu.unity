@@ -686,7 +686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &521217265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,7 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holepunchTop: {fileID: 1872796978}
   holepunchBottom: {fileID: 792333726}
-  punchTime: 0.2
+  punchTime: 1
   holepunchTopImage: {fileID: 1872796979}
   holepunchBottomImage: {fileID: 792333727}
   closedTop: {fileID: 21300000, guid: 0154e173b390f004ca4b33a2d130dc51, type: 3}
@@ -1318,7 +1318,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f7e4b2472dbfa804a8a4f888a5d15e83, type: 3}
   - {fileID: 21300000, guid: 232f87b52925855478971d70f21ff229, type: 3}
   fadeSpeed: 0.5
-  fps: 10
+  fps: 15
   menu: {fileID: 521217264}
 --- !u!1 &1872796977
 GameObject:
@@ -1413,7 +1413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1923875622
 MonoBehaviour:
   m_ObjectHideFlags: 0

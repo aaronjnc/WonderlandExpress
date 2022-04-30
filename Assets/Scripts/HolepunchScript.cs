@@ -117,4 +117,10 @@ public class HolepunchScript : MonoBehaviour
         holepunchBottomImage.enabled = display;
         holepunchTopImage.enabled = display;
     }
+
+    private void OnDestroy()
+    {
+        if (controls != null)
+            controls.Dispose();
+    }
 }
