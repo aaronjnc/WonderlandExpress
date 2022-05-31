@@ -14786,7 +14786,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1190887405}
         m_TargetAssemblyTypeName: TrainUpgrader, Assembly-CSharp
         m_MethodName: Exit
         m_Mode: 1
@@ -81620,7 +81620,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1190887405}
         m_TargetAssemblyTypeName: TrainUpgrader, Assembly-CSharp
         m_MethodName: UpgradeCar
         m_Mode: 1
@@ -81754,7 +81754,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1190887405}
         m_TargetAssemblyTypeName: TrainUpgrader, Assembly-CSharp
         m_MethodName: BuyCar
         m_Mode: 1
