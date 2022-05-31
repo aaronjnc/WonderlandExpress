@@ -325,7 +325,10 @@ public class GameManager : MonoBehaviour
     {
         carLevel++;
         happinessDecayRate *= .9f;
+        int oldGold = gold;
         gold -= cost;
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
     }
     public void BuyCar(int cost)
     {
@@ -336,7 +339,10 @@ public class GameManager : MonoBehaviour
             newPass[i] = passengers[i];
         }
         passengers = newPass;
+        int oldGold = gold;
         gold -= cost;
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
     }
     public void AddFollowPoint(Vector3 pos)
     {
