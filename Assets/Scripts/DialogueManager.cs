@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 public class DialogueManager : MonoBehaviour
 {
+    //a struct to hold a single piece of a dialog message
     [System.Serializable]
     public struct Dialog 
     {
@@ -108,6 +109,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     public async void Awake()
     {
+        //if the dialog test is enabled, run the startup dialog test
         if (runTest)
         {
             await DisplayDialog("test");
