@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
     private FollowPoint head;
     [Tooltip("Linked list of train poitns tail")]
     private FollowPoint tail;
+    public bool mouthNoises = false;
     public static GameManager Instance
     {
         get
@@ -534,5 +535,17 @@ public class GameManager : MonoBehaviour
     public void NewLoop()
     {
         loops += 1;
+    }
+
+    public void SetMouthNoises(bool UseMouthNoises)
+    {
+        mouthNoises = UseMouthNoises;
+        if (TrainAudioManager.Instance != null)
+        {
+            if (UseMouthNoises)
+                TrainAudioManager.Instance.SwitchSound(1);
+            else
+                TrainAudioManager.Instance.SwitchSound(1);
+        }
     }
 }
