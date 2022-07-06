@@ -155,11 +155,14 @@ public class PassengerGenerator : MonoBehaviour
                 if(pass.GetTrait() != traitList[0].name)
                 {
                     int traitNum = GetIndex(pass.GetTrait());
-                    if(traitNum < 0)
+                    if (traitNum < 0)
                     {
                         Debug.LogError("DID NOT FIND TRAIT IN LIST TO REMOVE");
                     }
-                    traitList.RemoveAt(traitNum);
+                    else
+                    {
+                        traitList.RemoveAt(traitNum);
+                    }
                     if(pass.GetTrait() == "Regular")
                     {
                         regularSpawned = true;
@@ -199,6 +202,7 @@ public class PassengerGenerator : MonoBehaviour
                 return i;
             }
         }
+        Debug.LogWarning("Couldn't find trait " + traitName);
         return -1;
     }
 
@@ -335,6 +339,11 @@ public class PassengerGenerator : MonoBehaviour
         //{
             //pass.SetTrait(traitList[0].name, traitList[0].description);
         //}
+        if(traitNum < 0)
+        {
+            traitNum = UnityEngine.Random.Range(1, traitList.Count);
+            Debug.LogError("pass " + pass + "couldn't find trait");
+        }
         pass.SetTrait(traitList[traitNum].name, traitList[traitNum].description);
 
         if(pass.GetTrait() == "Traveler")

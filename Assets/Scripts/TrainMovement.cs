@@ -90,11 +90,13 @@ public class TrainMovement : MonoBehaviour
     {
         if (pauseMenu.activeInHierarchy)
         {
+            trainAudioManager.ResumeSound();
             pauseMenu.SetActive(false);
             Time.timeScale = previousTime;
         }
         else
         {
+            trainAudioManager.StopSound();
             pauseMenu.SetActive(true);
             previousTime = Time.timeScale;
             Time.timeScale = 0;
@@ -141,7 +143,7 @@ public class TrainMovement : MonoBehaviour
                 trainAudioManager.SlowDown();
                 if (currentVel == Vector3.zero)
                 {
-                    currentVel = -transform.up * velocity;
+                    currentVel = (nextPoint.transform.position-transform.position).normalized * velocity;
                 }
                 transform.position = Vector3.SmoothDamp(transform.position, nextPoint.transform.position, ref currentVel, 1, maxVelocity);
                 velocity = currentVel.magnitude;
@@ -214,6 +216,6 @@ public class TrainMovement : MonoBehaviour
     private void OnDestroy()
     {
         if (controls != null)
-            controls.Disable();
+            controls.Dispose();
     }
 }

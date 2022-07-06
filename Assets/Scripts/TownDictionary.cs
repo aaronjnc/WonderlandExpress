@@ -75,6 +75,7 @@ public class TownDictionary : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoad;
         for (int i = 0; i < townNames.Count && i < towns.Count; i++)
         {
+            towns[i].SetName(townNames[i]);
             dict.Add(townNames[i], towns[i]);
             //DontDestroyOnLoad(towns[i]);
 
@@ -144,9 +145,9 @@ public class TownDictionary : MonoBehaviour
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 0)
+        if (scene.buildIndex == 0 && this != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -162,5 +163,11 @@ public class TownDictionary : MonoBehaviour
     public int GetTownDist(string town1, string town2)
     {
         return Mathf.Abs((FindTown(town1).GetLoc() % maxLength) - (FindTown(town2).GetLoc() % maxLength));
+    }
+
+    //returns the string name corresponding to the given index
+    public string GetTownNameByIndex(int index)
+    {
+        return townNames[index];
     }
 }
