@@ -90,13 +90,16 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        //sets the target framerate to avoid frame-dependent issues
         Application.targetFrameRate = targetFR;
+        //destroy any duplicate gamemanagers
         if (Instance != this)
         {
             Destroy(this.gameObject);
             Destroy(this);
             return;
         }
+        //if this is the only instance, set it as the instance and initialize this gamemanager to last through transitions
         _instance = this;
         DontDestroyOnLoad(this);
         Application.quitting += () => applicationIsQuitting = true;
@@ -112,6 +115,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        //if the current scene is the train scene, decrease all passengers' happiness every frame
         if (SceneManager.GetActiveScene().buildIndex == 1) {
             foreach (GameObject pass in passengers)
             {
