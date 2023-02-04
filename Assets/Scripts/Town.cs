@@ -31,6 +31,13 @@ public class Town : MonoBehaviour
         
     }
 
+    public void Setup(TownSave townSave)
+    {
+        wealth = townSave.wealth;
+        reputation = townSave.reputation;
+        destroyed = townSave.destroyed;
+    }
+
     //adjust town wealth by adding the wealth of a passenger
     public void AddWealth(float passengerWealth)
     {

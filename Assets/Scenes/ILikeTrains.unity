@@ -38796,6 +38796,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   train: {fileID: 1328246594}
+  pauseMenu: {fileID: 2142159013}
+  mouthNoisesToggle: {fileID: 1621261108}
 --- !u!1 &850078146
 GameObject:
   m_ObjectHideFlags: 0
@@ -39895,7 +39897,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -81898,10 +81900,12 @@ MonoBehaviour:
   tollMod: 1.2
   jabberwockyMod: 1.5
   load: 0
+  loadFromFile: 0
   trainSceneTesting: 0
   carCount: 1
   carLevel: 0
   mouthNoises: 0
+  passPrefab: {fileID: 4803336674730416826, guid: 97551bb90b0e2ac4d8543c694dd4ac9b, type: 3}
 --- !u!4 &2063867794
 Transform:
   m_ObjectHideFlags: 0

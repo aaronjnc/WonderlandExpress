@@ -60,6 +60,18 @@ public class TrainMovement : MonoBehaviour
             transform.eulerAngles = GameManager.Instance.GetTrainRotation();
             LoadFollowTrains();
         }
+        else if (GameManager.Instance.loadFromFile)
+        {
+            nextPoint = GameObject.Find(GameManager.Instance.GetCurrentStop()).GetComponent<TrackPoint>();
+            transform.position = GameManager.Instance.GetTrainPosition();
+            transform.eulerAngles = GameManager.Instance.GetTrainRotation();
+            lookRotation = GameManager.Instance.GetTrainLookRotation();
+            LoadFollowTrains();
+        }
+        if (!GameManager.Instance.loadFromFile)
+        {
+            lookRotation = transform.rotation;
+        }
         controls = new PlayerControls();
         controls.Menu.Pause.performed += Pause;
         controls.Menu.Pause.Enable();
@@ -67,7 +79,6 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.Click.Enable();
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
-        lookRotation = transform.rotation;
         GameManager.Instance.AddFollowPoint(nextPoint.transform.position);
         trainAudioManager.SpeedUp();
     }
@@ -211,6 +222,11 @@ public class TrainMovement : MonoBehaviour
         {
             GameManager.Instance.AddFollowTrain(trainCars[i]);
         }
+    }
+
+    public Quaternion GetLookRotation()
+    {
+        return lookRotation;
     }
 
     private void OnDestroy()

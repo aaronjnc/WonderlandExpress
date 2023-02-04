@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,6 +52,8 @@ public class GameManager : MonoBehaviour
     private UniquePassengerInfo upi;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
+    [Tooltip("The game is being opened from a file")]
+    public bool loadFromFile = false;
     [Tooltip("List of positions for follow cars")]
     private List<Vector3> trainCarPos = new List<Vector3>();
     [Tooltip("List of rotations for follow cars")]
@@ -65,9 +70,12 @@ public class GameManager : MonoBehaviour
     public int carLevel = 0;
     [Tooltip("Linked list of train points head")]
     private FollowPoint head;
-    [Tooltip("Linked list of train poitns tail")]
+    [Tooltip("Linked list of train points tail")]
     private FollowPoint tail;
     public bool mouthNoises = false;
+    private Quaternion trainLookRotation;
+    [SerializeField]
+    private GameObject passPrefab;
     public static GameManager Instance
     {
         get
@@ -105,6 +113,10 @@ public class GameManager : MonoBehaviour
         Application.quitting += () => applicationIsQuitting = true;
         SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
+        if (File.Exists(Application.persistentDataPath + "/SaveInfo.txt"))
+        {
+            LoadGame();
+        }
         jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
         upi = gameObject.GetComponent<UniquePassengerInfo>();
         if(upi == null)
@@ -233,6 +245,20 @@ public class GameManager : MonoBehaviour
         return passengers;
     }
 
+    public PassengerSave[] GetPassengerSaves()
+    {
+        PassengerSave[] passengerObjects = new PassengerSave[passengerCount];
+        for (int i = 0; i < passengers.Length; i++)
+        {
+            if (passengers[i] != null)
+            {
+                passengerObjects[i] = new PassengerSave();
+                passengerObjects[i].Setup(passengers[i].GetComponent<Passenger>());
+            }
+        }
+        return passengerObjects;
+    }
+
     /*
      * runs when a new scene loads to prevent duplicate gameManagers
      */
@@ -240,7 +266,15 @@ public class GameManager : MonoBehaviour
     {
         if (scene.buildIndex == 0 && this != null)
         {
+            for (int i = 0; i < passengers.Length; i++)
+            {
+                if (passengers[i] != null)
+                {
+                    Destroy(passengers[i].gameObject);
+                }
+            }
             Destroy(this.gameObject);
+            return;
         }
     }
 
@@ -264,6 +298,18 @@ public class GameManager : MonoBehaviour
         trainCarStops.Add(follow.GetNextPoint());
     }
 
+    public void AddTrainCarStop(FollowPoint point, int i)
+    {
+        trainCarStops[i] = point;
+    }
+
+    public void AddTrainCarPositionRotation(Vector3 pos, Vector3 rot)
+    {
+        trainCarPos.Add(pos);
+        trainCarRots.Add(rot);
+        trainCarStops.Add(null);
+    }
+
     /*
      * loads a following passenger car
      */
@@ -274,6 +320,7 @@ public class GameManager : MonoBehaviour
             followers[i].transform.position = trainCarPos[i];
             followers[i].transform.eulerAngles = trainCarRots[i];
             followers[i].SetNextPoint(trainCarStops[i]);
+            followers[i].UpdateLookRot();
         }
     }
 
@@ -356,6 +403,11 @@ public class GameManager : MonoBehaviour
     public int GetJabberwockyPrice()
     {
         return jabberwockyPrice;
+    }
+
+    public void SetJabberwockyPrice(int price)
+    {
+        jabberwockyPrice = price;
     }
 
     /*
@@ -453,6 +505,11 @@ public class GameManager : MonoBehaviour
         upi.InitializeUPI(pass, GetCurrentStop());
     }
 
+    public void InitializeUPI(UniquePassengerSave pass)
+    {
+        upi.InitializeUPI(pass);
+    }
+
     /*
      * run when you successfully drop off a unique passenger
      */
@@ -533,6 +590,11 @@ public class GameManager : MonoBehaviour
         return head;
     }
 
+    public FollowPoint GetTailPoint()
+    {
+        return tail;
+    }
+
     /*
      * Increment the number of loops completed to mark the start of a new loop
      */
@@ -551,5 +613,64 @@ public class GameManager : MonoBehaviour
             else
                 TrainAudioManager.Instance.SwitchSound(1);
         }
+    }
+
+    public List<Vector3> GetFollowCarPositions()
+    {
+        return trainCarPos;
+    }
+
+    public List<Vector3> GetFollowCarRotations()
+    {
+        return trainCarRots;
+    }
+
+    public List<FollowPoint> GetTrainFollowPoints()
+    {
+        return trainCarStops;
+    }
+
+    public void SetTrainLookRotation(Quaternion lookRotation)
+    {
+        trainLookRotation = lookRotation;
+    }
+
+    public Quaternion GetTrainLookRotation()
+    {
+        return trainLookRotation;
+    }
+
+    void LoadGame()
+    {
+        SaveInfo saveInfo = new SaveInfo();
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream inputStream = new FileStream(Application.persistentDataPath + "/SaveInfo.txt", FileMode.Open);
+        saveInfo = bf.Deserialize(inputStream) as SaveInfo;
+        inputStream.Close();
+        saveInfo.LoadGame(this);
+        loadFromFile = true;
+    }
+
+    public void SaveGame()
+    {
+        TrainMovement train = TrainMovement.Instance;
+        SetTrainLookRotation(train.GetLookRotation());
+        SetTrainPosition(train.transform.position);
+        SetTrainRotation(train.transform.eulerAngles);
+        train.SaveFollowTrains();
+        SaveInfo saveInfo = new SaveInfo();
+        saveInfo.SaveGame(this);
+    }
+
+    public void SpawnPassenger(PassengerSave p)
+    {
+        GameObject Pass = Instantiate(passPrefab);
+        DontDestroyOnLoad(Pass);
+        Pass.SetActive(false);
+        Pass.GetComponent<Passenger>().Setup(p);
+        Pass.GetComponent<Passenger>().SitDown();
+        Pass.transform.position = new Vector3(p.passengerPosition[0], p.passengerPosition[1], p.passengerPosition[2]);
+        passengers[passengerCount] = Pass;
+        AddPassenger();
     }
 }
