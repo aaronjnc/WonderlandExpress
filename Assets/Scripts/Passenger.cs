@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-
 public class Passenger : MonoBehaviour
 {
     [Header("General Passenger Stats")]
@@ -113,6 +112,23 @@ public class Passenger : MonoBehaviour
         wealth = pWealth;
         happiness = pHappiness;
         destination = pDestination;
+    }
+
+    public void Setup(PassengerSave p)
+    {
+        firstName = p.firstName;
+        lastName = p.lastName;
+        passName = firstName + " " + lastName;
+        gold = p.gold;
+        wealth = p.wealth;
+        happiness = p.happiness;
+        destination = p.destination;
+        passageMessage = p.passageMessage;
+        acceptMessage = p.acceptMessage;
+        denyMessage = p.denyMessage;
+        dropOffMessage = p.dropOffMessage;
+        trait = p.trait;
+        traitDescription = p.traitDescription;
     }
 
     public void SetName(string first, string last)

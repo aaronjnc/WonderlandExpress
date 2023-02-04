@@ -21,7 +21,7 @@ public class PassengerSheet : MonoBehaviour
     private GameObject previous;
     [Tooltip("Next page"), SerializeField]
     private GameObject next;
-    private void Awake()
+    private void Start()
     {
         t = GetComponent<RectTransform>();
         UpdatePassengers();
