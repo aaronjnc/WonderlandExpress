@@ -611,7 +611,7 @@ public class GameManager : MonoBehaviour
             if (UseMouthNoises)
                 TrainAudioManager.Instance.SwitchSound(1);
             else
-                TrainAudioManager.Instance.SwitchSound(1);
+                TrainAudioManager.Instance.SwitchSound(0);
         }
     }
 
