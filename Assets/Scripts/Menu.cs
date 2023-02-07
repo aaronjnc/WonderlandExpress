@@ -38,18 +38,24 @@ public class Menu : MonoBehaviour
     //Return to main menu
     public void MainMenu()
     {
-        GameManager.Instance.SaveGame();
         SceneManager.LoadScene(1);
         Time.timeScale = 1;
+    }
+    public void SaveMainMenu()
+    {
+        GameManager.Instance.SaveGame();
+        MainMenu();
     }
     //Exit the game
     public void Exit()
     {
         Application.Quit();
-        if (SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            GameManager.Instance.SaveGame();
-        }
+    }
+
+    public void SaveExit()
+    {
+        GameManager.Instance.SaveGame();
+        Exit();
     }
     //load train scene
 
