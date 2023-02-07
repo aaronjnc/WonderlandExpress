@@ -86,6 +86,7 @@ public class SaveInfo
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/SaveInfo.txt");
+        Debug.LogError(Application.persistentDataPath + "/SaveInfo.txt");
         bf.Serialize(file, this);
         file.Close();
     }

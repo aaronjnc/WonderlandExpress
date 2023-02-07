@@ -2729,7 +2729,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 846628106}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: MainMenu
+        m_MethodName: SaveMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -69884,7 +69884,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 846628106}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: Exit
+        m_MethodName: SaveExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
