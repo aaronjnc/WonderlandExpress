@@ -46,6 +46,10 @@ public class Menu : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            GameManager.Instance.SaveGame();
+        }
     }
     //load train scene
 
