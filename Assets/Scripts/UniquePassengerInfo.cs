@@ -49,6 +49,15 @@ public class UniquePassengerInfo : MonoBehaviour
         }
     }
 
+    public void InitializeUPI(UniquePassengerSave pass)
+    {
+        regular.firstName = pass.firstName;
+        regular.lastName = pass.lastName;
+        regular.happiness = pass.happiness;
+        regular.wealth = pass.wealth;
+        regular.currentTown = pass.currentTown;
+    }
+
     public void DropOffUPI(Passenger pass, string town)
     {
         if(pass.GetTrait() == "Regular")

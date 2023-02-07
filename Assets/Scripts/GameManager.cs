@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,8 +32,14 @@ public class GameManager : MonoBehaviour
     private int passengerCount = 0;
     [Tooltip("Current amount of gold")]
     public int gold = 0;
+    [Tooltip("Total amount of gold gained throughout the run")]
+    public int totalGold = 0;
+    [Tooltip("Number of loops completed throughout the run")]
+    public int loops = 0;
     [Tooltip("Rate at which passenger happiness decreases. measured in %/sec")]
     public float happinessDecayRate = 1f;
+    [Tooltip("modifier to apply to happinessDecayRate when jabberwock eats a passenger")]
+    public float happinessDecayEatMod = 50f;
     [Tooltip("Next toll price")]
     public int tollPrice = 50;
     [Tooltip("the value the toll is multiplied by at every sucessful pass")]
@@ -43,6 +52,8 @@ public class GameManager : MonoBehaviour
     private UniquePassengerInfo upi;
     [Tooltip("The scene is being opened from passenger scene")]
     public bool load = false;
+    [Tooltip("The game is being opened from a file")]
+    public bool loadFromFile = false;
     [Tooltip("List of positions for follow cars")]
     private List<Vector3> trainCarPos = new List<Vector3>();
     [Tooltip("List of rotations for follow cars")]
@@ -59,8 +70,12 @@ public class GameManager : MonoBehaviour
     public int carLevel = 0;
     [Tooltip("Linked list of train points head")]
     private FollowPoint head;
-    [Tooltip("Linked list of train poitns tail")]
+    [Tooltip("Linked list of train points tail")]
     private FollowPoint tail;
+    public bool mouthNoises = false;
+    private Quaternion trainLookRotation;
+    [SerializeField]
+    private GameObject passPrefab;
     public static GameManager Instance
     {
         get
@@ -83,20 +98,28 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        //sets the target framerate to avoid frame-dependent issues
         Application.targetFrameRate = targetFR;
+        //destroy any duplicate gamemanagers
         if (Instance != this)
         {
             Destroy(this.gameObject);
             Destroy(this);
             return;
         }
+        //if this is the only instance, set it as the instance and initialize this gamemanager to last through transitions
         _instance = this;
         DontDestroyOnLoad(this);
         Application.quitting += () => applicationIsQuitting = true;
         SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
-        jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
         upi = gameObject.GetComponent<UniquePassengerInfo>();
+        if (File.Exists(Application.persistentDataPath + "/SaveInfo.txt"))
+        {
+            LoadGame();
+        }
+        jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
+
         if(upi == null)
         {
             Debug.LogError("UPI NOT FOUND");
@@ -105,6 +128,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        //if the current scene is the train scene, decrease all passengers' happiness every frame
         if (SceneManager.GetActiveScene().buildIndex == 1) {
             foreach (GameObject pass in passengers)
             {
@@ -117,58 +141,147 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /*
+     * sets the train's current position
+     */
     public void SetTrainPosition(Vector3 pos)
     {
         trainPosition = pos;
     }
+
+    /*
+     * gets the train's current position
+     */
     public Vector3 GetTrainPosition()
     {
         return trainPosition;
     }
+
+    /*
+     * sets the train's rotation
+     */
     public void SetTrainRotation(Vector3 rot)
     {
         trainRotation = rot;
     }
+
+    /*
+     * gets the train's current rotation
+     */
     public Vector3 GetTrainRotation()
     {
         return trainRotation;
     }
+
+    /*
+     * sets the passerby's current stop
+     */
     public void SetCurrentStop(string stop)
     {
         currentStop = stop;
     }
+
+    /*
+     * gets the name of the current stop
+     */
     public string GetCurrentStop()
     {
         return currentStop;
     }
+
+    /*
+     * gets the current gold
+     */
     public int GetGold()
     {
         return gold;
     }
+
+    /*
+     * gets the total gold gained this run
+     */
+    public int GetTotalGold()
+    {
+        return totalGold;
+    }
+
+    /*
+     * gets the number of loops completed
+     */
+    public int GetLoopCount()
+    {
+        return loops;
+    }
+
+    /*
+     * gets the current number of passenger cars
+     */
     public int GetNumCar()
     {
         return carCount;
     }
+
+    /*
+     * sets the number of passenger cars
+     */
     public void SetNumCar(int num)
     {
         carCount = num;
     }
+
+    /*
+     * increase the amount of gold you have, as well as the total gold gained
+     */
     public void AddGold(int amt)
     {
         gold += amt;
+        totalGold += amt;
     }
+
+    /*
+     * returns an array of all current passengers
+     */
     public GameObject[] GetPassengers()
     {
         return passengers;
     }
+
+    public PassengerSave[] GetPassengerSaves()
+    {
+        PassengerSave[] passengerObjects = new PassengerSave[passengers.Length];
+        for (int i = 0; i < passengers.Length; i++)
+        {
+            if (passengers[i] != null)
+            {
+                passengerObjects[i] = new PassengerSave();
+                passengerObjects[i].Setup(passengers[i].GetComponent<Passenger>());
+            }
+        }
+        return passengerObjects;
+    }
+
+    /*
+     * runs when a new scene loads to prevent duplicate gameManagers
+     */
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 0 && this != null)
+        if (scene.buildIndex == 1 && this != null)
         {
+            for (int i = 0; i < passengers.Length; i++)
+            {
+                if (passengers[i] != null)
+                {
+                    Destroy(passengers[i].gameObject);
+                }
+            }
             Destroy(this.gameObject);
+            return;
         }
     }
 
+    /*
+     * clears all of the passenger cars
+     */
     public void ClearFollowTrains()
     {
         trainCarPos.Clear();
@@ -176,6 +289,9 @@ public class GameManager : MonoBehaviour
         trainCarStops.Clear();
     }
 
+    /*
+     * adds a passenger car to follow the train
+     */
     public void AddFollowTrain(FollowTrain follow)
     {
         trainCarPos.Add(follow.transform.position);
@@ -183,6 +299,21 @@ public class GameManager : MonoBehaviour
         trainCarStops.Add(follow.GetNextPoint());
     }
 
+    public void AddTrainCarStop(FollowPoint point, int i)
+    {
+        trainCarStops[i] = point;
+    }
+
+    public void AddTrainCarPositionRotation(Vector3 pos, Vector3 rot)
+    {
+        trainCarPos.Add(pos);
+        trainCarRots.Add(rot);
+        trainCarStops.Add(null);
+    }
+
+    /*
+     * loads a following passenger car
+     */
     public void LoadFollowTrain(List<FollowTrain> followers)
     {
         for (int i = 0; i < followers.Count; i++)
@@ -190,12 +321,15 @@ public class GameManager : MonoBehaviour
             followers[i].transform.position = trainCarPos[i];
             followers[i].transform.eulerAngles = trainCarRots[i];
             followers[i].SetNextPoint(trainCarStops[i]);
+            followers[i].UpdateLookRot();
         }
     }
 
-    //checks the toll against the current gold, 
-    //returns true if gold > toll
-    //returns false otherwise
+    /*
+     * checks the toll against the current gold, 
+     * returns true if gold > toll
+     * returns false otherwise
+     */
     public bool CheckToll()
     {
         Debug.Log("Checking toll");
@@ -209,7 +343,9 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    //pays the toll and increases its value
+    /*
+     * pays the toll and increases its cost
+     */
     public async Task TollPass()
     {
         int oldGold = gold;
@@ -221,7 +357,19 @@ public class GameManager : MonoBehaviour
             await TollChangeEvent(oldToll, tollPrice, oldGold, gold, jabberwockyPrice);
     }
 
-    //pays the toll, reducing gold by the amount given by the current toll
+    /*
+     * pays the wonderland toll, increasing the current loop total
+     */
+    public async Task TollPassWL()
+    {
+        await TollPass();
+        NewLoop();
+
+    }
+
+    /*
+     * pays the toll, reducing gold by the current toll price
+     */
     public void PayToll()
     {
         int oldGold = gold;
@@ -230,7 +378,9 @@ public class GameManager : MonoBehaviour
             TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
     }
 
-    //multiplies toll by the given value
+    /*
+     * Increases toll price by the toll modifer value
+     */
     public void IncreaseToll()
     {
         int oldToll = tollPrice;
@@ -240,16 +390,31 @@ public class GameManager : MonoBehaviour
             TollChangeEvent(oldToll, tollPrice, gold, gold, jabberwockyPrice);
     }
 
+    /*
+     * gets the current price of the toll
+     */
     public int GetToll()
     {
         return tollPrice;
     }
 
+    /*
+     * gets the current price of the jabberwocky toll
+     */
     public int GetJabberwockyPrice()
     {
         return jabberwockyPrice;
     }
 
+    public void SetJabberwockyPrice(int price)
+    {
+        jabberwockyPrice = price;
+    }
+
+    /*
+     * Pay the jabberwocky's toll.
+     * decreases gold by the toll's cost and plays an animation
+     */
     public async Task PayJabberwocky()
     {
         int oldGold = gold;
@@ -258,21 +423,34 @@ public class GameManager : MonoBehaviour
             await TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
     }
 
+    /*
+     * decrement the passenger count by 1
+     */
     public void RemovePassenger()
     {
         passengerCount -= 1;
     }
 
+    /*
+     * increment the passenger count by 1
+     */
     public void AddPassenger()
     {
         passengerCount += 1;
     }
 
+    /*
+     * return the current number fo passengers on the passerby
+     */
     public int GetPassengerCount()
     {
         return passengerCount;
     }
 
+    /*
+     * Run when the jabberwocky eats a passenger.
+     * Removes that passenger from the train, and lowers the happiness of all other passengers
+     */
     public async Task EatPassenger(int i, GameObject start, GameObject jw)
     {
         RemovePassenger();
@@ -283,50 +461,97 @@ public class GameManager : MonoBehaviour
         await pass.MoveTo(jw.transform.position, true);
         Destroy(passengers[i]);
         passengers[i] = null;
+        //DECREASE ALL PASSENGER HAPPINESS WHEN ONE IS EATEN. NOT YET TESTED
+        //foreach(GameObject passenger in passengers)
+        //{
+        //    if(pass != null)
+        //    {
+        //        passengers[i].GetComponent<Passenger>().DecreaseHappiness(happinessDecayRate * happinessDecayEatMod / 100f);
+        //    }
+        //}
     }
 
     //methods to do with unique passengers
+
+    /*
+     * checks if the unique 'regular' passenger has spawned yet
+     */
     public bool IsRegular()
     {
         return upi.RegularSpawned();
     }
 
+    /*
+     * checks if the current town was is the recorded location for the unique 'regular' passenger
+     */
     public bool CheckRegularTown()
     {
         return currentStop == upi.GetRegularTown();
     }
 
+    /*
+     * gets the unique 'regular' passenger
+     */
     public UniquePassengerInfo.UniquePass GetRegular()
     {
         return upi.GetRegular();
     }
 
+    /*
+     * Run when you first encounter a unique passenger. 
+     * Initializes them to the current town
+     */
     public void InitializeUPI(Passenger pass)
     {
         upi.InitializeUPI(pass, GetCurrentStop());
     }
 
+    public void InitializeUPI(UniquePassengerSave pass)
+    {
+        upi.InitializeUPI(pass);
+    }
+
+    /*
+     * run when you successfully drop off a unique passenger
+     */
     public void DropOffUPI(Passenger pass)
     {
         upi.DropOffUPI(pass, GetCurrentStop());
     }
 
+    /*
+     * run when you kick a unique passenger off of the Passerby
+     */
     public void KickOffUPI(Passenger pass)
     {
         upi.KickOffUPI(pass, GetCurrentStop());
     }
 
+    /*
+     * run when you ignore a unique passenger
+     */
     public void IgnoreUPI(Passenger pass)
     {
         upi.IgnoreUPI(pass, GetCurrentStop());
     }
 
+    /*
+     * upgrade the train cars. 
+     * Decreases the rate of happiness loss on the train scene and decreases gold by amount paid
+     */
     public void UpgradeCars(int cost)
     {
         carLevel++;
         happinessDecayRate *= .9f;
+        int oldGold = gold;
         gold -= cost;
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
     }
+    /*
+     * Purchase a new train car. 
+     *Increases number of passengers that can board and decreases gold by the amount paid
+     */
     public void BuyCar(int cost)
     {
         carCount++;
@@ -336,8 +561,12 @@ public class GameManager : MonoBehaviour
             newPass[i] = passengers[i];
         }
         passengers = newPass;
+        int oldGold = gold;
         gold -= cost;
+        if (TollChangeEvent != null)
+            TollChangeEvent(tollPrice, tollPrice, oldGold, gold, jabberwockyPrice);
     }
+
     public void AddFollowPoint(Vector3 pos)
     {
         if (tail == null)
@@ -350,13 +579,105 @@ public class GameManager : MonoBehaviour
         tail.SetNext(newTail);
         tail = newTail;
     }
+
     public FollowPoint RemoveHead()
     {
         head = head.GetNext();
         return head;
     }
+
     public FollowPoint GetHeadPoint()
     {
         return head;
+    }
+
+    public FollowPoint GetTailPoint()
+    {
+        return tail;
+    }
+
+    /*
+     * Increment the number of loops completed to mark the start of a new loop
+     */
+    public void NewLoop()
+    {
+        loops += 1;
+    }
+
+    public void SetMouthNoises(bool UseMouthNoises)
+    {
+        mouthNoises = UseMouthNoises;
+        if (TrainAudioManager.Instance != null)
+        {
+            TrainAudioManager.Instance.SwitchSound(GetAudioNum());
+        }
+    }
+
+    public int GetAudioNum()
+    {
+        if (mouthNoises)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    public List<Vector3> GetFollowCarPositions()
+    {
+        return trainCarPos;
+    }
+
+    public List<Vector3> GetFollowCarRotations()
+    {
+        return trainCarRots;
+    }
+
+    public List<FollowPoint> GetTrainFollowPoints()
+    {
+        return trainCarStops;
+    }
+
+    public void SetTrainLookRotation(Quaternion lookRotation)
+    {
+        trainLookRotation = lookRotation;
+    }
+
+    public Quaternion GetTrainLookRotation()
+    {
+        return trainLookRotation;
+    }
+
+    void LoadGame()
+    {
+        SaveInfo saveInfo = new SaveInfo();
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream inputStream = new FileStream(Application.persistentDataPath + "/SaveInfo.txt", FileMode.Open);
+        saveInfo = bf.Deserialize(inputStream) as SaveInfo;
+        inputStream.Close();
+        saveInfo.LoadGame(this);
+        loadFromFile = true;
+    }
+
+    public void SaveGame()
+    {
+        TrainMovement train = TrainMovement.Instance;
+        SetTrainLookRotation(train.GetLookRotation());
+        SetTrainPosition(train.transform.position);
+        SetTrainRotation(train.transform.eulerAngles);
+        train.SaveFollowTrains();
+        SaveInfo saveInfo = new SaveInfo();
+        saveInfo.SaveGame(this);
+    }
+
+    public void SpawnPassenger(PassengerSave p)
+    {
+        GameObject Pass = Instantiate(passPrefab);
+        DontDestroyOnLoad(Pass);
+        Pass.SetActive(false);
+        Pass.GetComponent<Passenger>().Setup(p);
+        Pass.GetComponent<Passenger>().SitDown();
+        Pass.transform.position = new Vector3(p.passengerPosition[0], p.passengerPosition[1], p.passengerPosition[2]);
+        passengers[passengerCount] = Pass;
+        AddPassenger();
     }
 }

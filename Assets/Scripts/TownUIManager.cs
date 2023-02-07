@@ -117,33 +117,40 @@ public class TownUIManager : MonoBehaviour
         if (interact)
         {
 
-
+            //get the current mouse position
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0));
             mousePos = new Vector3(mousePos.x, mousePos.y, zOffset);
-            //Vector3 cameraPos = Camera.main.transform.position;
+                //Vector3 cameraPos = Camera.main.transform.position;
             Vector3 cameraPos = new Vector3(mousePos.x, mousePos.y, camOffset);
-            //Debug.Log("mouse: " + mousePos);
+                //Debug.Log("mouse: " + mousePos);
+            //raycast from the mouse position into the screen to see if mouse is over any objects
             RaycastHit2D hit = Physics2D.Raycast(cameraPos, (mousePos - cameraPos) * 100, Mathf.Infinity);
             Debug.DrawRay(cameraPos, (mousePos - cameraPos) * 100, Color.red, 0.1f);
             if (hit.collider != null)
             {
-                //Debug.Log("Hit " + hit.collider.gameObject);
+                //check if the object his is a passenger
+                    //Debug.Log("Hit " + hit.collider.gameObject);
                 GameObject obj = hit.collider.gameObject;
                 Passenger pass = obj.GetComponent<Passenger>();
                 if (pass != null)
                 {
+                    //if the passenger hit isn't the passenger whose stats are currently displayed, change to displaying this passenger
                     if (currentPassDisplay != pass)
                     {
                         currentPassDisplay = pass;
                         ShowPassengerStats(pass);
                     }
                 }
+
+                //if it's not a passenger, hide the stats display
                 else
                 {
                     HidePassengerStats();
                     currentPassDisplay = null;
                 }
             }
+
+            //if there is no hit, hide the stats display
             else
             {
                 HidePassengerStats();
@@ -152,18 +159,23 @@ public class TownUIManager : MonoBehaviour
         }
     }
 
+    /*
+     * setup the remove buttons for the passengers in the currently displayed car
+     */
     public void SetupButtons(GameObject[] arr, int currentCar)
     {
         int currentNum = 0;
         foreach(GameObject button in removeButtons)
         {
-            //GameObject button = arr[i];
+                //GameObject button = arr[i];
             button.SetActive(arr[currentCar * 5 + currentNum] != null);
             currentNum++;
         }
 
     }
-
+    /*
+     * disable accept button and display message when train is full
+     */
     public void TrainFull(bool isFull)
     {
         
@@ -180,6 +192,9 @@ public class TownUIManager : MonoBehaviour
         trainFull = isFull;
     }
 
+    /*
+     * disable buttons and display message when there are no more passengers waiting
+     */
     public void NoMorePass()
     {
         acceptButton.interactable = false;
@@ -188,56 +203,89 @@ public class TownUIManager : MonoBehaviour
         t.text = "Accept";
     }
 
+    /*
+     * display the second passenger car if it exists
+     */
     public void DisplayTrains(bool display)
     {
         secondTrain.SetActive(display);
     }
 
+    /*
+     * if there are more passenger cars to the left, display the left button
+     */
     public void DisplayLeft(bool display)
     {
         leftButton.gameObject.SetActive(display);
     }
 
+    /*
+     * if there are more passenger cars to the right, display the right button
+     */
     public void DisplayRight(bool display)
     {
         rightButton.gameObject.SetActive(display);
     }
 
+    /*
+     * display the tip given by a passenger
+     */
     public async Task DisplayTip(float tip)
     {
         await tipDisplay.GetComponent<TipMove>().floatMove(tipTime, tip);
     }
 
+    /*
+     * display the current town's name when given a town
+     */
     public void DisplayTown(Town t)
     {
         townNameText.text = t.GetName();
     }
 
+    /*
+     * display the current town's name when given a town name
+     */
     public void DisplayTown(string tName)
     {
         townNameText.text = tName;
     }
 
+    /*
+     * display the current gold
+     */
     public void DisplayGold(int g)
     {
         goldText.text = "Gold: " + g + "g";
     }
 
+    /*
+     * display the amount the gold is increasing by
+     */
     public void DisplayIncrement(int g)
     {
         goldIncrementText.text = "+" + g + "g";
     }
 
+    /*
+     * hide the gold increment text
+     */
     public void HideIncrement()
     {
         goldIncrementText.text = "";
     }
 
+    /*
+     * display the current toll price
+     */
     public void DisplayToll(int t)
     {
         tollText.text = "Toll Price: " + t + "g";
     }
 
+    /*
+     * display a scrolling animation while changing gold value
+     */
     public async Task AdjustGold(int current, int final)
     {
 
@@ -277,22 +325,34 @@ public class TownUIManager : MonoBehaviour
     //  }
     //}
 
+    /*
+     * get the townUIManager
+     */
     public static TownUIManager GetManager()
     {
         return Instance;
     }
 
+    /*
+     * display text from the current passenger
+     */
     public void DisplayPassText(Passenger pass)
     {
         DisplayText("Name: " + pass.GetName() + "\nDestination: " + pass.GetDestination() + "\nGold: " + pass.GetGold() + "\n" + pass.GetMessage() + "\n\nTrait: " + pass.GetTrait() + "\n" + pass.GetTraitDescription());
     }
 
+    /*
+     * display the given text
+     */
     public void DisplayText(string text)
     {
         passMessageText.text = text;
         errorText.text = "";
     }
 
+    /*
+     * display the current text as an error message
+     */
     public void DisplayError(string text)
     {
         errorText.text = text;
@@ -306,18 +366,26 @@ public class TownUIManager : MonoBehaviour
         SceneManager.LoadScene("ILikeTrains");
     }
 
+    /*
+     * display the passenger's stats in the passenger stats ui
+     */
     public void ShowPassengerStats(Passenger pass)
     {
         passengerStats.SetActive(true);
         passengerStats.GetComponent<PassUIFollow>().SetupUI(pass);
     }
 
+    /*
+     * hide the passenger stats ui
+     */
     public void HidePassengerStats()
     {
         passengerStats.SetActive(false);
     }
 
-    //sets whether or not the buttons are interactable
+    /*
+     * sets whether or not the buttons are interactable
+     */
     public void CanInteract(bool ci)
     {
         acceptButton.interactable = ci && !trainFull;
@@ -330,7 +398,10 @@ public class TownUIManager : MonoBehaviour
         interact = ci;
     }
 
-    //sets the conductor to the given state. 0=default, 1=yes, 2=no
+    /*
+     * sets the conductor to the given state. 
+     * 0=default, 1=yes, 2=no
+     */
     public void SetConductorImage(int state)
     {
         conductor.sprite = conductorSprites[state];

@@ -38,8 +38,22 @@ public class UIMouseFollow : MonoBehaviour
     {
         Vector3 mousePos = new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), 0);
         //Debug.Log("mouse pos: " + mousePos);
-        transform.position = new Vector3(mousePos.x + rect.width / 2, mousePos.y + rect.height / 2, zOffset);
+        Vector3 transformPos = new Vector3(mousePos.x + rect.width / 2, mousePos.y + rect.height / 2, zOffset);
+        if(mousePos.x + rect.width > Screen.width)
+        {
+            transformPos.x -= rect.width;
+        }
+        if (mousePos.y + rect.height > Screen.height)
+        {
+            transformPos.y -= rect.height;
+        }
+        transform.position = transformPos;
         //Gizmos.DrawWireSphere(mousePos, 1f);
+        //Debug.Log("s2w: " + Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, zOffset)) +
+            //"\ns2v: " + Camera.main.ScreenToViewportPoint(new Vector3(mousePos.x, mousePos.y, zOffset)) +
+            //"\nw2v: " + Camera.main.WorldToViewportPoint(new Vector3(mousePos.x, mousePos.y, zOffset)) +
+            //"\nw2s: " + Camera.main.WorldToScreenPoint(new Vector3(mousePos.x, mousePos.y, zOffset)) +
+            //"\nnormal: " + new Vector3(mousePos.x, mousePos.y, zOffset));
     }
 
     public void Enable()

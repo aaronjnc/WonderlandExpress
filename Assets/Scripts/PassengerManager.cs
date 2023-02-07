@@ -120,7 +120,6 @@ public class PassengerManager : MonoBehaviour
         if(GameManager.Instance != null)
         {
             currentPass = GameManager.Instance.GetPassengers();
-            
         }
         if(GameManager.Instance.GetCurrentStop() == null)
         {

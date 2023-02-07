@@ -89,6 +89,27 @@ public class TownDictionary : MonoBehaviour
         
     }
 
+    public void UpdateTown(string townName, TownSave save)
+    {
+        int i = townNames.IndexOf(townName);
+        if (save.destroyed)
+        {
+            destroyed.Add(towns[i]);
+        }
+        towns[i].Setup(save);
+    }
+
+    public TownSave[] GetTownSaves()
+    {
+        TownSave[] townSaves = new TownSave[towns.Count];
+        for (int i = 0; i < townSaves.Length; i++)
+        {
+            townSaves[i] = new TownSave();
+            townSaves[i].Setup(towns[i]);
+        }
+        return townSaves;
+    }
+
     //gets the currently stored town
     public Town GetCurrentTown()
     {
@@ -145,7 +166,7 @@ public class TownDictionary : MonoBehaviour
 
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 0 && this != null)
+        if (scene.buildIndex == 1 && this != null)
         {
             Destroy(gameObject);
         }

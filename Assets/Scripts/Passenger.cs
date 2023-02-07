@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 
-
 public class Passenger : MonoBehaviour
 {
     [Header("General Passenger Stats")]
@@ -115,6 +114,23 @@ public class Passenger : MonoBehaviour
         destination = pDestination;
     }
 
+    public void Setup(PassengerSave p)
+    {
+        firstName = p.firstName;
+        lastName = p.lastName;
+        passName = firstName + " " + lastName;
+        gold = p.gold;
+        wealth = p.wealth;
+        happiness = p.happiness;
+        destination = p.destination;
+        passageMessage = p.passageMessage;
+        acceptMessage = p.acceptMessage;
+        denyMessage = p.denyMessage;
+        dropOffMessage = p.dropOffMessage;
+        trait = p.trait;
+        traitDescription = p.traitDescription;
+    }
+
     public void SetName(string first, string last)
     {
         firstName = first;
@@ -157,7 +173,9 @@ public class Passenger : MonoBehaviour
         return traitDescription;
     }
 
-    //moves to the given position and sets the rendered to active
+    /*
+     * moves to the given position and sets the rendered to active
+     */
     public void Display(Vector3 pos)
     {
         transform.position = pos;
@@ -168,7 +186,9 @@ public class Passenger : MonoBehaviour
         //}
     }
 
-    //hides the spriteRenderer
+    /*
+     * hides the spriteRenderer
+     */
     public void Hide()
     {
         sr.enabled = false;
@@ -179,7 +199,9 @@ public class Passenger : MonoBehaviour
         transform.position = transform.position + new Vector3(0, 0, 11);
     }
 
-    //decreases happiness by the given amount
+    /*
+     * decreases happiness by the given amount
+     */
     public void DecreaseHappiness(float diff)
     {
 
@@ -190,11 +212,13 @@ public class Passenger : MonoBehaviour
         }
         if (happiness >= 1f)
         {
-            happiness = 0f;
+            happiness = 1f;
         }
     }
 
-    //increases happiness by the given amount
+    /*
+     * increases happiness by the given amount
+     */
     public void IncreaseHappiness(float diff)
     {
         happiness += diff;
@@ -204,10 +228,13 @@ public class Passenger : MonoBehaviour
         }
         if (happiness >= 1f)
         {
-            happiness = 0f;
+            happiness = 1f;
         }
     }
 
+    /*
+     * gets the passenger's gold
+     */
     public int GetGold()
     {
         int displayGold = (int)((float)gold * distanceMod);
@@ -219,51 +246,81 @@ public class Passenger : MonoBehaviour
 
     }
 
+    /*
+     * sets this passenger's gold
+     */
     public void SetGold(int newGold)
     {
         gold = newGold;  
     }
 
+    /*
+     * gets this passenger's wealth
+     */
     public float GetWealth()
     {
         return wealth;
     }
 
+    /*
+     * sets this passenger's wealth
+     */
     public void SetWealth(float newWealth)
     {
         wealth = newWealth;
     }
 
+    /*
+     * gets this passenger's happiness
+     */
     public float GetHappiness()
     {
         return happiness;
     }
 
+    /*
+     * sets this passenger's happiness
+     */
     public void SetHappiness(float happy)
     {
         happiness = happy;
     }
 
+    /*
+     * gets this passenger's full name
+     */
     public string GetName()
     {
         return passName;
     }
 
+    /*
+     * gets this passenger's first name
+     */
     public string GetFirst()
     {
         return firstName;
     }
 
+    /*
+     * gets this passenger's last name
+     */
     public string GetLast()
     {
         return lastName;
     }
 
+    /*
+     * gets this passenger's destination
+     */
     public string GetDestination()
     {
         return destination;
     }
 
+    /*
+     * sets this passenger's destination
+     */
     public void SetDestination(string dest)
     {
         destination = dest;
@@ -274,26 +331,41 @@ public class Passenger : MonoBehaviour
     //    return destination.GetName();
     //}
 
+    /*
+     * gets this passenger's greeting message
+     */
     public string GetMessage()
     {
         return passageMessage;
     }
 
+   /*
+    * gets this passenger's accept message
+    */
     public string GetAccept()
     {
         return acceptMessage;
     }
 
+    /*
+    * gets this passenger's deny message
+    */
     public string GetDeny()
     {
         return denyMessage;
     }
 
+    /*
+    * gets this passenger's dropoff message
+    */
     public string GetDropOff()
     {
         return dropOffMessage;
     }
 
+    /*
+     * changes this passenger's sprite to face the correct direction
+     */
     public void ChangeSprite(string dir)
     {
         if(dir != filePathEnd)
@@ -303,21 +375,33 @@ public class Passenger : MonoBehaviour
         }
     }
 
+    /*
+     * makes the passenger face into the screen, displaying their back
+     */
     public void FaceBack()
     {
         ChangeSprite("back");
     }
 
+    /*
+     * makes the passenger face out of the scene, displaying their front
+     */
     public void FaceFront()
     {
         ChangeSprite("front");
     }
 
+    /*
+     * makes the passenger sit down, displaying their side profile
+     */
     public void SitDown()
     {
         ChangeSprite("sit");
     }
 
+    /*
+     * drop off the passenger at a town
+     */
     public void DropOff(Town t)
     {
         if (trait == "Shady")
@@ -330,7 +414,9 @@ public class Passenger : MonoBehaviour
         }
     }
 
-    //reduces happiness as train moves. decrease = amount happiness typically drops by, numPassengers = number of passengers
+    /*
+     * reduces happiness as train moves. decrease = amount happiness typically drops by, numPassengers = number of passengers
+     */
     public void OnTrainMove(float decrease, int numPassengers)
     {
         decrease /= distanceMod;
@@ -365,7 +451,10 @@ public class Passenger : MonoBehaviour
 
     }
 
-    //move to the designated location. trown: false-> bounce multiple times, true -> bounce once and much higher
+    /*
+     * move to the designated location. 
+     * thrown: false-> bounce multiple times, true -> bounce once and much higher
+     */
     public async Task MoveTo(Vector3 pos, bool thrown)
     {
         Sprite sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
@@ -391,23 +480,25 @@ public class Passenger : MonoBehaviour
         
 
         float period = totalDist / (float)bounceCount;
-        //Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
-        //Debug.Log("bounce height: " + bounceHeight);
+            //Debug.Log("total distance: " + totalDist + "\nbounce count: " + bounceCount + "\nperiod: " + period);
+            //Debug.Log("bounce height: " + bounceHeight);
         float startTime = Time.time;
         int startFrame = Time.frameCount;
-        //Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
+            //Debug.Log("start time: " + startTime + " at deltatime " + Time.deltaTime + " on frame " + startFrame);
         int counter = 0;
 
         
-
+        //sets up the position for travel to follow, ignoring bounces
         Vector3 travelPos = transform.position;
-        //Debug.Log("start movement: " + speed);
+            //Debug.Log("start movement: " + speed);
         while(travelPos != pos)
         {
-            //Debug.Log((pos - travelPos).magnitude);
+                //Debug.Log((pos - travelPos).magnitude);
+
+            //if the passenger is too close to move without passing their destination, move directly to the destination
             if((pos - travelPos).magnitude <= moveSpeed)
             {
-                //Debug.Log("almost done");
+                    //Debug.Log("almost done");
                 travelPos = pos;
                 transform.position = pos;
                 transform.eulerAngles = Vector3.zero;
@@ -416,15 +507,17 @@ public class Passenger : MonoBehaviour
                 int endFrame = Time.frameCount;
                 float timeDiff = endTime - startTime;
                 int frameDiff = endFrame - startFrame;
-                //Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
+                    //Debug.Log("Done at time " + endTime + " with time elapsed: " + timeDiff + ", at frame " + endFrame + " with frames elapsed: " + frameDiff + " and at count " + counter);
                 Vector3 centerOfRotation = transform.position + transform.up.normalized * (sprite.bounds.extents.y / 4);// sprite.bounds.center;
-                //Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
+                    //Debug.Log("transform: " + transform.position + " sprite center: " + centerOfRotation);
                 Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, 1f);
 
             }
+
+            //if the passenger still has space to move, continue moving
             else
             {
-                //Debug.Log("moving " + ((pos - transform.position).normalized).magnitude + ", " + speed);
+                    //Debug.Log("moving " + ((pos - transform.position).normalized).magnitude + ", " + speed);
                 counter++;
 
                 travelPos += (pos - travelPos).normalized * moveSpeed;
@@ -440,7 +533,7 @@ public class Passenger : MonoBehaviour
                     transform.RotateAround(centerOfRotation, Vector3.forward, angleOffset);
                     Vector3 diff = (centerOfRotation - transform.position) * -Mathf.Cos(((2 * Mathf.PI) / period) * distance) + (centerOfRotation - transform.position);
                     bounce -= diff;
-                    //Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, .5f);
+                        //Debug.DrawRay(centerOfRotation, transform.position - centerOfRotation, Color.red, .5f);
                 }
                 else
                 {
@@ -453,8 +546,8 @@ public class Passenger : MonoBehaviour
 
                 
                 
-                //Debug.DrawRay(travelPos, pos, Color.red, .1f);
-                //Debug.DrawRay(transform.position, travelPos, Color.green, .1f);
+                    //Debug.DrawRay(travelPos, pos, Color.red, .1f);
+                    //Debug.DrawRay(transform.position, travelPos, Color.green, .1f);
             }
             await Task.Yield();
         }

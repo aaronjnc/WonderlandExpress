@@ -17,7 +17,7 @@ public class FollowTrain : MonoBehaviour
     private bool caboose;
     private void Start()
     {
-        if (!GameManager.Instance.load)
+        if (!GameManager.Instance.load && !GameManager.Instance.loadFromFile)
         {
             nextPoint = GameManager.Instance.GetHeadPoint();
             nextPos = nextPoint.GetPos();
@@ -37,11 +37,7 @@ public class FollowTrain : MonoBehaviour
             {
                 nextPoint = nextPoint.GetNext();
             }
-            nextPos = nextPoint.GetPos();
-            Vector3 diff = -(nextPos - transform.position);
-            diff.Normalize();
-            float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            lookRotation = Quaternion.Euler(0, 0, rot - 90);
+            UpdateLookRot();
         }
         if (transform.rotation != lookRotation)
         {
@@ -76,5 +72,14 @@ public class FollowTrain : MonoBehaviour
     {
         transform.position = train.position + (transform.up * distanceBehind * (carNum + 1));
         Camera.main.gameObject.GetComponent<CameraTransition>().Transition(transform.position.x > 0);
+    }
+
+    public void UpdateLookRot()
+    {
+        nextPos = nextPoint.GetPos();
+        Vector3 diff = -(nextPos - transform.position);
+        diff.Normalize();
+        float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        lookRotation = Quaternion.Euler(0, 0, rot - 90);
     }
 }

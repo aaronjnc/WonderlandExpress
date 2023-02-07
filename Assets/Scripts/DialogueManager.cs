@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 public class DialogueManager : MonoBehaviour
 {
+    //a struct to hold a single piece of a dialog message
     [System.Serializable]
     public struct Dialog 
     {
@@ -108,6 +109,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     public async void Awake()
     {
+        //if the dialog test is enabled, run the startup dialog test
         if (runTest)
         {
             await DisplayDialog("test");
@@ -128,50 +130,74 @@ public class DialogueManager : MonoBehaviour
         dialogObject.SetActive(false);
     }
 
-    //shows dialog corresponding to the given string
+    /*
+     * shows dialog corresponding to the given string name
+     */
     public async Task DisplayDialog(string path)
     {
+        //initialize the dialogue ui
         displayingDialogue = true;
         conductorTalking = true;
         tmo.SetInteract(false);
         ct.SetInteracting(false);
         Debug.Log("display dialog of " + path);
         
+        //set up the list of dialog based on the string namepath provided
         Dialog[] currentDialog = (Dialog[])this.GetType().GetField(path).GetValue(this);
+        //check for null dialog
         if(currentDialog == null)
         {
             Debug.LogError("DIALOG " + path + " NOT FOUND");
             return;
         }
+        //display the first speaker and pass dialog off the handler
         DisplaySpeaker(currentDialog[0].speaker);
         dialogObject.SetActive(true);
         await HandleDialog(currentDialog);
+
+        //hide the dialog ui
         HideDisplay();
         tmo.SetInteract(true);
         ct.SetInteracting(true);
     }
 
+    /*
+     * handles the array of dialog items to be displayed
+     * lists the text in the text box and handles all special unique interactions
+     */
     public async Task HandleDialog(Dialog[] dialogs)
     {
-        
+        //enable input 
         canGetInput = true;
         continueText.enabled = false;
         Debug.Log("dialogs to run: " + dialogs.Length);
+
+        //handle each individual piece of dialog
         foreach (Dialog d in dialogs)
         {
+            //display the current speaker
             await Task.Delay(100);
             Debug.Log("running dialog");
             DisplaySpeaker(d.speaker);
+
+            //display the current message
             await Task.Delay(100);
             await DisplayText(d.message);
+
+            //handle the different unique interactions
             if(d.uniqueInteraction == "PayToll")
             {
                 await GameManager.Instance.TollPass();
+            }
+            else if (d.uniqueInteraction == "PayTollWL")
+            {
+                await GameManager.Instance.TollPassWL();
             }
             else if(d.uniqueInteraction == "GameOver")
             {
                 Time.timeScale = 0;
                 endGame.SetActive(true);
+                endGame.GetComponent<GameOverCanvas>().Setup();
                 gameEnded = true;
             }
             else if(d.uniqueInteraction == "PayJW")
@@ -190,9 +216,14 @@ public class DialogueManager : MonoBehaviour
         
     }
 
+    /*
+     * displays the portraits of the speakers in dialog
+     * highlights the current speaker and greys out whoever they are talking to
+     */
     public void DisplaySpeaker(string speaker)
     {
         Debug.Log("displaying: " + speaker);
+        //if the conductor is the speaker, highlight him and grey out the target
         if(speaker == "Conductor")
         {
             if (!conductorTalking)
@@ -207,6 +238,7 @@ public class DialogueManager : MonoBehaviour
                 conductorTalking = true;
             }
         }
+        //else, highlight the speaker and grey out the conductor
         else 
         {
             if (conductorTalking)
@@ -215,6 +247,8 @@ public class DialogueManager : MonoBehaviour
                 speakerNameText.enabled = true;
                 conductorNamePanel.SetActive(false);
                 conductorNameText.enabled = false;
+
+                //if the current speaker is not already being displayed, display the curren't speaker's image
                 if (currentSpeaker != speaker)
                 {
                     speakerImage.sprite = Resources.Load<Sprite>("Character Sprites/" + speaker);
@@ -228,6 +262,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /*
+     * displays the dialog text through the typewriter script
+     */
     public async Task DisplayText(string text)
     {
         continueText.enabled = false;
@@ -241,6 +278,10 @@ public class DialogueManager : MonoBehaviour
         
     }
 
+    /*
+     * runs whenever receiving input during the dialog scene. 
+     * Handles skipping through text and moving on the next set of dialog if input is enabled
+     */
     public async void inputReceived()
     {
         if (!canGetInput || !displayingDialogue)
@@ -265,6 +306,9 @@ public class DialogueManager : MonoBehaviour
         //Invoke("ResetInput", .1f);
     }
 
+    /*
+     * resets the buffer on input interaction
+     */
     public void ResetInput()
     {
         canGetInput = true;

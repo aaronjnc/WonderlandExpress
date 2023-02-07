@@ -30,6 +30,7 @@ public class HolepunchScript : MonoBehaviour
     public AudioSource audio;
     private void Start()
     {
+        punched = false;
         openTop = holepunchTopImage.sprite;
         openBottom = holepunchBottomImage.sprite;
         DisplayPunch(false);
@@ -46,24 +47,18 @@ public class HolepunchScript : MonoBehaviour
             holepunchBottomImage.sprite = closedBottom;
             punched = true;
             audio.Play();
-            StartCoroutine("ClickWait");
+            //StartCoroutine("ClickWait");
         }
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (!punched)
         {
 
             Vector3 mousePos = new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), -1f);//Camera.main.ScreenToViewportPoint(new Vector3(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue(), -1f));
-            //Debug.Log(mousePos);
-            //mousePos = new Vector3(mousePos.x, mousePos.y, -1);
-            //Vector3 cameraPos = Camera.main.transform.position;
             Vector3 cameraPos = new Vector3(mousePos.x, mousePos.y, 10f);
-            //Debug.Log("mouse: " + mousePos);
             RaycastHit2D hit = Physics2D.Raycast(cameraPos, (mousePos - cameraPos) * 100, Mathf.Infinity);
-            //Debug.DrawRay(cameraPos, (mousePos - cameraPos) * 100, Color.red, 0.1f);
             if (hit.collider != null)
             {
                 //Debug.Log("Hit " + hit.collider.gameObject);

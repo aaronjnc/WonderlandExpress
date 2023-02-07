@@ -48,4 +48,14 @@ public class PassengerOnSheet : MonoBehaviour
         happiness.text = "Happiness: " + Mathf.Round(passenger.happiness*100) + "%";
         trait.text = "Trait: " + passenger.trait;
     }
+
+    public void UpdateHappiness()
+    {
+        happiness.text = "Happiness: " + Mathf.Round(passenger.happiness * 100) + "%";
+    }
+
+    public bool HasPassenger()
+    {
+        return passenger != null;
+    }
 }

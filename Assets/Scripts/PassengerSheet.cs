@@ -21,7 +21,7 @@ public class PassengerSheet : MonoBehaviour
     private GameObject previous;
     [Tooltip("Next page"), SerializeField]
     private GameObject next;
-    private void Awake()
+    private void Start()
     {
         t = GetComponent<RectTransform>();
         UpdatePassengers();
@@ -84,6 +84,16 @@ public class PassengerSheet : MonoBehaviour
                 moveOut = false;
                 t.anchoredPosition = endPosition;
             }
+        }
+        UpdateHappiness();
+    }
+    private void UpdateHappiness()
+    {
+        foreach (PassengerOnSheet p in passengerTexts)
+        {
+            if (p == null || !p.HasPassenger())
+                continue;
+            p.UpdateHappiness();
         }
     }
     public void ChangePage(int i)
