@@ -26,6 +26,8 @@ public class TrainAudioManager : MonoBehaviour
     [HideInInspector]
     public int state = 0;
     private int trainAudioNum = 0;
+    [SerializeField, Range(0,1)]
+    private float MaxVolume = .8f;
     public static TrainAudioManager Instance
     {
         get
@@ -44,6 +46,9 @@ public class TrainAudioManager : MonoBehaviour
         controls = new PlayerControls();
         controls.ClickEvents.TrainWhistle.performed += Whistle;
         controls.ClickEvents.TrainWhistle.Enable();
+        trainAudioSource.loop = true;
+        SwitchSound(GameManager.Instance.GetAudioNum());
+        trainAudioSource.Play();
     }
 
     void Whistle(CallbackContext ctx)
@@ -53,6 +58,11 @@ public class TrainAudioManager : MonoBehaviour
             trainWhistle.clip = trainWhistleSound[trainAudioNum];
         }
         trainWhistle.Play();
+    }
+
+    public void UpdateTrainVolume(float percentage)
+    {
+        trainAudioSource.volume = percentage * MaxVolume;
     }
 
     public void SpeedUp()
@@ -131,10 +141,10 @@ public class TrainAudioManager : MonoBehaviour
     public void StopSound()
     {
         trainAudioSource.Pause();
-        if (trainWhistle.isPlaying)
+        /*if (trainWhistle.isPlaying)
         {
             trainWhistle.Pause();
-        }
+        }*/
     }
     public void ResumeSound()
     {
@@ -148,7 +158,11 @@ public class TrainAudioManager : MonoBehaviour
             ActualTrainSound();
             return;
         }
-        switch (state)
+        else
+        {
+            trainAudioSource.clip = trainRegular;
+        }
+        /*switch (state)
         {
             case 0:
                 trainAudioSource.clip = trainRegular;
@@ -159,7 +173,7 @@ public class TrainAudioManager : MonoBehaviour
             case 2:
                 trainAudioSource.clip = trainDecelerate;
                 break;
-        }
+        }*/
     }
     private void OnDestroy()
     {

@@ -80,7 +80,8 @@ public class TrainMovement : MonoBehaviour
         controls.ClickEvents.ZoomOut.performed += Zoom;
         controls.ClickEvents.ZoomOut.Enable();
         GameManager.Instance.AddFollowPoint(nextPoint.transform.position);
-        trainAudioManager.SpeedUp();
+        trainAudioManager.UpdateTrainVolume(velocity / maxVelocity);
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
     }
     private void Zoom(CallbackContext ctx)
     {
@@ -127,10 +128,6 @@ public class TrainMovement : MonoBehaviour
     {
         if (paused)
         {
-            if (!previousChosen.continuous)
-            {
-                trainAudioManager.SpeedUp();
-            }
             Vector3 diff = -(nextPoint.transform.position - transform.position);
             diff.Normalize();
             float rot = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
@@ -151,7 +148,6 @@ public class TrainMovement : MonoBehaviour
             if (Vector3.Distance(transform.position, nextPoint.transform.position) < stoppingDistance
                 && !nextPoint.continuous)
             {
-                trainAudioManager.SlowDown();
                 if (currentVel == Vector3.zero)
                 {
                     currentVel = (nextPoint.transform.position-transform.position).normalized * velocity;
@@ -165,8 +161,6 @@ public class TrainMovement : MonoBehaviour
             }
             else
             {
-                if (trainAudioManager.state != 0 && trainAudioManager.state != 1)
-                    trainAudioManager.ConstantSpeed();
                 velocity = Mathf.Clamp(velocity + Time.deltaTime * acceleration, 0, maxVelocity);
                 transform.position = Vector3.MoveTowards(transform.position, nextPoint.transform.position, velocity*Time.deltaTime);
             }
@@ -186,8 +180,6 @@ public class TrainMovement : MonoBehaviour
             if (!previousChosen.continuous)
             {
                 paused = previousChosen.StopAction();
-                if (!paused)
-                    trainAudioManager.SpeedUp();
             }
             if (!paused)
             {
@@ -208,6 +200,7 @@ public class TrainMovement : MonoBehaviour
             currentVel = Vector3.zero;
             stopped = true;
         }
+        trainAudioManager.UpdateTrainVolume(velocity/maxVelocity);
     }
 
     public void LoadFollowTrains()

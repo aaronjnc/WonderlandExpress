@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LogoAnimation : MonoBehaviour
@@ -15,8 +16,6 @@ public class LogoAnimation : MonoBehaviour
     private int imageNum = 0;
     [SerializeField]
     private float fps;
-    [SerializeField]
-    private GameObject menu;
     private void Start()
     {
         Time.timeScale = 1;
@@ -42,8 +41,7 @@ public class LogoAnimation : MonoBehaviour
             {
                 img.color = new Color(1, 1, 1, 0);
                 fadeIn = false;
-                menu.SetActive(true);
-                gameObject.SetActive(false);
+                SceneManager.LoadScene(1);
             }
         }
     }

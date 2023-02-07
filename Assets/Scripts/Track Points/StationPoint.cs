@@ -27,7 +27,7 @@ public class StationPoint : TrackPoint
         GameManager.Instance.load = true;
         TrainMovement.Instance.SaveFollowTrains();
         if (!GameManager.Instance.trainSceneTesting)
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         return false;
     }
 }

@@ -38798,6 +38798,7 @@ MonoBehaviour:
   train: {fileID: 1328246594}
   pauseMenu: {fileID: 2142159013}
   mouthNoisesToggle: {fileID: 1621261108}
+  deleteSave: {fileID: 0}
 --- !u!1 &850078146
 GameObject:
   m_ObjectHideFlags: 0
@@ -39899,7 +39900,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -55287,6 +55288,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1b0a101cb5e3c7943aa5f293147d0b63, type: 3}
   actualTrainConstant: {fileID: 8300000, guid: 604872818a8bf8b4f8e45ddfb802b93c, type: 3}
   state: 0
+  MaxVolume: 0.3
 --- !u!4 &1328246595
 Transform:
   m_ObjectHideFlags: 0

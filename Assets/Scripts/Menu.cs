@@ -39,7 +39,8 @@ public class Menu : MonoBehaviour
     public void MainMenu()
     {
         GameManager.Instance.SaveGame();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1;
     }
     //Exit the game
     public void Exit()
@@ -50,7 +51,7 @@ public class Menu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void DeleteSave()
