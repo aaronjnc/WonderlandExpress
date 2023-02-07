@@ -113,12 +113,13 @@ public class GameManager : MonoBehaviour
         Application.quitting += () => applicationIsQuitting = true;
         SceneManager.sceneLoaded += OnSceneLoad;
         passengers = new GameObject[maxCap];
+        upi = gameObject.GetComponent<UniquePassengerInfo>();
         if (File.Exists(Application.persistentDataPath + "/SaveInfo.txt"))
         {
             LoadGame();
         }
         jabberwockyPrice = (int)(jabberwockyMod * tollPrice);
-        upi = gameObject.GetComponent<UniquePassengerInfo>();
+
         if(upi == null)
         {
             Debug.LogError("UPI NOT FOUND");
@@ -247,7 +248,7 @@ public class GameManager : MonoBehaviour
 
     public PassengerSave[] GetPassengerSaves()
     {
-        PassengerSave[] passengerObjects = new PassengerSave[passengerCount];
+        PassengerSave[] passengerObjects = new PassengerSave[passengers.Length];
         for (int i = 0; i < passengers.Length; i++)
         {
             if (passengers[i] != null)
@@ -264,7 +265,7 @@ public class GameManager : MonoBehaviour
      */
     private void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 0 && this != null)
+        if (scene.buildIndex == 1 && this != null)
         {
             for (int i = 0; i < passengers.Length; i++)
             {
@@ -608,11 +609,17 @@ public class GameManager : MonoBehaviour
         mouthNoises = UseMouthNoises;
         if (TrainAudioManager.Instance != null)
         {
-            if (UseMouthNoises)
-                TrainAudioManager.Instance.SwitchSound(1);
-            else
-                TrainAudioManager.Instance.SwitchSound(0);
+            TrainAudioManager.Instance.SwitchSound(GetAudioNum());
         }
+    }
+
+    public int GetAudioNum()
+    {
+        if (mouthNoises)
+        {
+            return 1;
+        }
+        return 0;
     }
 
     public List<Vector3> GetFollowCarPositions()

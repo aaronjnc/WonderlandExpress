@@ -95,8 +95,9 @@ public class SaveInfo
         manager.loops = loops;
         manager.gold = gold;
         manager.totalGold = totalGold;
-        manager.maxCap = maxCap;
-        manager.passengers = new GameObject[maxCap];
+        manager.carCount = carCount;
+        manager.carLevel = carLevel;
+        manager.passengers = new GameObject[maxCap * carCount];
         manager.SetCurrentStop(currentStop);
         manager.SetTrainPosition(new Vector3(trainPosition[0], trainPosition[1], trainPosition[2]));
         manager.SetTrainRotation(new Vector3(trainRotation[0], trainRotation[1], trainRotation[2]));
@@ -119,8 +120,7 @@ public class SaveInfo
             }
         }
         manager.SetMouthNoises(useMouthNoises);
-        manager.carCount = carCount;
-        manager.carLevel = carLevel;
+
         for (int i = 0; i < followLinkedList.Length; i++)
         {
             Vector3 pos = new Vector3(followLinkedList[i][0], followLinkedList[i][1], followLinkedList[i][2]);
@@ -142,7 +142,8 @@ public class SaveInfo
             manager.InitializeUPI(upiSave);
         foreach (PassengerSave p in passengers)
         {
-            manager.SpawnPassenger(p);
+            if (p != null)
+                manager.SpawnPassenger(p);
         }
     }
 }
