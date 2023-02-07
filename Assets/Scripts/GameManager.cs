@@ -660,6 +660,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
+        Debug.Log("Save Game");
         TrainMovement train = TrainMovement.Instance;
         SetTrainLookRotation(train.GetLookRotation());
         SetTrainPosition(train.transform.position);
